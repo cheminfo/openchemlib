@@ -46,6 +46,7 @@ import com.actelion.research.share.gui.editor.io.IKeyEvent;
 import com.actelion.research.share.gui.editor.io.IMouseEvent;
 
 import java.awt.geom.Point2D;
+import java.util.function.Consumer;
 
 
 /**
@@ -322,6 +323,17 @@ public abstract class AtomHighlightAction extends DrawAction
         if (mol != null) {
             boolean showReactionHints = (model.getMode() & Model.MODE_REACTION) != 0;
             IAtomQueryFeaturesDialog dlg = factory.createAtomQueryFeatureDialog(mol, atom, showReactionHints);
+            dlg.setResultHandler(new Consumer<DialogResult>()
+            {
+                @Override
+                public void accept(DialogResult res)
+                {
+                    if (res == DialogResult.IDOK) {
+                        model.setSelectedAtom(-1);
+                        model.changed();
+                    }
+                }
+            });
             return dlg.doModalAt(lastHightlightPoint.getX(), lastHightlightPoint.getY()) == DialogResult.IDOK;
         }
         return false;
