@@ -1,0 +1,2591 @@
+[33mcommit 7ea03e6cb536fcf75e4f1e4e614117e5f915d998[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Luc Patiny <luc@patiny.com>
+Date:   Mon Aug 5 17:30:41 2019 +0200
+
+    fix build.xml to deal with java 1.8
+
+[33mcommit 4113337f6cd6f3d0989b517525e36f793a24b427[m
+Author: Luc Patiny <luc@patiny.com>
+Date:   Mon Aug 5 17:30:25 2019 +0200
+
+    Add more chiral dia tests
+
+[33mcommit 7db8ff7fcd424491836585c4ab8967cdf5a90f6b[m
+Author: Luc Patiny <luc@patiny.com>
+Date:   Mon Aug 5 17:29:14 2019 +0200
+
+    Add small information on how to build and execute code
+
+[33mcommit eb0a0c706edc16b10989c3bf09e3aa892af896d9[m
+Author: Michaël Zasso <targos@protonmail.com>
+Date:   Fri Jul 5 09:54:47 2019 +0200
+
+    fix: improve SVG depictor
+
+[33mcommit bea36bed2ecd89a8a3a49a19afc44afd25582194[m
+Author: Michaël Zasso <targos@protonmail.com>
+Date:   Thu Dec 13 11:43:41 2018 +0100
+
+    fix(editor): allow atoms/bonds to be deleted via backspace key
+
+[33mcommit 455aaecc19c2833704d7433647d425992ddc2ba1[m
+Author: Michaël Zasso <targos@protonmail.com>
+Date:   Thu Dec 13 11:39:22 2018 +0100
+
+    fix: editor.setMolfile pushes current molecule to undo stack
+
+[33mcommit 6825155b8cf5d3c6ae3b2c316729896886b44b97[m
+Author: Michaël Zasso <targos@protonmail.com>
+Date:   Sun Dec 2 14:58:08 2018 +0100
+
+    fix: emit change event from dialogs
+
+[33mcommit 2f28da23f343d10b73453b24fe0f02490df1ddd8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jul 9 04:00:30 2019 +0200
+
+    Sync of 2019_07_09-04_00_27
+
+[33mcommit b73e3b26ba34c437a974d58de41760c094377733[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 4 04:00:30 2019 +0200
+
+    Sync of 2019_07_04-04_00_27
+
+[33mcommit d7456ba786446c823d9d49205345f46b7f827a23[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Jul 1 04:30:56 2019 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 5dd51420cfc3a90415d4879a437d7bc8fdfc8b49[m[33m ([m[1;33mtag: openchemlib-2019.7.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Jul 1 04:30:49 2019 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2019.7.0
+
+[33mcommit fbf63bc7e65fc1923b69a0d6d05a5c6b123b26a3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jun 25 04:00:30 2019 +0200
+
+    Sync of 2019_06_25-04_00_28
+
+[33mcommit c94fa6a7017420d82981e16a1c5f07fba0da171b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 21 04:00:35 2019 +0200
+
+    Sync of 2019_06_21-04_00_33
+
+[33mcommit 0f97a5dc7318fd4a3e583e306700219831ef6a3b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 19 04:00:29 2019 +0200
+
+    Sync of 2019_06_19-04_00_27
+
+[33mcommit ed35b1e77e9133537ce62d4a21bf777a5d5359a1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jun 18 04:00:31 2019 +0200
+
+    Sync of 2019_06_18-04_00_29
+
+[33mcommit f0eb9924cebd6ceeac164ab0905327c11731df03[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 14 08:07:48 2019 +0200
+
+    Sync of 2019_06_14-08_07_43
+
+[33mcommit f1048e0044dba5b7fe08f438240bc5bcecb95052[m
+Author: Roman Bär <roman.baer@idorsia.com>
+Date:   Wed Jun 12 10:16:34 2019 +0200
+
+    Set compiler to Java 1.8
+
+[33mcommit 500efe745ba81c8322eb5c16a025ac047f99b686[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 12 10:05:54 2019 +0200
+
+    Sync of 2019_06_12-10_05_52
+
+[33mcommit 56a88665a7bde76bccf30ad2b195406da260c8f2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jun 1 04:30:55 2019 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 583ea43b442d3001f6904f2fd4ddbaaf1dbbf656[m[33m ([m[1;33mtag: openchemlib-2019.6.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jun 1 04:30:48 2019 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2019.6.0
+
+[33mcommit 8cfc5d817d4575aaf8187c27917b8adf69ec8854[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 30 04:00:34 2019 +0200
+
+    Sync of 2019_05_30-04_00_29
+
+[33mcommit 11b319a85e2bb9bfe9e59f513cd9edbf6ab00584[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat May 25 04:00:31 2019 +0200
+
+    Sync of 2019_05_25-04_00_28
+
+[33mcommit 84bcefe748a6cd360fc1afc90bae5d903a13c391[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 24 04:00:31 2019 +0200
+
+    Sync of 2019_05_24-04_00_28
+
+[33mcommit 154dfef5e1de15f4b123327fd6f0496e98ac3b71[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 17 04:00:29 2019 +0200
+
+    Sync of 2019_05_17-04_00_26
+
+[33mcommit 8eb4f82822059d680d33c379674c952b6cdf00f9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 16 16:57:10 2019 +0200
+
+    Sync of 2019_05_16-16_57_05
+
+[33mcommit 99a9f8fd912c6fb47cb84114b370ab048eea51ed[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 16 16:40:56 2019 +0200
+
+    Sync of 2019_05_16-16_40_54
+
+[33mcommit d8ad41e696da2ea4ca804aecae7870dde0c6f45d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 16 04:00:32 2019 +0200
+
+    Sync of 2019_05_16-04_00_29
+
+[33mcommit 301ef8348a14e4143490a45edc83db2e537930b1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed May 15 04:00:28 2019 +0200
+
+    Sync of 2019_05_15-04_00_26
+
+[33mcommit 80709098fdcba7318a00080f4e821e186a1a8396[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 14 04:00:29 2019 +0200
+
+    Sync of 2019_05_14-04_00_27
+
+[33mcommit ad26a28da3c7af2285c233a6551f3b72350d9e44[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 10 04:00:30 2019 +0200
+
+    Sync of 2019_05_10-04_00_27
+
+[33mcommit 7ccc2744b90073c60855669de0ccb2f28719da16[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 9 04:00:30 2019 +0200
+
+    Sync of 2019_05_09-04_00_27
+
+[33mcommit 296a949dd189e61fc45f06ac45c1aefcfd641b76[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 7 04:00:29 2019 +0200
+
+    Sync of 2019_05_07-04_00_26
+
+[33mcommit 8b881b85da7319b1d9496a9ee0fb216f93556786[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 3 16:18:07 2019 +0200
+
+    Sync of 2019_05_03-16_18_03
+
+[33mcommit 414672fed2f0145e655d29e4e8ede75027c457de[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 3 04:00:31 2019 +0200
+
+    Sync of 2019_05_03-04_00_28
+
+[33mcommit c6ab184b9bb8a631884288fe302a2ae09d804b49[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed May 1 04:30:50 2019 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit dc5f33abcf6c937e6ee7ccee601defbe2c79b40f[m[33m ([m[1;33mtag: openchemlib-2019.5.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed May 1 04:30:43 2019 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2019.5.0
+
+[33mcommit 7f5a13006511b747f182ce640c3ded22a317bf93[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Apr 30 04:00:28 2019 +0200
+
+    Sync of 2019_04_30-04_00_26
+
+[33mcommit 8354a804853ad1a135f2a15e3b026bb767480e90[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Apr 26 04:00:30 2019 +0200
+
+    Sync of 2019_04_26-04_00_28
+
+[33mcommit 1ffa0690c29d0c25d4f2b5e5941c3bbd7902f2b6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 25 04:00:31 2019 +0200
+
+    Sync of 2019_04_25-04_00_28
+
+[33mcommit af2dd69becc35b7b9471ff2f78c516826c69eedd[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Apr 12 04:00:31 2019 +0200
+
+    Sync of 2019_04_12-04_00_28
+
+[33mcommit fdfc3a513aa730cc458e757ccbb676329449d250[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 11 04:00:30 2019 +0200
+
+    Sync of 2019_04_11-04_00_28
+
+[33mcommit dad2193434686baddefe6c78201485af6c60d7da[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Apr 10 04:00:31 2019 +0200
+
+    Sync of 2019_04_10-04_00_29
+
+[33mcommit 79c869cdc76bab83e3874e66351ee6e790bcdb09[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Apr 9 04:00:37 2019 +0200
+
+    Sync of 2019_04_09-04_00_34
+
+[33mcommit ef82c136731a9c4c3421155d1100b5b553c1bd08[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Apr 6 04:00:30 2019 +0200
+
+    Sync of 2019_04_06-04_00_27
+
+[33mcommit 90b034728d8b417a9a19e1050eb2649b1bd4fb7f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Apr 5 04:00:29 2019 +0200
+
+    Sync of 2019_04_05-04_00_26
+
+[33mcommit 3dc04760acbb2124823272ce665f8a6b07693b43[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 4 04:00:29 2019 +0200
+
+    Sync of 2019_04_04-04_00_26
+
+[33mcommit 061ceb170239bc9d145a573a852ebea0f79eff5d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Apr 2 04:00:43 2019 +0200
+
+    Sync of 2019_04_02-04_00_40
+
+[33mcommit f7ffc9ad64d944bd8ef5ee56cb3b30a6f9f7d894[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Apr 1 04:30:56 2019 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 4d70f38ac1464b26e467f776048e51d210fbadf9[m[33m ([m[1;33mtag: openchemlib-2019.4.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Apr 1 04:30:47 2019 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2019.4.0
+
+[33mcommit 376f21c789c1ddf053abd1595608469a05adac77[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Mar 30 04:00:32 2019 +0100
+
+    Sync of 2019_03_30-04_00_29
+
+[33mcommit 9cec4d8cc571f5522aede9ae1f9b9a7623b1fafa[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 28 04:00:31 2019 +0100
+
+    Sync of 2019_03_28-04_00_28
+
+[33mcommit fd956b3cf1077e1a13a50eaff298d159c889fffd[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Mar 27 04:00:38 2019 +0100
+
+    Sync of 2019_03_27-04_00_35
+
+[33mcommit 2b857b84faa307e55ab549dda9658f746256ff34[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 22 18:52:26 2019 +0100
+
+    Sync of 2019_03_22-18_52_23
+
+[33mcommit b6fee65381d00f8163c733ff454f7316e26530c1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 22 04:00:36 2019 +0100
+
+    Sync of 2019_03_22-04_00_34
+
+[33mcommit a5319b0eb27dde3c342f0871ba1e0ae3c6ca6ddc[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 21 04:00:31 2019 +0100
+
+    Sync of 2019_03_21-04_00_28
+
+[33mcommit cc5c83369160ec022ba2bab400442ef061019bab[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Mar 19 04:00:35 2019 +0100
+
+    Sync of 2019_03_19-04_00_32
+
+[33mcommit a485de68e3ce7246eb3b7bb07140e15b64f9fc8f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Mar 16 04:00:29 2019 +0100
+
+    Sync of 2019_03_16-04_00_27
+
+[33mcommit b3d7ee771ac8eeff4a3d2e75b3e68a2066081f31[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 8 04:00:31 2019 +0100
+
+    Sync of 2019_03_08-04_00_28
+
+[33mcommit e0bdd94f9af9fd3cc924c173cd276443c90af513[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Mar 6 13:04:39 2019 +0100
+
+    Sync of 2019_03_06-13_04_37
+
+[33mcommit 30e9d77fdea0d05cfd60087396ca4e8930981bf5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Mar 5 04:00:30 2019 +0100
+
+    Sync of 2019_03_05-04_00_27
+
+[33mcommit 27f5d914ca53118a5a14caf9789fe94742c834c5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 1 04:30:54 2019 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 7f18e0684340c3b2e035608b39c7533a0c8737c4[m[33m ([m[1;33mtag: openchemlib-2019.3.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 1 04:30:47 2019 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2019.3.0
+
+[33mcommit 9889f6b126a26b68a92ae3e7c9f06162e449001c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Feb 28 04:00:34 2019 +0100
+
+    Sync of 2019_02_28-04_00_31
+
+[33mcommit 7fe68a01ac4dc5f5e5bee7d6733cb949141d8d5a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Feb 23 04:00:32 2019 +0100
+
+    Sync of 2019_02_23-04_00_28
+
+[33mcommit ec37661d8418ac5bc31dfdfd93fcd928910ace6c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 22 04:00:34 2019 +0100
+
+    Sync of 2019_02_22-04_00_31
+
+[33mcommit 6d97fbe3c5d251889fdb7eafab857a68b9d32691[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 20 10:38:21 2019 +0100
+
+    Sync of 2019_02_20-10_38_18
+
+[33mcommit c9d08b9ae1ada4950d91f0786c44f661ecaf8ab7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 20 04:00:32 2019 +0100
+
+    Sync of 2019_02_20-04_00_29
+
+[33mcommit 04482220d96f090b68e0074bd2d084de639354e5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Feb 19 04:00:32 2019 +0100
+
+    Sync of 2019_02_19-04_00_29
+
+[33mcommit 001a9c595065013974a92e9bbb08d6945ae30902[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Feb 18 13:44:10 2019 +0100
+
+    Sync of 2019_02_18-13_44_07
+
+[33mcommit 9a8d672e716a04416a493af14b13015eb3c823c6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Feb 16 04:00:31 2019 +0100
+
+    Sync of 2019_02_16-04_00_28
+
+[33mcommit b87a23ae2973892c47fae16ca363f0991c98e57c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 15 04:00:26 2019 +0100
+
+    Sync of 2019_02_15-04_00_23
+
+[33mcommit f543db5ca42b989b70fbb00752d0b8777c17d599[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Feb 14 04:00:27 2019 +0100
+
+    Sync of 2019_02_14-04_00_24
+
+[33mcommit 21c89f84c86be51adf34cddd633fab139bddd5ee[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 8 04:00:28 2019 +0100
+
+    Sync of 2019_02_08-04_00_25
+
+[33mcommit 5c03f4a831dd429992582aff2adf52f51f22e14f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Feb 5 04:00:26 2019 +0100
+
+    Sync of 2019_02_05-04_00_23
+
+[33mcommit 8ace687afd0cc92b9a87ba535c24c9ab9b7582d3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Feb 2 04:00:27 2019 +0100
+
+    Sync of 2019_02_02-04_00_24
+
+[33mcommit 24cdb28ab2b7a6ef8b31b6539c8a8acea65a532b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 1 04:30:50 2019 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit b742eea9647fda02ad50630083e4e0063009de25[m[33m ([m[1;33mtag: openchemlib-2019.2.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 1 04:30:43 2019 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2019.2.0
+
+[33mcommit 0896a93f1022ffc5239ce08b9d086b43a86af881[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jan 31 04:00:29 2019 +0100
+
+    Sync of 2019_01_31-04_00_26
+
+[33mcommit d5c578d3d08e16a6ea20e0a57bd89cdc55c0f1a3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jan 26 04:00:28 2019 +0100
+
+    Sync of 2019_01_26-04_00_26
+
+[33mcommit c4ab4937940813cdd0ed3ffbeabddaf759a9a040[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jan 23 04:00:27 2019 +0100
+
+    Sync of 2019_01_23-04_00_24
+
+[33mcommit 29b5597e427e1ed483784dd8c5d9aaeb4ab2f81b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jan 17 15:25:09 2019 +0100
+
+    Sync of 2019_01_17-15_25_02
+
+[33mcommit 59bf4e2bc0a27b0887d46b06eae564b090ba6a93[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jan 17 04:00:26 2019 +0100
+
+    Sync of 2019_01_17-04_00_22
+
+[33mcommit 16e89c4a1c75d0aabff9504d503af784b34af382[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 15 04:00:26 2019 +0100
+
+    Sync of 2019_01_15-04_00_23
+
+[33mcommit 60fff01e9f450c2e6b2b55a448da4dbd145ac6c5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 8 04:00:26 2019 +0100
+
+    Sync of 2019_01_08-04_00_23
+
+[33mcommit 16de64a5c21dcbca652ea46e004bc0e8be6d99b6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jan 4 04:00:23 2019 +0100
+
+    Sync of 2019_01_04-04_00_20
+
+[33mcommit 38360ff46206b09650724467d96355cc0a99fd59[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jan 3 04:00:24 2019 +0100
+
+    Sync of 2019_01_03-04_00_22
+
+[33mcommit 71772eba918e244b95dd7af86076f215c6300417[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 1 04:30:47 2019 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit f861fd7f6b503a2a759dc2c9acb007745563ae0f[m[33m ([m[1;33mtag: openchemlib-2019.1.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 1 04:30:39 2019 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2019.1.0
+
+[33mcommit e661fd87b01715006b531df8a608795c31154ef7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 21 04:00:26 2018 +0100
+
+    Sync of 2018_12_21-04_00_23
+
+[33mcommit ae9a74faee1e57a1ddcdf37b4bfb204cb8544e86[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Dec 18 04:00:25 2018 +0100
+
+    Sync of 2018_12_18-04_00_22
+
+[33mcommit b2dbedecd57b9e6cff6ba28e667e3b417924cd46[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Dec 17 16:27:21 2018 +0100
+
+    Sync of 2018_12_17-16_27_18
+
+[33mcommit 3fe0325cdfb2f8b98d3f16dee74b81f94132067a[m
+Author: Roman Bär <roman.baer@idorsia.com>
+Date:   Wed Dec 12 14:28:07 2018 +0100
+
+    contrib refactoring
+
+[33mcommit d8763e8fd299edf190bd8175bb465377cf831ff3[m
+Merge: 79eb019 2d7bbb3
+Author: thsa <thomas.sander@idorsia.com>
+Date:   Wed Dec 12 11:24:57 2018 +0100
+
+    Merge pull request #17 from cheminfo/fix-diaid
+    
+    Fix valence problem with diastereoID of heavy atom
+
+[33mcommit 79eb0199fd286fea128176549eeb5a8a3f35637e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Dec 12 04:00:26 2018 +0100
+
+    Sync of 2018_12_12-04_00_24
+
+[33mcommit 6b5ef1258d511c52491493374e612c29392da3b3[m
+Author: Christian Rufener <christian.rufener@gmail.com>
+Date:   Mon Dec 10 15:12:26 2018 +0100
+
+    Fix: atom and bond can be deleted via backspace key
+
+[33mcommit f8cdf3289994bc484ef6390b4925f5dccc6dbe06[m
+Author: Christian Rufener <rufenec@Christians-MacBook-Air.local>
+Date:   Mon Dec 10 14:22:27 2018 +0100
+
+    Fixed issue in setMolfile method: Pushes current molecule to undo stack
+
+[33mcommit 9fcd9985b737d2cceaec13166fd725b46d3aa29b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Dec 8 04:00:24 2018 +0100
+
+    Sync of 2018_12_08-04_00_22
+
+[33mcommit e225e6ddb3e998b8b5d917f442e1e1c65aad4cfa[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 7 04:00:29 2018 +0100
+
+    Sync of 2018_12_07-04_00_26
+
+[33mcommit e456c20a0af9275c9a22d00a7b61694ea75dc757[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Dec 6 04:00:25 2018 +0100
+
+    Sync of 2018_12_06-04_00_23
+
+[33mcommit ba49bb615a5f217690c01716512200177754de7a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Dec 4 04:00:25 2018 +0100
+
+    Sync of 2018_12_04-04_00_22
+
+[33mcommit 2d7bbb3157739c85c58bc616f4d437b9316886c8[m
+Author: Michaël Zasso <targos@protonmail.com>
+Date:   Sun Dec 2 14:42:37 2018 +0100
+
+    fix DiastereotopicAtomID and HoseCodeCreator
+
+[33mcommit e90ad32a6d6b554f8d4fbeb55b6966b12179065e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Dec 1 04:30:50 2018 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 98c7ea78cf924dad01ca7ee9e3be34b9a13d447c[m[33m ([m[1;33mtag: openchemlib-2018.12.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Dec 1 04:30:42 2018 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2018.12.0
+
+[33mcommit e927b4df32fc3298671e9b4d924c99cf39314629[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 28 04:00:23 2018 +0100
+
+    Sync of 2018_11_28-04_00_20
+
+[33mcommit 963c8a5885bd0557cefbefb4fffddc35abcb945c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 27 04:00:24 2018 +0100
+
+    Sync of 2018_11_27-04_00_21
+
+[33mcommit 8c89ba491c246ac27e404a736053a17f4f6ba416[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Nov 25 04:00:23 2018 +0100
+
+    Sync of 2018_11_25-04_00_21
+
+[33mcommit 67fdf01ba8c10199b3af70e3007d9058e18bb334[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Nov 23 04:00:26 2018 +0100
+
+    Sync of 2018_11_23-04_00_23
+
+[33mcommit de01c0d981db57a3b6016a03ed0d592007e6de62[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 22 04:00:25 2018 +0100
+
+    Sync of 2018_11_22-04_00_22
+
+[33mcommit bfafc532e209c2b159bacd3e1f76bc72116f2187[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 20 04:00:27 2018 +0100
+
+    Sync of 2018_11_20-04_00_25
+
+[33mcommit 12fa4e754ed68b44bf4daf27d9cb8e2ef81c0d04[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 13 16:42:21 2018 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 5208a025a9ab147a8acd1c88485e474bad21de55[m[33m ([m[1;33mtag: openchemlib-2018.11.1[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 13 16:42:10 2018 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2018.11.1
+
+[33mcommit 2312f9e65367cf7e5a95ee1f75489c8974aaed7c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 13 16:29:28 2018 +0100
+
+    Sync of 2018_11_13-16_29_26
+
+[33mcommit a6986bdde4cb6f7e6e2af3bde0016f2980e711ce[m
+Author: Roman Bär <roman.baer@idorsia.com>
+Date:   Tue Nov 13 16:28:19 2018 +0100
+
+    java source/target version set to 1.6
+
+[33mcommit 8115e4c6bf0bd69c72ee10d3d231b152d8fdf548[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 13 04:00:26 2018 +0100
+
+    Sync of 2018_11_13-04_00_23
+
+[33mcommit b9be3415a628c31e574028bcbfdd96ad8b1bee25[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Nov 10 04:00:28 2018 +0100
+
+    Sync of 2018_11_10-04_00_25
+
+[33mcommit 2cb3e6a4e634d3efd34af478237bb231b44d0850[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 8 04:00:27 2018 +0100
+
+    Sync of 2018_11_08-04_00_24
+
+[33mcommit be60121612e24a19f6e038d14901e19db4dfe6bc[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Nov 3 04:00:24 2018 +0100
+
+    Sync of 2018_11_03-04_00_20
+
+[33mcommit 87ae24f3730fcfae18405c5c6706c5216b9f492a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 1 04:30:48 2018 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 7a3937bdd721622a8196cfb806af4ec6e337b2e3[m[33m ([m[1;33mtag: openchemlib-2018.11.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 1 04:30:39 2018 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2018.11.0
+
+[33mcommit 05ef2702e9b26aa188cf4bff125333b70ddd8dc1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 27 04:00:25 2018 +0200
+
+    Sync of 2018_10_27-04_00_22
+
+[33mcommit 35df3f155fa63d5383fc0f835f66c61d4de87cbc[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Oct 26 04:00:25 2018 +0200
+
+    Sync of 2018_10_26-04_00_22
+
+[33mcommit b922da325a6c522453bd534c9908dd8d4598a1f2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Oct 23 04:00:24 2018 +0200
+
+    Sync of 2018_10_23-04_00_21
+
+[33mcommit 13a453da0f571110a0c1533ebc2b0f84d9f8f828[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Oct 22 10:44:47 2018 +0200
+
+    Sync of 2018_10_22-10_44_44
+
+[33mcommit b9f7f85d3b68c738da88db11d62d39e720a765b4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Oct 16 04:00:24 2018 +0200
+
+    Sync of 2018_10_16-04_00_21
+
+[33mcommit 53fad831f369382481f14ca70148af47e65a7bf0[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 13 04:00:25 2018 +0200
+
+    Sync of 2018_10_13-04_00_22
+
+[33mcommit beaa0d647672de025dfce11d8d53533bb1a347c9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Oct 1 04:30:50 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit ebda3e16200f01e303398529abe12e9b9edf2412[m[33m ([m[1;33mtag: openchemlib-2018.10.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Oct 1 04:30:42 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.10.0
+
+[33mcommit 01de813d3bf28dcc6402d187f1f7f475dcb93687[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Sep 24 10:58:14 2018 +0200
+
+    Sync of 2018_09_24-10_58_11
+
+[33mcommit 015be0d91257ab41baa2a6e7383ecf8bfb308b8f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Sep 19 09:00:41 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit c476cb2404847318daa7095b58416c47eb74711b[m[33m ([m[1;33mtag: openchemlib-2018.9.2[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Sep 19 09:00:32 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.9.2
+
+[33mcommit 83df4fc1fcb0d267ce1ecfb0be7ba4d11d460be7[m
+Author: Roman Bär <roman.baer@idorsia.com>
+Date:   Wed Sep 19 08:50:26 2018 +0200
+
+    Organisation corrected in pom.xml
+
+[33mcommit a447f41cc94769f2be7eaa95a85ed0325874abf5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Sep 18 04:00:26 2018 +0200
+
+    Sync of 2018_09_18-04_00_22
+
+[33mcommit 1bb567eb193891327be1fc90139cc01de635bf9c[m
+Author: Roman Bär <roman.baer@idorsia.com>
+Date:   Mon Sep 17 14:31:17 2018 +0200
+
+    Updated Developers in pom.xml
+
+[33mcommit 9e99ad5f6b7cbb4f694e5630efc8fd3e7b05879c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Sep 17 10:15:30 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit cdc3805c191b4a1ae2932ae568a09898b5e68071[m[33m ([m[1;33mtag: openchemlib-2018.9.1[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Sep 17 10:15:22 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.9.1
+
+[33mcommit 13d611b86ad06bed16fef7c93e4d563f1e1ce43f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Sep 14 04:00:26 2018 +0200
+
+    Sync of 2018_09_14-04_00_23
+
+[33mcommit c34a404f5ee142a53dd7a023604d1d0e2415ddb3[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Thu Sep 13 16:11:16 2018 +0200
+
+    Remove dir example
+
+[33mcommit 42d562b2e7c851096ff8f84b3260507925187c77[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Wed Sep 12 16:00:19 2018 +0200
+
+    update
+
+[33mcommit ba324875a4cb28a464e5cf32950c38f8a02d7fd1[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Wed Sep 12 15:49:27 2018 +0200
+
+    update
+
+[33mcommit 0544a51dccf2e2c100253c68be634dc802f9f443[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Wed Sep 12 15:49:06 2018 +0200
+
+    update
+
+[33mcommit fdedb7f051486a49c9efbab1af96365e53a7cc1f[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Wed Sep 12 15:43:34 2018 +0200
+
+    update
+
+[33mcommit 2daa7c63da636df324a673fc66f420dfd8bd6710[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Wed Sep 12 15:41:38 2018 +0200
+
+    example to examples
+
+[33mcommit ff7b76ca152c690462831f434c6f3b07e21d4486[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Wed Sep 12 15:39:26 2018 +0200
+
+    added example folder
+
+[33mcommit 2e734f23dc6f59b944298a0657aabd1f4b2fd581[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Tue Sep 11 15:57:03 2018 +0200
+
+    <?xml version="1.0" encoding="UTF-8"?><AbstractText Label="GRAPHICAL ABSTRACT" NlmCategory="UNASSIGNED"/>
+    update
+
+[33mcommit e808c9dc73d693c6c7c96d242df6f56bdf9bbfa9[m
+Author: korffmo1 <modest.korff@actelion.com>
+Date:   Tue Sep 11 14:17:47 2018 +0200
+
+    added fractal dimension calculation
+
+[33mcommit 246f2e3cc668eb6508af87f3e34822cb1dfa5b1f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Sep 11 04:00:54 2018 +0200
+
+    Sync of 2018_09_11-04_00_51
+
+[33mcommit 47852fe2b5bc79e05689689c7fe704f47d1b15d9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Sep 1 04:31:13 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit fd60fab56447dd5f87b705a480e6a0e13d5335aa[m[33m ([m[1;33mtag: openchemlib-2018.9.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Sep 1 04:31:02 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.9.0
+
+[33mcommit 4e7844bfafde9193eafffb34e80a4ed23fcf66e1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 30 04:00:54 2018 +0200
+
+    Sync of 2018_08_30-04_00_51
+
+[33mcommit 3cd5c134a6f2dcd9bf3e6ba9eb09205911021da4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 23 04:00:52 2018 +0200
+
+    Sync of 2018_08_23-04_00_49
+
+[33mcommit 72ee942c1e814c871c0d2ed3b8fc2b368930fff6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 21 04:00:51 2018 +0200
+
+    Sync of 2018_08_21-04_00_48
+
+[33mcommit 0c8f781b55f628d32d572c2120c6312c0fafe5ed[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 18 04:00:52 2018 +0200
+
+    Sync of 2018_08_18-04_00_49
+
+[33mcommit cc8633ae3a135c9da3e8337a5d64ce19532c35a1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 14 04:00:47 2018 +0200
+
+    Sync of 2018_08_14-04_00_44
+
+[33mcommit cc067add9698c0b69efe1db54b64a8f799be311d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 11 04:00:50 2018 +0200
+
+    Sync of 2018_08_11-04_00_47
+
+[33mcommit c0ed2076da966897b2fa85c516256c3dcb4ca3da[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Aug 10 04:00:48 2018 +0200
+
+    Sync of 2018_08_10-04_00_45
+
+[33mcommit 73fd753f7012cf8108a558ec8f7814d46b019c34[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 9 04:00:47 2018 +0200
+
+    Sync of 2018_08_09-04_00_44
+
+[33mcommit 0b5faea25aac0ee1625254d7dce4e1ad59971dc2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 7 04:00:51 2018 +0200
+
+    Sync of 2018_08_07-04_00_48
+
+[33mcommit ec0c9bf32445a7ffacf231a054f303b625a1eff1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 4 04:00:48 2018 +0200
+
+    Sync of 2018_08_04-04_00_45
+
+[33mcommit fb29448198f799905f8f8552ceecbe687a8abdcb[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Aug 1 04:31:10 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 02f146308be3b58b7a7d2b10818c1958d73350b2[m[33m ([m[1;33mtag: openchemlib-2018.8.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Aug 1 04:31:00 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.8.0
+
+[33mcommit 1485047e540a36de559cd31d743a0e538be3cbfc[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 13 15:25:40 2018 +0200
+
+    Sync of 2018_07_13-15_25_37
+
+[33mcommit 3a58c469096100cf4088266cbd390c2711e09c35[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Jul 1 04:30:41 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit b04aec49f03e3894c34721a82afbb49cb3a2d9f2[m[33m ([m[1;33mtag: openchemlib-2018.7.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Jul 1 04:30:34 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.7.0
+
+[33mcommit 5c3d243bbde41f11102bf990951898c345d9abbb[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Jun 25 07:23:30 2018 +0200
+
+    Sync of 2018_06_25-07_23_27
+
+[33mcommit 74a84e9e51a193978452272e5b69b54a9e27ddb2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 1 04:31:36 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit b1b54d03ebde82a117f89a6024a5cf94b663bb91[m[33m ([m[1;33mtag: openchemlib-2018.6.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 1 04:31:28 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.6.0
+
+[33mcommit 13cdf163b01045a621941ba108169c2e4a56d6e3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 1 04:31:22 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 5a881be9550c3f0eceb3a1b2da9daea7cc277a86[m[33m ([m[1;33mtag: openchemlib-2018.5.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 1 04:31:14 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.5.0
+
+[33mcommit f89d8cfa451306ceeb119184f76c8e8230bc59fe[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Apr 1 04:31:11 2018 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 9d3a0ff573c2364ae1636a44b5aa862d2866fd36[m[33m ([m[1;33mtag: openchemlib-2018.4.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Apr 1 04:31:02 2018 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2018.4.0
+
+[33mcommit 65e296c57f280ddd0052f4b4b33850727c1550e8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Mar 10 04:01:27 2018 +0100
+
+    Sync of 2018_03_10-04_01_19
+
+[33mcommit 0dc7bfb6a598f27d669781e493bec37b1d9a69de[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 9 04:01:09 2018 +0100
+
+    Sync of 2018_03_09-04_01_04
+
+[33mcommit 80fbe3790777fefc4a73eab953c40c55f53045e2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 1 04:31:43 2018 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit b6776dc6038224542757df43470e6780af45d25f[m[33m ([m[1;33mtag: openchemlib-2018.3.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 1 04:31:36 2018 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2018.3.0
+
+[33mcommit b574bf26571172fc83b4b94d69096f03337b94d2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 16 04:01:24 2018 +0100
+
+    Sync of 2018_02_16-04_01_19
+
+[33mcommit 6039367d3a332a726655f142db85948c042ac008[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 14 04:01:36 2018 +0100
+
+    Sync of 2018_02_14-04_01_33
+
+[33mcommit dae662d1d16b4f4db8f7d52d4f663b48598b430e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Feb 1 04:31:30 2018 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit f4fe74f626c14fa746ad24c0faebd7092c96add8[m[33m ([m[1;33mtag: openchemlib-2018.2.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Feb 1 04:31:24 2018 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2018.2.0
+
+[33mcommit ff799df280570ca6864fa086ce84dec917ea5e83[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jan 27 04:01:45 2018 +0100
+
+    Sync of 2018_01_27-04_01_42
+
+[33mcommit 18a15e66f8afbd237b27d930817bae835790dcec[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jan 19 04:01:35 2018 +0100
+
+    Sync of 2018_01_19-04_01_32
+
+[33mcommit 53d21d1be1eafcdbff78895b62009f9b2029b300[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jan 18 04:01:40 2018 +0100
+
+    Sync of 2018_01_18-04_01_37
+
+[33mcommit 576d09011bf3009ae926b927dbd51bcbc15468c7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jan 17 04:01:43 2018 +0100
+
+    Sync of 2018_01_17-04_01_34
+
+[33mcommit a38241862159c5501d5a0ef5989f0801bc8d6d55[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 16 04:01:46 2018 +0100
+
+    Sync of 2018_01_16-04_01_35
+
+[33mcommit 5bf31bba14231e9a19a29fd82568c0003a2f89c5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jan 12 04:01:36 2018 +0100
+
+    Sync of 2018_01_12-04_01_31
+
+[33mcommit 288a9661f3d4589114ac322052090c01c8cdae85[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 9 04:01:26 2018 +0100
+
+    Sync of 2018_01_09-04_01_21
+
+[33mcommit 731c88d359a99bf4afb19dc10202a59cc7412e32[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Jan 1 04:45:28 2018 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 0513ffbb7a07be15565cefa1b33a015466f019b2[m[33m ([m[1;33mtag: openchemlib-2018.1.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Jan 1 04:45:17 2018 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2018.1.0
+
+[33mcommit 12cbb7bcf3eeedbc4788d3091388630cbcf74209[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Dec 21 04:02:13 2017 +0100
+
+    Sync of 2017_12_21-04_02_09
+
+[33mcommit edcfe5269f96085a92fda5d0f74285408002513b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Dec 19 04:02:27 2017 +0100
+
+    Sync of 2017_12_19-04_02_23
+
+[33mcommit f9bf9b967e9dff31c45bad07749ca155d60d1b9c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 15 04:01:25 2017 +0100
+
+    Sync of 2017_12_15-04_01_21
+
+[33mcommit 20f8d7bcc07f8f338678b95a97494e8ac492a3a9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Dec 10 04:01:39 2017 +0100
+
+    Sync of 2017_12_10-04_01_27
+
+[33mcommit e6c703cff9abe692a33465406c84e80cc203cfeb[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 8 12:02:11 2017 +0100
+
+    Sync of 2017_12_08-12_02_08
+
+[33mcommit 8a236a3004301d9c7266b2fc0e9ab87e083529c5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 1 04:31:51 2017 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 889e054edde7e517f4f8a7fbb23a335011b0978c[m[33m ([m[1;33mtag: openchemlib-2017.12.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 1 04:31:45 2017 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2017.12.0
+
+[33mcommit 523819ee9fc47361fdca6109e676b0403084c024[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 30 04:01:49 2017 +0100
+
+    Sync of 2017_11_30-04_01_46
+
+[33mcommit 96b73ed894758efec9763c3772a413c24ee8bae8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Nov 27 09:31:06 2017 +0100
+
+    Sync of 2017_11_27-09_31_01
+
+[33mcommit 9a7326d7a73574e0166f6269af6fe346d416c411[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Nov 24 04:01:46 2017 +0100
+
+    Sync of 2017_11_24-04_01_43
+
+[33mcommit c1019182e8efa4dc2a34b2592bacc10eec0b0b2a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 22 04:01:02 2017 +0100
+
+    Sync of 2017_11_22-04_00_54
+
+[33mcommit e64a93a8ebc41eb66bdbaf4d5740811b46bf68ff[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 14 04:01:06 2017 +0100
+
+    Sync of 2017_11_14-04_01_01
+
+[33mcommit bdf26ec6c2f542d451fe1ec6ec2382e25226a792[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 1 04:31:17 2017 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit f8e15cf69b75afb280d1567993fc0b1e8477d1dd[m[33m ([m[1;33mtag: openchemlib-2017.11.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 1 04:31:10 2017 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2017.11.0
+
+[33mcommit 58f7f8bf3e559237c620c515a600aaa9596aa191[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 1 04:01:08 2017 +0100
+
+    Sync of 2017_11_01-04_01_04
+
+[33mcommit 31720602e67720032bf7d96072483095c4c8cfb9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Oct 27 04:01:03 2017 +0200
+
+    Sync of 2017_10_27-04_00_59
+
+[33mcommit 627294e3888a6a10328996543eccf5aeb8ddd9c2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 21 04:01:32 2017 +0200
+
+    Sync of 2017_10_21-04_01_28
+
+[33mcommit b7f40a2e71bfc71346ea17444e1b9377b8bc2a9b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Oct 20 04:00:56 2017 +0200
+
+    Sync of 2017_10_20-04_00_52
+
+[33mcommit f606c880c6778fadefe9dbb767affb22576a638a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Oct 17 04:00:57 2017 +0200
+
+    Sync of 2017_10_17-04_00_51
+
+[33mcommit 98f1893b47641cca72d594398bb5b3a6cfa04859[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Oct 1 04:31:10 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit f9e1e3bff9f560cb643453e8d789e776bb903de5[m[33m ([m[1;33mtag: openchemlib-2017.10.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Oct 1 04:31:03 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.10.0
+
+[33mcommit 713a6cbd682f5933dc920b873c785fdbad0636d6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Sep 30 04:00:59 2017 +0200
+
+    Sync of 2017_09_30-04_00_55
+
+[33mcommit 9805adcf4b57d38201db37f14708e72dbee7d8ab[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Sep 25 15:06:36 2017 +0200
+
+    Sync of 2017_09_25-15_06_33
+
+[33mcommit 71dbde98d49b1b4bbb9adea30bbd4d8f30011ff6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Sep 1 04:31:19 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit f8d7a11bec10e2c119f9a39053d742a9db2a5461[m[33m ([m[1;33mtag: openchemlib-2017.9.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Sep 1 04:31:13 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.9.0
+
+[33mcommit 531cb8bce17f7ef91b9510a6d17c6d933f2d6819[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 29 04:01:16 2017 +0200
+
+    Sync of 2017_08_29-04_01_13
+
+[33mcommit fb786a8e75c48d8d417e239565077690c8bc07de[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 24 04:01:01 2017 +0200
+
+    Sync of 2017_08_24-04_00_58
+
+[33mcommit 80dbabccbaa0a7868311a21797f85d9ec97b44b0[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 22 04:01:02 2017 +0200
+
+    Sync of 2017_08_22-04_00_58
+
+[33mcommit c6986ac675cf874d28c0b2d5516bc30e3a5c4253[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 19 04:01:57 2017 +0200
+
+    Sync of 2017_08_19-04_01_53
+
+[33mcommit 435975a91dd12bab478f5932e2ad978b1276adc6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Aug 11 04:01:24 2017 +0200
+
+    Sync of 2017_08_11-04_01_21
+
+[33mcommit f165d070dd90e9b0c67a85af9470962b09785cd9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 5 04:01:33 2017 +0200
+
+    Sync of 2017_08_05-04_01_30
+
+[33mcommit 9c59ca957d60955576476d9394c7844cad87c51b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Aug 4 04:01:29 2017 +0200
+
+    Sync of 2017_08_04-04_01_26
+
+[33mcommit 4ca0099ceaa5e01c7c60146fd0d275b4342c2754[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 3 04:01:25 2017 +0200
+
+    Sync of 2017_08_03-04_01_22
+
+[33mcommit 1fc2ceba3a46552c1aef2dfe35f2d7e845523514[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 1 04:31:06 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 1ecdbe1b71e1ca39df2ce4fc1699dc99164e25a6[m[33m ([m[1;33mtag: openchemlib-2017.8.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 1 04:30:59 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.8.0
+
+[33mcommit 19d0b483847ec6b213220bb0cacd08607272d29f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 28 04:00:59 2017 +0200
+
+    Sync of 2017_07_28-04_00_55
+
+[33mcommit 9ff62b016acb8692ff0f4b9ae8694b57b04f32d0[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 27 04:00:51 2017 +0200
+
+    Sync of 2017_07_27-04_00_45
+
+[33mcommit 680e4f22feb48f7150000aaa3e0ae1a9124b4f4d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 13 04:00:54 2017 +0200
+
+    Sync of 2017_07_13-04_00_51
+
+[33mcommit c9380fd4305433bc9de23117fed9a4c8121a4702[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 7 04:00:50 2017 +0200
+
+    Sync of 2017_07_07-04_00_45
+
+[33mcommit ada51b7e72e6d9e43b6d4c7bf4a9a4da411f9185[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 6 04:00:58 2017 +0200
+
+    Sync of 2017_07_06-04_00_55
+
+[33mcommit f96860ef350348487b47f061e6aeeb1dc256880e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jul 1 04:31:15 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 919b64eafc3ffb9b9b5e612de8117131f64ccdb7[m[33m ([m[1;33mtag: openchemlib-2017.7.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jul 1 04:31:09 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.7.0
+
+[33mcommit 34cbb67429e767eb09de0fde07101f6bfe7dd030[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 30 04:00:54 2017 +0200
+
+    Sync of 2017_06_30-04_00_49
+
+[33mcommit 415f449eecb61e6dcb4a50f4113655d0e8031a6a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 28 04:00:56 2017 +0200
+
+    Sync of 2017_06_28-04_00_53
+
+[33mcommit 5d21804e0b1cf1cab2e2fb346712d37903edfc21[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 23 04:00:49 2017 +0200
+
+    Sync of 2017_06_23-04_00_44
+
+[33mcommit b83f254ac13198a1ce12abad1a018171a7f6a5f6[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 21 04:00:47 2017 +0200
+
+    Sync of 2017_06_21-04_00_44
+
+[33mcommit 011c6931fe109556383d755044cfbe51541c26ac[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jun 10 04:01:03 2017 +0200
+
+    Sync of 2017_06_10-04_00_52
+
+[33mcommit 7cfdb431c35003ce7b89b4164d4303a2f022fc7e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 9 04:00:49 2017 +0200
+
+    Sync of 2017_06_09-04_00_45
+
+[33mcommit 083f0b204b732bec5e74ae3ec8d4e1618e5a28ba[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 2 04:00:53 2017 +0200
+
+    Sync of 2017_06_02-04_00_50
+
+[33mcommit 1f1deec206f99d88581d691c8fa4f328aa6e9ff8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jun 1 04:31:05 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit ec2ac4f66f2137ec048386af9b1aad9663b85dc2[m[33m ([m[1;33mtag: openchemlib-2017.6.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jun 1 04:30:57 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.6.0
+
+[33mcommit 9141dc91a0dfd60fb81af0dd09d2c599cbefaf46[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed May 24 04:00:58 2017 +0200
+
+    Sync of 2017_05_24-04_00_48
+
+[33mcommit b8c0e489a87c8604e618c9a96b3da12ffdfa8dcf[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed May 17 04:00:52 2017 +0200
+
+    Sync of 2017_05_17-04_00_49
+
+[33mcommit c84e26aeb4b1a65bd0cceb47255d8b44cdbc432e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 16 04:01:04 2017 +0200
+
+    Sync of 2017_05_16-04_01_00
+
+[33mcommit ccab815cabc50603ee860ed52a5eef522b490d5d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat May 13 04:01:33 2017 +0200
+
+    Sync of 2017_05_13-04_01_29
+
+[33mcommit fff586648969575164d83957732aee108b58f4d7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 11 04:00:49 2017 +0200
+
+    Sync of 2017_05_11-04_00_45
+
+[33mcommit 495375f1c54316edc97d8b1f3848e1a1e324a7a4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 9 04:00:52 2017 +0200
+
+    Sync of 2017_05_09-04_00_48
+
+[33mcommit 241f3cd7fee321b7ed5fd92490cd6fb56a91b4bf[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed May 3 04:00:57 2017 +0200
+
+    Sync of 2017_05_03-04_00_48
+
+[33mcommit 09be4515a92beab5466ff92001b55597091ee47f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon May 1 04:31:13 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 195df0907250d1a69454d45790ce1f289e97797c[m[33m ([m[1;33mtag: openchemlib-2017.5.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon May 1 04:31:02 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.5.0
+
+[33mcommit 4018905d48829506e0dd51d17f49728ff1ac110a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Apr 28 04:00:51 2017 +0200
+
+    Sync of 2017_04_28-04_00_47
+
+[33mcommit 2c147663e6337d299af0ad7f2bb568db909444a2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Apr 25 04:00:47 2017 +0200
+
+    Sync of 2017_04_25-04_00_43
+
+[33mcommit f3a9cac9545bcf7d1ca926dc2546a7bf8c7b5162[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Apr 22 04:01:34 2017 +0200
+
+    Sync of 2017_04_22-04_01_31
+
+[33mcommit 6a83f87af7fe291b32a4cd47ea9947ab03a39eb7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 20 04:00:44 2017 +0200
+
+    Sync of 2017_04_20-04_00_41
+
+[33mcommit 4ec4a9c132addc6792bac9f65bba377e8924651c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Apr 1 04:31:14 2017 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 3b7339042607e32a8695b88cc87391612b049a55[m[33m ([m[1;33mtag: openchemlib-2017.4.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Apr 1 04:31:05 2017 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2017.4.0
+
+[33mcommit d507d4df615b9c319ad4c3910251365cb788d029[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 24 04:00:51 2017 +0100
+
+    Sync of 2017_03_24-04_00_48
+
+[33mcommit 5f6c9372d47b9ebc9eac6fbdf888a0f07befcd98[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 23 04:00:50 2017 +0100
+
+    Sync of 2017_03_23-04_00_47
+
+[33mcommit b60430c492b28128221ed259a3dc1cd43dd582a5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Mar 20 04:00:49 2017 +0100
+
+    Sync of 2017_03_20-04_00_42
+
+[33mcommit 986b90d1917602165e2350c48c8bbe7c212094bf[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 17 04:00:41 2017 +0100
+
+    Sync of 2017_03_17-04_00_37
+
+[33mcommit 9232a9911dac6ba6cf686aa73ad3b66faf2cc394[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 3 04:00:44 2017 +0100
+
+    Sync of 2017_03_03-04_00_41
+
+[33mcommit 0c7071e7456062310964473d24049c93b599637f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 2 04:00:52 2017 +0100
+
+    Sync of 2017_03_02-04_00_48
+
+[33mcommit 71c24fcd00cfcb4c8b28f6300381b02fe9e2993e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Mar 1 04:31:12 2017 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 6fc89a9ce59e78a71f3108a5c90c5c030a737f46[m[33m ([m[1;33mtag: openchemlib-2017.3.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Mar 1 04:31:01 2017 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2017.3.0
+
+[33mcommit afe8cb064e1728ea941fcaf2b30e3ac594f49371[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Feb 25 04:00:57 2017 +0100
+
+    Sync of 2017_02_25-04_00_48
+
+[33mcommit 8b65199c9c00d80d2ed573b9c601bacae381c7b4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 17 04:00:50 2017 +0100
+
+    Sync of 2017_02_17-04_00_46
+
+[33mcommit 4671a0e28f6b25bc82e826f349ab2c0f29965eb7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Feb 16 04:00:48 2017 +0100
+
+    Sync of 2017_02_16-04_00_45
+
+[33mcommit 037b352427fb8e8bbf1fb36bb445ca5b82f4764a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 15 04:00:47 2017 +0100
+
+    Sync of 2017_02_15-04_00_44
+
+[33mcommit 28ef98c70b4e5853123b7c41fb9a915f5c39b221[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Feb 10 04:00:46 2017 +0100
+
+    Sync of 2017_02_10-04_00_43
+
+[33mcommit d9605afdbf9b6bcc9105cc303645c131730e96f8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 8 10:57:45 2017 +0100
+
+    Sync of 2017_02_08-10_57_42
+
+[33mcommit 83d2036b3611cfc0ded2fd3c522982aaa37f2a24[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 8 04:00:44 2017 +0100
+
+    Sync of 2017_02_08-04_00_41
+
+[33mcommit 930d0f7e4d86c7a13fd34ae414757085eed34f4d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Feb 7 04:00:51 2017 +0100
+
+    Sync of 2017_02_07-04_00_42
+
+[33mcommit aeaa326f7fc30aabcb6738093fa29ad69ae098f4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 1 04:31:08 2017 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit e7f37e6f7922df7aa8352b59bccc74378c2a57fc[m[33m ([m[1;33mtag: openchemlib-2017.2.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 1 04:30:57 2017 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2017.2.0
+
+[33mcommit e9db21edcf8f907bcadbf83184f84929e10ff7b2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jan 28 04:00:52 2017 +0100
+
+    Sync of 2017_01_28-04_00_45
+
+[33mcommit 0befe339465b3d751aa7c0f7236d95a14e0a8900[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jan 24 04:00:46 2017 +0100
+
+    Sync of 2017_01_24-04_00_43
+
+[33mcommit 25716b28d2679feebce5d721b7481a773bdc861a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Jan 1 04:31:07 2017 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 6919fc69f12fc37732a7d1825475a1673a9104ef[m[33m ([m[1;33mtag: openchemlib-2017.1.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Jan 1 04:30:57 2017 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2017.1.0
+
+[33mcommit dc278fffc08b3d2e9926975692ddb5e246f13ec0[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Dec 22 04:00:39 2016 +0100
+
+    Sync of 2016_12_22-04_00_36
+
+[33mcommit 623323e15c01272e792105361a733935fca496d4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Dec 9 04:00:44 2016 +0100
+
+    Sync of 2016_12_09-04_00_41
+
+[33mcommit 20215f8f5da6c45216e1274a18be047d6019e960[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Dec 1 04:31:10 2016 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 4c284b6aa4e769c0342b37ec663c593c7421251b[m[33m ([m[1;33mtag: openchemlib-2016.12.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Dec 1 04:31:02 2016 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2016.12.0
+
+[33mcommit cc4c0a47b6e89c0f01fd9bf505a2ad09091fedc4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 29 04:00:48 2016 +0100
+
+    Sync of 2016_11_29-04_00_44
+
+[33mcommit 19563dad64282a7afaa2831d255bf1aeb9da29ea[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 24 04:00:50 2016 +0100
+
+    Sync of 2016_11_24-04_00_41
+
+[33mcommit 6153766754be936c692cc337b0c4495ebe67292a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 23 04:00:45 2016 +0100
+
+    Sync of 2016_11_23-04_00_41
+
+[33mcommit ce7bccbdd6e8b1e1beb9adec39b9182407e8f9ea[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 22 04:00:47 2016 +0100
+
+    Sync of 2016_11_22-04_00_44
+
+[33mcommit ce21c6b9bf057616e8854a889cbfe4469be7c10b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Nov 18 04:00:46 2016 +0100
+
+    Sync of 2016_11_18-04_00_43
+
+[33mcommit 95ffd1ba8bb2424897d299a0046b8c44469e8583[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 17 15:19:16 2016 +0100
+
+    Sync of 2016_11_17-15_19_12
+
+[33mcommit e40b76596b7418f7e6293c22335ebd9a6079cfba[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 17 14:45:52 2016 +0100
+
+    Sync of 2016_11_17-14_45_49
+
+[33mcommit 5c2081478934f7d3b5eff16a5178ea4f9732a881[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 17 04:00:48 2016 +0100
+
+    Sync of 2016_11_17-04_00_45
+
+[33mcommit a15eaed83c6add93689e41c052dd26863344b710[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Nov 13 04:00:39 2016 +0100
+
+    Sync of 2016_11_13-04_00_36
+
+[33mcommit 5f4fd19773307cf589942183ef8f6dab157bfa3e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Nov 11 04:00:46 2016 +0100
+
+    Sync of 2016_11_11-04_00_43
+
+[33mcommit 01117292db36087e19a2f279c3b62bab1036a375[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 10 04:00:40 2016 +0100
+
+    Sync of 2016_11_10-04_00_35
+
+[33mcommit 630d08445e46656317c41d7adf4d63ba5b693a3e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Nov 9 04:00:53 2016 +0100
+
+    Sync of 2016_11_09-04_00_45
+
+[33mcommit c5e3279d945d9d9ef6aba6cbbb5e50aeac105551[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 8 04:00:37 2016 +0100
+
+    Sync of 2016_11_08-04_00_33
+
+[33mcommit 2e2f576070bc9f3c1c30eafba9fc96bbe124ca78[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Nov 7 04:00:41 2016 +0100
+
+    Sync of 2016_11_07-04_00_37
+
+[33mcommit 7175e7c60291fc9fe8c00395a64b1b7b0e5ba867[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun Nov 6 04:00:42 2016 +0100
+
+    Sync of 2016_11_06-04_00_36
+
+[33mcommit efe060f77bef726bf04df276119457e04e30059c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Nov 5 04:01:16 2016 +0100
+
+    Sync of 2016_11_05-04_00_54
+
+[33mcommit 4ba09354cedd08106c81a75066da80d2014810c4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Nov 3 04:00:52 2016 +0100
+
+    Sync of 2016_11_03-04_00_44
+
+[33mcommit 438d067f8f924e93ce4ee09fe6bd47e68d2d022c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 1 14:21:54 2016 +0100
+
+    Sync of 2016_11_01-14_21_50
+
+[33mcommit 37852b4ed98fc03bdd3f2501e024a0f706a18cfc[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 1 04:31:10 2016 +0100
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit ec509e127ec3bbc3af1383010ca70ad534f90698[m[33m ([m[1;33mtag: openchemlib-2016.11.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Nov 1 04:31:02 2016 +0100
+
+    [maven-release-plugin] prepare release openchemlib-2016.11.0
+
+[33mcommit 56725e1332562fd2c1dd765d8fe34a09eb25c5d1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Oct 28 04:00:42 2016 +0200
+
+    Sync of 2016_10_28-04_00_38
+
+[33mcommit 9a494bd5d0e641b954cf7cae29cc2d6f67f70d07[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Oct 25 04:00:51 2016 +0200
+
+    Sync of 2016_10_25-04_00_46
+
+[33mcommit 8907809699eb80a99b42abac972a2b711ec4019f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Oct 24 04:00:44 2016 +0200
+
+    Sync of 2016_10_24-04_00_41
+
+[33mcommit 703833e4d8c5bc0628cf14efca2a944271fbe383[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 22 04:00:51 2016 +0200
+
+    Sync of 2016_10_22-04_00_47
+
+[33mcommit 59ba85463543feb06c82a38fe63248b51d835e1e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Oct 21 04:00:45 2016 +0200
+
+    Sync of 2016_10_21-04_00_41
+
+[33mcommit 6c8ec6d707b220e9ff9b9997d9b002e96b4ada64[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Oct 20 04:00:54 2016 +0200
+
+    Sync of 2016_10_20-04_00_50
+
+[33mcommit b5d4fbf0819951bb90deeca1982c03791a87e13e[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Oct 18 04:00:48 2016 +0200
+
+    Sync of 2016_10_18-04_00_45
+
+[33mcommit a5fd10ee798a00ce7dd276dadbb5fcbde1e123b1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 8 04:00:42 2016 +0200
+
+    Sync of 2016_10_08-04_00_39
+
+[33mcommit 3f1120a4c6a740f94c70745d139849ab25be9b6d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Oct 6 04:00:43 2016 +0200
+
+    Sync of 2016_10_06-04_00_38
+
+[33mcommit a22340c91c0a0f8644777bf6429596a8aa0a2569[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Oct 5 09:43:14 2016 +0200
+
+    Sync of 2016_10_05-09_43_05
+
+[33mcommit 80d071afc979f6eb4497465ed11b7e2c343e8064[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 1 04:31:16 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 25db6cbe8321eb85f3752a776356d3bc7c0eebe3[m[33m ([m[1;33mtag: openchemlib-2016.10.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Oct 1 04:31:09 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.10.0
+
+[33mcommit 66df3280802fba137aced9cdcf2e93d44ae05fd2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Sep 29 04:00:41 2016 +0200
+
+    Sync of 2016_09_29-04_00_38
+
+[33mcommit 61d98e7f9a71e77d3949265599de655daadb192b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Sep 24 04:00:45 2016 +0200
+
+    Sync of 2016_09_24-04_00_41
+
+[33mcommit 4633da5f2bfc3fbd59e2e01897c42d7be2b22b2d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Sep 17 04:00:48 2016 +0200
+
+    Sync of 2016_09_17-04_00_42
+
+[33mcommit da5f76ec4bf56576c1410dbe3bf3a34c44041330[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Sep 15 04:00:40 2016 +0200
+
+    Sync of 2016_09_15-04_00_37
+
+[33mcommit 52673a946c86928d4f95437d5dba5926c16a441c[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Sep 9 04:00:46 2016 +0200
+
+    Sync of 2016_09_09-04_00_42
+
+[33mcommit 1716390cf99b5bff3db09b85115284cb8ba1eee8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Sep 8 04:00:44 2016 +0200
+
+    Sync of 2016_09_08-04_00_39
+
+[33mcommit aec5fff8146fbe3290fc28fd0262292767e4e159[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Sep 3 04:00:56 2016 +0200
+
+    Sync of 2016_09_03-04_00_51
+
+[33mcommit d5ff8fd4378508317e7fad8f037c81c45fd9fa4f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Sep 2 04:00:55 2016 +0200
+
+    Sync of 2016_09_02-04_00_50
+
+[33mcommit 1ca2ef8f2a87b45996f0482954ecb98d6b10c680[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Sep 1 04:31:28 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 0d5177ca60326001ffaaa4567f27cc1b014107a3[m[33m ([m[1;33mtag: openchemlib-2016.9.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Sep 1 04:31:21 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.9.0
+
+[33mcommit d0e283a86c7fe1ba9933b54a27ca28518fdb4b92[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 27 04:00:49 2016 +0200
+
+    Sync of 2016_08_27-04_00_43
+
+[33mcommit 231d1055966dc14cccabd0f9c562a0892466188a[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Fri Aug 26 13:51:30 2016 +0200
+
+    Minor change in pom
+
+[33mcommit 902cf71db3b0803bcf107f49df7ba91087f480e1[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Aug 26 13:40:46 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit f970b52e7c734af432ae65e7123f5c644af00269[m[33m ([m[1;33mtag: openchemlib-2016.8.1[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Aug 26 13:40:39 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.8.1
+
+[33mcommit 528448f5fd89dc4d63ce311e5bd5836698c5b651[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Fri Aug 26 13:38:19 2016 +0200
+
+    Added version to maifest
+
+[33mcommit e121ee4c5038d90d94235ddd02a9c648b5b171ba[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 25 04:00:56 2016 +0200
+
+    Sync of 2016_08_25-04_00_49
+
+[33mcommit 2e6f87220dd428268d744b90de36a80eb547f4ae[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 23 04:00:41 2016 +0200
+
+    Sync of 2016_08_23-04_00_38
+
+[33mcommit 1cfdd36f89a5cd61dbf60b3900c1d05b0cd7c911[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 18 04:00:47 2016 +0200
+
+    Sync of 2016_08_18-04_00_42
+
+[33mcommit e0d94655961dfa1e184395b94328ba5d07869375[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Aug 16 04:00:55 2016 +0200
+
+    Sync of 2016_08_16-04_00_51
+
+[33mcommit e8633f705629afb8095373292b77710f85c336f9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Aug 13 04:01:05 2016 +0200
+
+    Sync of 2016_08_13-04_00_59
+
+[33mcommit 2dd370e9980e1702975b59b1afe39d0b0d97a8b8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Aug 12 04:00:58 2016 +0200
+
+    Sync of 2016_08_12-04_00_53
+
+[33mcommit 3d714a9261cae7f838b722390f260ea8fff8d02d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Aug 4 04:01:01 2016 +0200
+
+    Sync of 2016_08_04-04_00_56
+
+[33mcommit a33cc8103d8815c8e084ecf25fb8d8d3efd18c07[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Aug 1 04:31:45 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 96fef2738e3b19ab2c81b074fbf6c65a7eb2e95a[m[33m ([m[1;33mtag: openchemlib-2016.8.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Aug 1 04:31:39 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.8.0
+
+[33mcommit 243d0ee1c8ca4202e93263ad9e98d6116e7738a9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 21 04:02:46 2016 +0200
+
+    Sync of 2016_07_21-04_02_41
+
+[33mcommit 243a8aa9cfff3bd574a8b831c10a9671cf191a57[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jul 16 04:02:05 2016 +0200
+
+    Sync of 2016_07_16-04_02_00
+
+[33mcommit 185283faea19316b054b5ca0012d1645f4a6bab2[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 15 04:01:25 2016 +0200
+
+    Sync of 2016_07_15-04_01_18
+
+[33mcommit 2740b230468b8f05cec347a5d1a26b5b0ba0cea9[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 14 04:00:53 2016 +0200
+
+    Sync of 2016_07_14-04_00_47
+
+[33mcommit ea096627787b1420f2a5f0e155dc67c030cc3d4b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jul 13 04:00:54 2016 +0200
+
+    Sync of 2016_07_13-04_00_49
+
+[33mcommit 81efbb291659d55904f01d62c44b118cee0ae761[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jul 12 04:01:20 2016 +0200
+
+    Sync of 2016_07_12-04_01_14
+
+[33mcommit 9bcb6777973d995118faa044fe76c13f7a233340[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 8 04:01:45 2016 +0200
+
+    Sync of 2016_07_08-04_01_41
+
+[33mcommit 8aa778c946826ad7cc0a0f0b731fb282c405897f[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jul 7 04:02:34 2016 +0200
+
+    Sync of 2016_07_07-04_02_00
+
+[33mcommit aad029b077fa84ee06fb9146fee662af4cc5b1fe[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jul 2 04:01:23 2016 +0200
+
+    Sync of 2016_07_02-04_00_57
+
+[33mcommit 419b4fca08bde4436d85b2e45416c7d869af9371[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 1 04:32:03 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 34c4b756dae0ab17895c6888d6a53a12b06834e0[m[33m ([m[1;33mtag: openchemlib-2016.7.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 1 04:31:56 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.7.0
+
+[33mcommit 401e30ba7a91f0ce6e21d1459c8a6f40c093206b[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jul 1 04:01:08 2016 +0200
+
+    Sync of 2016_07_01-04_01_03
+
+[33mcommit be2e82158d9d98c6a10bb6ff8c2aa00f2caa0dc4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jun 28 04:00:54 2016 +0200
+
+    Sync of 2016_06_28-04_00_49
+
+[33mcommit 70d6853ba4af9d031da36abb75bce34e0cd2f1b7[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Mon Jun 27 04:00:54 2016 +0200
+
+    Sync of 2016_06_27-04_00_50
+
+[33mcommit f137b2370b594434eee271fbeb3df60f64410bab[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jun 25 04:00:43 2016 +0200
+
+    Sync of 2016_06_25-04_00_39
+
+[33mcommit d28f4a83e1ad5eef86d5edd55835971af846c2c3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jun 23 04:01:48 2016 +0200
+
+    Sync of 2016_06_23-04_01_19
+
+[33mcommit 5e8342ce4d615daed10f3d4be01f8d0421078680[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 22 04:00:47 2016 +0200
+
+    Sync of 2016_06_22-04_00_42
+
+[33mcommit c782711797d2b00751830a3020a906c2dab6337d[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jun 21 04:00:47 2016 +0200
+
+    Sync of 2016_06_21-04_00_43
+
+[33mcommit 6eed6d105d91b3ae6ebdbd75088007f358c63dfa[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jun 18 04:00:47 2016 +0200
+
+    Sync of 2016_06_18-04_00_43
+
+[33mcommit 5684f3881dd1364461b6e36e988827c7322178ee[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Jun 17 04:00:48 2016 +0200
+
+    Sync of 2016_06_17-04_00_44
+
+[33mcommit af850cdf05ade9b42be265fb20d7d1b4f15ef2ff[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Jun 16 04:00:45 2016 +0200
+
+    Sync of 2016_06_16-04_00_42
+
+[33mcommit f18cca41c401e921383749119c235879b3d530be[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 15 04:00:44 2016 +0200
+
+    Sync of 2016_06_15-04_00_40
+
+[33mcommit f54a8bf05cc2c104319b53ff682fbc8a147729c8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jun 14 04:00:49 2016 +0200
+
+    Sync of 2016_06_14-04_00_45
+
+[33mcommit 14db163ee1e13710a56951d1dcc12a23a1fcac31[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Jun 11 04:00:43 2016 +0200
+
+    Sync of 2016_06_11-04_00_40
+
+[33mcommit 435cdb7899c778bff26593262eacbba996d8bbb4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Jun 7 04:00:40 2016 +0200
+
+    Sync of 2016_06_07-04_00_37
+
+[33mcommit 4715526c70a07141e7c42a98fb0919290cb51f90[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 1 04:31:15 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 96b1a4493902dcc041fa39c20d41079b4b97a322[m[33m ([m[1;33mtag: openchemlib-2016.6.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 1 04:31:09 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.6.0
+
+[33mcommit 3a1fdb386573264f973244da446fb5b9f924a2b3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Jun 1 04:00:39 2016 +0200
+
+    Sync of 2016_06_01-04_00_35
+
+[33mcommit 50cef8d11ed05100d651a6d2ba702d38999fe7e4[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun May 29 04:00:38 2016 +0200
+
+    Sync of 2016_05_29-04_00_34
+
+[33mcommit 0063a9f0682c1fb32f92db0ae1e76122661a2da8[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 27 04:00:39 2016 +0200
+
+    Sync of 2016_05_27-04_00_34
+
+[33mcommit ac724ea9ec0d62c31c39c90a4289180f4ebb2dd0[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 26 04:00:42 2016 +0200
+
+    Sync of 2016_05_26-04_00_38
+
+[33mcommit bfddddb7c826d7ad050bd01e827426a17c390b47[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 17 04:00:40 2016 +0200
+
+    Sync of 2016_05_17-04_00_36
+
+[33mcommit 446e261683296c5458e859c0815f21cbcc20b429[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun May 15 04:00:38 2016 +0200
+
+    Sync of 2016_05_15-04_00_35
+
+[33mcommit 496efa727001bbaa723e0602da3a0a3e3df827a5[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat May 14 04:00:41 2016 +0200
+
+    Sync of 2016_05_14-04_00_38
+
+[33mcommit 41f472ea08b8f28f0adfa84f83318139af5e4c05[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri May 13 04:00:38 2016 +0200
+
+    Sync of 2016_05_13-04_00_34
+
+[33mcommit ae4be542c78d5a41129147c72cba81e98625a110[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu May 12 04:00:48 2016 +0200
+
+    Sync of 2016_05_12-04_00_44
+
+[33mcommit bc267bb96267ef3678e9c85596803821b600b790[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 10 04:00:42 2016 +0200
+
+    Sync of 2016_05_10-04_00_37
+
+[33mcommit 92da1b0b4671bdabec18e73aa7dc5ad8053e8ad3[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue May 3 04:00:43 2016 +0200
+
+    Sync of 2016_05_03-04_00_40
+
+[33mcommit a284601a00036d933233c3a0b47923d421bfca77[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun May 1 04:31:10 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 2855e26f989752b072b6068a8f6f0e01bcae0f1d[m[33m ([m[1;33mtag: openchemlib-2016.5.0[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sun May 1 04:31:04 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.5.0
+
+[33mcommit 331b2dd61dead78a042990893bec1444f0fd990a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Apr 27 04:00:40 2016 +0200
+
+    Sync of 2016_04_27-04_00_36
+
+[33mcommit df75c39206f149fd711bb46c0de42af8fad40736[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Apr 23 04:00:40 2016 +0200
+
+    Sync of 2016_04_23-04_00_36
+
+[33mcommit a76fd95207f24228ee33d922a32dd970a422ce28[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 21 15:48:10 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit b27b36ffd3a24e3c0176f8abc5fdb61f56911194[m[33m ([m[1;33mtag: openchemlib-2016.4.1[m[33m)[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 21 15:48:03 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.4.1
+
+[33mcommit 7570461ae93db119c47a2a8b9cbc094631e1475e[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Thu Apr 21 15:40:24 2016 +0200
+
+    Disabled doclint in javadoc generation (for Java 8)
+
+[33mcommit 2f17058fd87bfc6ae9eda610101bb4af857ce187[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Apr 21 13:59:55 2016 +0200
+
+    Sync of 2016_04_21-13_59_50
+
+[33mcommit eecf2b857fadba7e73740961524534bf90c738db[m
+Merge: 5f4c985 26bb565
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Wed Apr 20 09:43:27 2016 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 5f4c985fa136f2d46793c68a2021bc98837b429b[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Wed Apr 20 09:43:17 2016 +0200
+
+    Activated auto release to Maven Central
+
+[33mcommit 26bb5657a347be0bc133ee7598ac8c6026f29da5[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Wed Apr 20 08:52:02 2016 +0200
+
+    [maven-release-plugin] prepare for next development iteration
+
+[33mcommit 4bb6f344008ee694a778e08e84f47fc20498920a[m[33m ([m[1;33mtag: openchemlib-2016.4.0[m[33m)[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Wed Apr 20 08:51:56 2016 +0200
+
+    [maven-release-plugin] prepare release openchemlib-2016.4.0
+
+[33mcommit 5a82605fe025d7ee8a0e43e3011d6b57573dad71[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Apr 20 04:00:43 2016 +0200
+
+    Sync of 2016_04_20-04_00_38
+
+[33mcommit 2a6b7e3d3114de8ef0352c261f3f02ec68e1848a[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Tue Apr 19 18:12:46 2016 +0200
+
+    Added developers
+
+[33mcommit bae707f6059d61c9c9d23a95b4c4d9e9648ad745[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Tue Apr 19 17:48:27 2016 +0200
+
+    Minor changes
+
+[33mcommit ad46051ad5567e27f5ea882b716ddae30695c039[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Tue Apr 19 04:00:43 2016 +0200
+
+    Sync of 2016_04_19-04_00_39
+
+[33mcommit 51057a840f3fa15c08ecb6a225995bf2c1da1370[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Mon Apr 18 14:43:26 2016 +0200
+
+    Changes for new (maven compliant) project structure
+
+[33mcommit 1f049dc93bfad507fae7ba425a86b95c5da932ca[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Sat Apr 16 04:00:44 2016 +0200
+
+    Sync of 2016_04_16-04_00_40
+
+[33mcommit ce0e36d6ed6abca926b060871afcd0746c4b6787[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Apr 15 04:00:39 2016 +0200
+
+    Sync of 2016_04_15-04_00_35
+
+[33mcommit 6e2ddcc49a7744e1a224ff71b714352414727242[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Mar 30 04:00:40 2016 +0200
+
+    Sync of 2016_03_30-04_00_36
+
+[33mcommit 8c1a71bfcc0c79ca44714da8a41f669b81f3853a[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 4 14:45:41 2016 +0100
+
+    Sync of 2016_03_04-14_45_30
+
+[33mcommit 61e8232c1fd7db0bd13550cde34c0ef75710a869[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Fri Mar 4 04:00:39 2016 +0100
+
+    Sync of 2016_03_04-04_00_35
+
+[33mcommit 1515faf6d12fec19b65c3e0f05205b0a04885e39[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Thu Mar 3 04:00:39 2016 +0100
+
+    Sync of 2016_03_03-04_00_35
+
+[33mcommit 996fd8143787ce0a8006a58eb898b58182f8d702[m
+Author: Bamboo <bamboo@chiron.actelion.com>
+Date:   Wed Feb 24 04:00:33 2016 +0100
+
+    Sync of 2016_02_24-04_00_30
+
+[33mcommit 2c2973283097a32e30023f0800f12d500dd3d52d[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Fri Jan 29 04:00:38 2016 +0100
+
+    Sync of 2016_01_29-04_00_33
+
+[33mcommit 70210ffd4c5d735749886eb90f0f25833b081608[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Fri Jan 22 04:00:41 2016 +0100
+
+    Sync of 2016_01_22-04_00_38
+
+[33mcommit e5ef564b7e273f8d887787349b1299a2b5592acc[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Fri Jan 8 09:04:06 2016 +0100
+
+    Sync of 2016_01_08-09_04_02
+
+[33mcommit 2cc6552f3bc0b8eccf54baffffd6e92e00382d26[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Tue Dec 15 04:00:38 2015 +0100
+
+    Sync of 2015_12_15-04_00_34
+
+[33mcommit 683fa67cb3bb25a5197bdb571cce7a5410cc3884[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Mon Dec 14 04:00:40 2015 +0100
+
+    Sync of 2015_12_14-04_00_36
+
+[33mcommit 2afac2052d749ebb1d4ff393f3f8db93add2f55e[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Thu Dec 10 13:55:48 2015 +0100
+
+    Sync of 2015_12_10-13_55_45
+
+[33mcommit 5f974135a8c288259645ab303bce76618f5679e6[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Sat Nov 28 04:01:38 2015 +0100
+
+    Sync of 2015_11_28-04_01_34
+
+[33mcommit 3b7d97e5aa47597c3117c879b18d1f32b3a1e323[m
+Author: Bamboo <roman.baer@actelion.com>
+Date:   Wed Nov 25 15:42:48 2015 +0100
+
+    Sync of 2015_11_25-15_42_42
+
+[33mcommit a7280a9067a6ca938511e367c8f7b86342334f5c[m
+Author: Roman Bär <roman.baer@actelion.com>
+Date:   Wed Nov 25 15:41:14 2015 +0100
+
+    Added ant build script
+
+[33mcommit 4ebd303574fac07ce523245a5245744f533332f3[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Nov 9 09:23:39 2015 +0100
+
+    Fixed descriptor package path
+
+[33mcommit f7ce1d896226c213dcc8968e19b68de54b6c45c7[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Oct 12 14:19:12 2015 +0200
+
+    Fixed package problems
+
+[33mcommit 5f7f8c8420a0cd231e8df16a59e9809a77213170[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Oct 12 14:17:52 2015 +0200
+
+    Fixed package problems
+
+[33mcommit 23140246a8c29d875f2d44b5036353c487f90d75[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Oct 12 14:09:05 2015 +0200
+
+    Added ToxicityPredictor
+
+[33mcommit 603db8e1eb0f6bd506ef3565a2448ea7c9cd14ff[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Tue Sep 15 13:56:49 2015 +0200
+
+    Added DrugLikeness
+
+[33mcommit d66e5fc76d67e7c1d127d09086d31bdf2b3d772a[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Fri May 8 14:23:39 2015 +0200
+
+    Update of 8.5.2015
+
+[33mcommit b04bab5b2e7957c427410b923d7c77d4f88fd48c[m
+Author: CXR <christian.rufener@ebmnet.ch>
+Date:   Fri Apr 3 14:19:31 2015 +0200
+
+    Synced with current core version
+
+[33mcommit 262df8efa8c6611caa9ccdeff27d071f3e0801ee[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Fri Mar 20 15:35:00 2015 +0100
+
+    Fixed comments in Molecule, fixed measuring in SVGDepictor
+
+[33mcommit 6d646f09613463f3ac7ef72ed2324fce07f94420[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Fri Mar 20 09:42:50 2015 +0100
+
+    Fixed atom drawing
+
+[33mcommit 3c064d367710dd4f11367d280760b266a52ac003[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Wed Mar 18 16:12:35 2015 +0100
+
+    Removed test function from SVGDescriptor
+
+[33mcommit 7472cbc408a5d4181df75f135e3b48d04a84d065[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Tue Mar 17 17:48:59 2015 +0100
+
+    Bring predictions back
+
+[33mcommit abf0b540ccce5d6aece533e228c1697a1b561b4e[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Mar 16 10:49:27 2015 +0100
+
+    Added SVGDepictor
+
+[33mcommit 1edfa668cf5184b1ad4b79d9487a20e672f8a1b0[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Mar 9 12:37:52 2015 +0100
+
+    Fixed Lic headers
+
+[33mcommit 947099d432a8a560a03547ab94a211c1818c17fa[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Mar 9 12:25:15 2015 +0100
+
+    Removed Platform class
+
+[33mcommit 2627bfce14ab8dd324af1cb8484d3d50d10644d2[m
+Merge: ccf7f23 b816a45
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Mar 9 12:13:31 2015 +0100
+
+    Merge branch 'master' of https://github.com/Actelion/openchemlib
+
+[33mcommit ccf7f238a48da8dff4c6ad18e0e3105408f2b6c7[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Mar 9 12:12:55 2015 +0100
+
+    Fixed wrong directories
+
+[33mcommit 157424b7fe9ee81eda03e884e90d619bfa3cdcc1[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Mon Mar 9 12:11:52 2015 +0100
+
+    Fixed wrong directories
+
+[33mcommit b816a458cce0556cc702c6526f359c75461f4b5c[m
+Author: CXR <christian.rufener@ebmnet.ch>
+Date:   Fri Feb 20 20:20:44 2015 +0100
+
+    Added missing images
+
+[33mcommit 104f4649135174adcb30fbecb5a720dc6cdd4b44[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Fri Feb 20 13:00:54 2015 +0100
+
+    Changed License, added LICENSE
+
+[33mcommit 882dcb8b712c50d6d36051081ff892d8fe7f522f[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Fri Feb 20 12:47:35 2015 +0100
+
+    Added LICENSE file
+
+[33mcommit 80d65a306de976b909d70c74f0c53db51d2ce46e[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Fri Feb 20 12:29:20 2015 +0100
+
+    Initial Version
+
+[33mcommit 2b8f91122e0ceac845aa9ab9f2a9053d8068dd6a[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Tue Jan 27 19:52:16 2015 +0100
+
+    First Commit
+
+[33mcommit bf16258a6b78f8da6df3a1a5fd4d36fd0bcaaaf2[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Tue Jan 27 19:43:01 2015 +0100
+
+    First Commit
+
+[33mcommit 6be7dddb764408ee6c5ed3b24d8e2195e35c6a4f[m
+Author: Christian Rufener <christian.rufener@actelion.com>
+Date:   Tue Jan 27 19:41:00 2015 +0100
+
+    First Commit
+
+[33mcommit 7f5da5996a30c8d28a725aae45589ee595b7e742[m
+Author: rufenerc <rufenerc@users.noreply.github.com>
+Date:   Tue Jan 27 19:33:02 2015 +0100
+
+    Initial commit

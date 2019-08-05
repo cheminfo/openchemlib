@@ -13,3 +13,9 @@ git clone https://github.com/Actelion/openchemlib.git
 ## Folder 'examples'
 Contains examples for working with the *OpenChemLib* library.
 
+## compile and test
+
+```bash
+ant
+java  -classpath build com.actelion.research.chem.contrib.DiastereoIDTest
+```
