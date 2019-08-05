@@ -15,3 +15,10 @@ Contains examples for working with the *OpenChemLib* library.
 
 ### Logo
 ![logo](logo.png)
+
+### compile and test
+
+```bash
+ant
+java  -classpath build com.actelion.research.chem.contrib.DiastereoIDTest
+```
