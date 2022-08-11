@@ -345,11 +345,11 @@ public class SmilesParser {
 									boolean lowerCaseFound = false;
 									int start = position - labelLength;
 									for (int p=start; p<smiles.length; p++) {
-										if (!Character.isLetter(smiles[p])) {
+										if (!Character.isLetter((char)smiles[p])) {
 											int no = Molecule.getAtomicNoFromLabel(new String(smiles, start, p - start));
 											if (no != 0) {
 												atomList.add(no);
-												if (Character.isUpperCase(smiles[start]))
+												if (Character.isUpperCase((char)smiles[start]))
 													upperCaseFound = true;
 												else
 													lowerCaseFound = true;
@@ -1102,7 +1102,7 @@ public class SmilesParser {
 	private int parseAtomList(byte[] smiles, int start, SortedList<Integer> atomList) {
 		atomList.removeAll();
 		for (int p=start; p<smiles.length; p++) {
-			if (!Character.isLetter(smiles[p])) {
+			if (!Character.isLetter((char)smiles[p])) {
 				int atomicNo = Molecule.getAtomicNoFromLabel(new String(smiles, start, p - start));
 				if (atomicNo != 0)
 					atomList.add(atomicNo);
