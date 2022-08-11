@@ -140,13 +140,13 @@ public class SVGDepictor extends AbstractDepictor
     }
 
     @Override
-    protected void drawPolygon(double[] x, double[] y, int count)
+    protected void drawPolygon(GenericPolygon p)
     {
         StringBuilder s = new StringBuilder("<polygon points=\"");
         for (int i = 0; i < p.getSize(); i++) {
-            s.append(Math.round(p.getX[i]));
+            s.append(Math.round(p.getX(i)));
             s.append(",");
-            s.append(Math.round(p.getY[i]));
+            s.append(Math.round(p.getY(i)));
             s.append(" ");
         }
         s.append("\" " +
