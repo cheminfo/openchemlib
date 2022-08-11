@@ -1,3 +1,35 @@
+/*
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package com.actelion.research.calc.histogram;
 
 import java.util.List;
@@ -5,9 +37,6 @@ import java.util.Random;
 
 /**
  * IntegerHistogram
- * <p>Copyright: Actelion Ltd., Inc. All Rights Reserved
- * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
- * Use is subject to license terms.</p>
  * @author Modest von Korff
  * @version 1.0
  * Jun 11, 2013 MvK Start implementation
@@ -23,7 +52,7 @@ public class IntegerHistogram {
 	private int [][] arrBins;
 	
 	private int [] arrCounts;
-	
+
 	public IntegerHistogram(int [][] arrBins) {
 		this(arrBins, true);
 	}
@@ -41,7 +70,6 @@ public class IntegerHistogram {
 				}
 			}
 		}
-		
 	}
 	
 	/**
@@ -49,16 +77,11 @@ public class IntegerHistogram {
 	 * @param v
 	 */
 	public void add(int v){
-		
 		for (int i = 0; i < arrBins.length; i++) {
-			
 			if((v >= arrBins[i][0]) && (v < arrBins[i][1])){
 				arrCounts[i]++;
 			}
-			
-			
 		}
-		
 	}
 	
 	public void add(int [] a){
@@ -75,14 +98,12 @@ public class IntegerHistogram {
 
 	public int getTotalCounts(){
 		int c = 0;
-		
 		for (int i = 0; i < arrBins.length; i++) {
 			c += arrCounts[i];
 		}
-		
 		return c;
 	}
-	
+
 	public int [] getBinWithNPercentOfAllCounts(int percent){
 		
 		int nTotal = getTotalCounts();

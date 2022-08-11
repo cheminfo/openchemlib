@@ -6,19 +6,22 @@ import com.actelion.research.chem.ExtendedDepictor;
 import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.reaction.Reaction;
 import com.actelion.research.gui.LookAndFeelHelper;
+import com.actelion.research.gui.generic.GenericDepictor;
+import com.actelion.research.gui.generic.GenericDrawContext;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gui.hidpi.HiDPIHelper;
+import com.actelion.research.gui.swing.SwingDrawContext;
 import com.actelion.research.util.ColorHelper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class ChemistryRenderPanel extends JPanel {
     static final long serialVersionUID = 0x20070312;
 
     private Object  mChemistry;
-    private Color mOverruleForeground;
+    private int mOverruleForegroundARGB;
     private boolean mAlternateBackground;
 
     public void setChemistry(Object chemistry) {
@@ -49,9 +52,14 @@ public class ChemistryRenderPanel extends JPanel {
             setBorder(new EmptyBorder(1, 1, 1, 1));
         }
 
+    @Deprecated
     public void setOverruleForeground(Color fg) {
-		mOverruleForeground = fg;
+        mOverruleForegroundARGB = fg == null ? 0 : fg.getRGB();
     	}
+
+    public void setOverruleForeground(int argb) {
+        mOverruleForegroundARGB = argb;
+    }
 
     public void setAlternateBackground(boolean b) {
         mAlternateBackground = b;
@@ -80,23 +88,25 @@ public class ChemistryRenderPanel extends JPanel {
 
         if (mChemistry != null && r.width > 0 && r.height > 0) {
             if (mChemistry instanceof StereoMolecule) {
-                Depictor2D d = new Depictor2D((StereoMolecule)mChemistry, Depictor2D.cDModeSuppressChiralText);
-                d.setForegroundColor(getForeground(), getBackground());
-                if (mOverruleForeground != null)
-                	d.setOverruleColor(mOverruleForeground, getBackground());
+                GenericDepictor d = new GenericDepictor((StereoMolecule)mChemistry, Depictor2D.cDModeSuppressChiralText);
+                d.setForegroundColor(getForeground().getRGB(), getBackground().getRGB());
+                if (mOverruleForegroundARGB != 0)
+                	d.setOverruleColor(mOverruleForegroundARGB, getBackground().getRGB());
                 int avbl = HiDPIHelper.scale(AbstractDepictor.cOptAvBondLen);
-                d.validateView(g, new Rectangle2D.Double(r.x, r.y, r.width, r.height), AbstractDepictor.cModeInflateToMaxAVBL | avbl);
-                d.paint(g);
+                SwingDrawContext context = new SwingDrawContext((Graphics2D)g);
+                d.validateView(context, new GenericRectangle(r.x, r.y, r.width, r.height), AbstractDepictor.cModeInflateToMaxAVBL | avbl);
+                d.paint(context);
                 }
             if (mChemistry instanceof Reaction) {
             	Reaction rxn = (Reaction)mChemistry;
-                ExtendedDepictor d = new ExtendedDepictor(rxn, rxn.getDrawingObjects(), rxn.isReactionLayoutRequired(), true);
-                d.setForegroundColor(getForeground(), getBackground());
-                if (mOverruleForeground != null)
-                	d.setOverruleColor(mOverruleForeground, getBackground());
+                ExtendedDepictor d = new ExtendedDepictor(rxn, rxn.getDrawingObjects(), rxn.isReactionLayoutRequired());
+                d.setForegroundColor(getForeground().getRGB(), getBackground().getRGB());
+                if (mOverruleForegroundARGB != 0)
+                	d.setOverruleColor(mOverruleForegroundARGB, getBackground().getRGB());
                 int avbl = HiDPIHelper.scale(AbstractDepictor.cOptAvBondLen);
-                d.validateView(g, new Rectangle2D.Double(r.x, r.y, r.width, r.height), AbstractDepictor.cModeInflateToMaxAVBL | avbl);
-                d.paint(g);
+                GenericDrawContext context = new SwingDrawContext((Graphics2D)g);
+                d.validateView(context, new GenericRectangle(r.x, r.y, r.width, r.height), AbstractDepictor.cModeInflateToMaxAVBL | avbl);
+                d.paint(context);
                 }
             }
         }

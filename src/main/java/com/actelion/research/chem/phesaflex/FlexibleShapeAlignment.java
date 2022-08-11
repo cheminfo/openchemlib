@@ -3,11 +3,17 @@ package com.actelion.research.chem.phesaflex;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.actelion.research.chem.StereoMolecule;
+import com.actelion.research.chem.alignment3d.PheSAAlignmentOptimizer.PheSASetting;
+import com.actelion.research.chem.alignment3d.PheSAAlignmentOptimizer.SimilarityMode;
 import com.actelion.research.chem.alignment3d.transformation.TransformationSequence;
+import com.actelion.research.chem.conf.BondRotationHelper;
+import com.actelion.research.chem.conf.Conformer;
 import com.actelion.research.chem.forcefield.mmff.ForceFieldMMFF94;
-import com.actelion.research.chem.forcefield.mmff.PositionConstraint;
+import com.actelion.research.chem.forcefield.mmff.MMFFPositionConstraint;
+import com.actelion.research.chem.optimization.MCHelper;
 import com.actelion.research.chem.optimization.OptimizerLBFGS;
 import com.actelion.research.chem.phesa.MolecularVolume;
 import com.actelion.research.chem.phesa.PheSAAlignment;
@@ -42,25 +48,30 @@ public class FlexibleShapeAlignment {
 	private StereoMolecule fitMol;
 	private MolecularVolume refVol;
 	private MolecularVolume fitVol;
-	private double ppWeight;
-	Map<String, Object> ffOptions;
+	private Map<String, Object> ffOptions;
+	private PheSASetting settings;
 	
+	public PheSASetting getSettings() {
+		return settings;
+	}
+
+	public void setSettings(PheSASetting settings) {
+		this.settings = settings;
+	}
+
 	public FlexibleShapeAlignment(StereoMolecule refMol, StereoMolecule fitMol) {
-		this(refMol, fitMol, new MolecularVolume(refMol), new MolecularVolume(fitMol),0.5);
+		this(refMol, fitMol, new MolecularVolume(refMol), new MolecularVolume(fitMol));
 	}
 	
-	public FlexibleShapeAlignment(StereoMolecule refMol, StereoMolecule fitMol, double ppWeight) {
-		this(refMol, fitMol, new MolecularVolume(refMol), new MolecularVolume(fitMol),ppWeight);
-	}
 	
-	public FlexibleShapeAlignment(StereoMolecule refMol,StereoMolecule fitMol, MolecularVolume refVol, MolecularVolume fitVol, double ppWeight) {
-		this.ppWeight = ppWeight;
+	public FlexibleShapeAlignment(StereoMolecule refMol,StereoMolecule fitMol, MolecularVolume refVol, MolecularVolume fitVol) {
 		this.refMol = refMol;
 		this.fitMol = fitMol;
 		this.refVol = refVol;
 		this.fitVol = fitVol;
 		ffOptions = new HashMap<String, Object>();
 		ffOptions.put("dielectric constant", 4.0);
+		settings = new PheSASetting();
 	}
 	
 	public double[] align() {
@@ -74,33 +85,36 @@ public class FlexibleShapeAlignment {
 		}
 		
 		restrainedRelaxation(fitMol,e0);
-		
-		double[] v = new double[3*fitMol.getAllAtoms()];
 
 		boolean[] isHydrogen = new boolean[fitMol.getAllAtoms()];
 		for(int at=0;at<fitMol.getAllAtoms();at++) {
 			
 			isHydrogen[at] = fitMol.getAtomicNo(at)==1 ? true : false;
 		}
-		EvaluableFlexibleOverlap eval = new EvaluableFlexibleOverlap(shapeAlign, refMol, fitMol, ppWeight, isHydrogen, v, ffOptions);
+		Conformer fitConf = new Conformer(fitMol);
+		BondRotationHelper  torsionHelper = new BondRotationHelper(fitConf.getMolecule(),true);
+		EvaluableFlexibleOverlap eval = new EvaluableFlexibleOverlap(shapeAlign, refMol, fitConf, torsionHelper, 
+				settings, isHydrogen, ffOptions);
+		eval.setState(eval.getState());
 		eval.setE0(e0);
 		OptimizerLBFGS opt = new OptimizerLBFGS(200,0.001);
-		opt.optimize(eval);
-		eval.getState(v);
-		double t0 = getTanimoto(eval,shapeAlign);
-
-		MetropolisMonteCarloHelper mcHelper = new MetropolisMonteCarloHelper(fitMol);
-		boolean success = mcHelper.init();
+		double t0 = opt.optimize(eval)[0];
+		//eval.getState(v);
+		Random random = new Random(12345L);
+		MCHelper mcHelper = new MCHelper(torsionHelper, null, random);
+		//MetropolisMonteCarloHelper mcHelper = new MetropolisMonteCarloHelper(fitMol);
+		boolean success = torsionHelper.getRotatableBonds().length!=0;
+		double[] v = eval.getState();
 		double told = t0;
 		if(success) {
 			for(int i=0;i<MC_STEPS;i++) {
 				double [] vold = Arrays.stream(v).toArray(); // now copy v
-				mcHelper.step();
-				eval = new EvaluableFlexibleOverlap(shapeAlign, refMol, fitMol, ppWeight, isHydrogen, v, ffOptions);
+				mcHelper.torsionPerturbation(fitConf, v);
+				eval.setState(v);
 				eval.setE0(e0);
 				opt = new OptimizerLBFGS(200,0.001);
 				opt.optimize(eval);
-				double tnew = getTanimoto(eval,shapeAlign);
+				double tnew = getSimilarity(eval,shapeAlign);
 				if(!mcHelper.accept(told, tnew)) {
 					v = vold;
 					eval.setState(v);
@@ -112,25 +126,50 @@ public class FlexibleShapeAlignment {
 	
 			}
 		}
-		result = getResult();
 		
+		Conformer alignedConf = eval.getFitConf();
+		for(int a=0;a<alignedConf.getMolecule().getAllAtoms();a++) {
+			fitMol.setAtomX(a, alignedConf.getX(a));
+			fitMol.setAtomY(a, alignedConf.getY(a));
+			fitMol.setAtomZ(a, alignedConf.getZ(a));
+		}
+		result = getResult();
 		return result;
 	}
 	
-	private double getTanimoto(EvaluableFlexibleOverlap eval, PheSAAlignment shapeAlign) { 
+	private double getSimilarity(EvaluableFlexibleOverlap eval, PheSAAlignment shapeAlign) { 
+		boolean tversky = true;
+		if(settings.getSimMode()==SimilarityMode.TANIMOTO)
+			tversky=false;
+		double ppWeight = settings.getPpWeight();
+		double tverskyCoeff = settings.getSimMode()==SimilarityMode.TVERSKY ? PheSAAlignment.TVERSKY_COEFFICIENT : 1.0-PheSAAlignment.TVERSKY_COEFFICIENT;
 		double Obb = eval.getFGValueShapeSelf(new double[3*fitMol.getAllAtoms()], shapeAlign.getMolGauss(),false);
 		double Oaa = eval.getFGValueShapeSelf(new double[3*refMol.getAllAtoms()], shapeAlign.getRefMolGauss(),true);
 		double Oab = eval.getFGValueShape(new double[3*fitMol.getAllAtoms()]);
-		double Tshape = Oab/(Oaa+Obb-Oab);
+		double Tshape = 0.0;
+		if(tversky)
+			Tshape = Oab/(tverskyCoeff*Obb+(1.0-tverskyCoeff)*Oaa);
+		else
+			Tshape = Oab/(Oaa+Obb-Oab);
+		if(!tversky && Tshape>1.0) //can happen because of weights
+			Tshape = 1.0f;	
 		double correctionFactor = shapeAlign.getRefMolGauss().getPPGaussians().size()/shapeAlign.getRefMolGauss().getPPGaussians().stream().mapToDouble(g -> g.getWeight()).sum();
-		double ObbPP = eval.getFGValueSelfPP(new double[3*fitMol.getAllAtoms()], shapeAlign.getMolGauss(),false);
-		double OaaPP = eval.getFGValueSelfPP(new double[3*refMol.getAllAtoms()], shapeAlign.getRefMolGauss(),true);
-		double OabPP = eval.getFGValuePP(new double[3*fitMol.getAllAtoms()]);
-		double Tpp = OabPP/(OaaPP+ObbPP-OabPP);
+		double ObbPP = eval.getFGValueSelfPP(shapeAlign.getMolGauss(),false);
+		double OaaPP = eval.getFGValueSelfPP(shapeAlign.getRefMolGauss(),true);
+		double OabPP = eval.getFGValuePP();
+		double Tpp = 0.0;
+		if(shapeAlign.getRefMolGauss().getPPGaussians().size()==0 && shapeAlign.getMolGauss().getPPGaussians().size()==0 )
+			Tpp = 1.0;
+		else {
+			if(tversky)
+				Tpp = OabPP/(tverskyCoeff*ObbPP+(1.0-tverskyCoeff)*OaaPP);
+			else
+				Tpp = (OabPP/(OaaPP+ObbPP-OabPP));
+		}
 		Tpp*=correctionFactor;
-		if(Tshape>1.0) //can happen because of weights
+		if(!tversky && Tshape>1.0) //can happen because of weights
 			Tshape = 1.0f;
-		if(Tpp>1.0) //can happen because of weights
+		if(!tversky && Tpp>1.0) //can happen because of weights
 			Tpp = 1.0f;
 		double T = (1.0f-(float)ppWeight)*Tshape + (float)ppWeight*Tpp;
 
@@ -141,8 +180,8 @@ public class FlexibleShapeAlignment {
 	
 	private double[] getResult() { 
 		TransformationSequence sequence = new TransformationSequence();
-		PheSAAlignment pa = new PheSAAlignment(fitMol,refMol, ppWeight);
-		double[] r = pa.findAlignment(new double[][] {{0.00, 0.00, 0.00,0.0,0.0,0.0}},sequence,false);
+		PheSAAlignment pa = new PheSAAlignment(fitMol,refMol, settings.getPpWeight());
+		double[] r = pa.findAlignment(new double[][] {{0.00, 0.00, 0.00,0.0,0.0,0.0}},sequence,false,settings.getSimMode());
 		return new double[] {r[0],r[1],r[2], r[3]};
 	}
 	
@@ -166,11 +205,11 @@ public class FlexibleShapeAlignment {
 		int cycles = 0;
 		while(notRelaxed && cycles<maxCycles) {
 			ForceFieldMMFF94 forceField = new ForceFieldMMFF94(fitMol, ForceFieldMMFF94.MMFF94SPLUS, ffOptions);
-			PositionConstraint constraint = new PositionConstraint(fitMol,50,init);
+			MMFFPositionConstraint constraint = new MMFFPositionConstraint(fitMol,50,init);
 			forceField.addEnergyTerm(constraint);
 			forceField.minimise();
 			double e = forceField.getTotalEnergy();
-			notRelaxed = (e<e0) && (e-e0>ENERGY_CUTOFF);
+			notRelaxed = (e>e0) && (e-e0>ENERGY_CUTOFF);
 			init += 0.2;
 			cycles++;
 

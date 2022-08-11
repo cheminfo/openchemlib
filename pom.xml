@@ -8,7 +8,7 @@
     Please follow the naming scheme YEAR.MONTH.RELEASE_NO_OF_MONTH
     (eg. 2016.4.1 for second release in Apr 2016)
     -->
-    <version>2021.9.4-SNAPSHOT</version>
+    <version>2022.8.0</version>
 
     <name>OpenChemLib</name>
     <description>Open Source Chemistry Library</description>
@@ -46,6 +46,10 @@
     </licenses>
 
     <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <!-- Disable doclint for Java 8 -->
     <profiles>
@@ -86,15 +90,25 @@
             </build>
         </profile>
         <profile>
-            <id>include-jfx11</id>
+            <id>include-jfx</id>
             <activation>
-                <jdk>11</jdk>
+                <jdk>[11,)</jdk>
             </activation>
             <dependencies>
                 <dependency>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-controls</artifactId>
-                    <version>11-ea+19</version>
+                    <version>11.0.2</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-swing</artifactId>
+                    <version>11.0.2</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-web</artifactId>
+                    <version>11.0.2</version>
                 </dependency>
             </dependencies>            
         </profile>
@@ -118,6 +132,7 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -195,7 +210,7 @@
         <connection>scm:git:git@github.com:Actelion/openchemlib.git</connection>
         <developerConnection>scm:git:git@github.com:Actelion/openchemlib.git</developerConnection>
         <url>https://github.com/Actelion/openchemlib</url>
-      <tag>HEAD</tag>
+      <tag>openchemlib-2022.8.0</tag>
   </scm>
 
     <distributionManagement>

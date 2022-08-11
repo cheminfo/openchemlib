@@ -1,34 +1,50 @@
 /*
- * Project: DD_jfx
- * @(#)MoleculeDragAdapter.java
- *
- * Copyright (c) 1997- 2015
+ * Copyright (c) 1997 - 2016
  * Actelion Pharmaceuticals Ltd.
  * Gewerbestrasse 16
  * CH-4123 Allschwil, Switzerland
  *
- * All Rights Reserved.
+ * All rights reserved.
  *
- * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
- * Use is subject to license terms.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * Author: Christian Rufener
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Christian Rufener
  */
 
 package com.actelion.research.gui.dnd;
 
 import com.actelion.research.chem.AbstractDepictor;
-import com.actelion.research.chem.Depictor2D;
 import com.actelion.research.chem.ExtendedDepictor;
-import com.actelion.research.chem.StereoMolecule;
 import com.actelion.research.chem.dnd.ChemistryFlavors;
 import com.actelion.research.chem.reaction.Reaction;
+import com.actelion.research.gui.generic.GenericRectangle;
+import com.actelion.research.gui.swing.SwingDrawContext;
 
 import java.awt.*;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -166,13 +182,14 @@ public abstract class ReactionDragAdapter implements DragSourceListener /*,DragS
 				Object o = t.getTransferData(ChemistryFlavors.DF_SERIALIZED_REACTION);
 				if (o instanceof Reaction) {
 					Reaction rxn = (Reaction) o;
-					ExtendedDepictor depict = new ExtendedDepictor(rxn, null, false, true);
+					ExtendedDepictor depict = new ExtendedDepictor(rxn, null, false);
 					BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 					Graphics g = img.getGraphics();
 					((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 					((Graphics2D)g).setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-					depict.validateView(g, new Rectangle2D.Double(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
-					depict.paint(g);
+					SwingDrawContext context = new SwingDrawContext((Graphics2D)g);
+					depict.validateView(context, new GenericRectangle(0, 0, width, height), AbstractDepictor.cModeInflateToMaxAVBL);
+					depict.paint(context);
 					return img;
 				}
 			} catch (IOException e1) {

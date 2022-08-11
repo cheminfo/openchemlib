@@ -94,7 +94,7 @@ public class MolfileParser
 			mHydrogenMap = null;
 
 			if(mMol != null){
-				mMol.deleteMolecule();
+				mMol.clear();
 				mMol.setFragment(false);
 			}
 
@@ -177,6 +177,7 @@ public class MolfileParser
 				int atomicNo = Molecule.getAtomicNoFromLabel(label);
 				mMol.setAtomicNo(atom,atomicNo);
 				if(label.equals("A")){
+					mMol.setAtomicNo(atom, 6);
 					mMol.setAtomQueryFeature(atom,Molecule.cAtomQFAny,true);
 				}
 

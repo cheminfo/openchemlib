@@ -33,10 +33,10 @@
 
 package com.actelion.research.chem;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import com.actelion.research.gui.generic.GenericDrawContext;
+import com.actelion.research.gui.generic.GenericPoint;
+import com.actelion.research.gui.generic.GenericRectangle;
+import com.actelion.research.gui.generic.GenericShape;
 
 
 public abstract class AbstractDrawingObject {
@@ -44,18 +44,15 @@ public abstract class AbstractDrawingObject {
 	protected static final String DESCRIPTOR_END = "></DrawingObject>";
 	protected static final String DESCRIPTOR_TYPE = " type=\"";
 
-    protected static final Color SELECTION_COLOR = UIManager.getColor("TextArea.selectionBackground");
-
-	protected Point2D.Double[]	mPoint;
+	protected GenericPoint[]	mPoint;
 	protected boolean			mIsSelected,mProtectedFromDeletion;
 
 	protected double			mTransformationReferenceX,mTransformationReferenceY;
 	protected double			mTransformationValue1[];
 	protected double			mTransformationValue2[];
 
-	abstract public void draw(Graphics g, DepictorTransformation t);
-	abstract public void draw2D(Graphics2D g, DepictorTransformation t);
-	abstract public void hilite(Graphics g);
+	abstract public void draw(GenericDrawContext context, DepictorTransformation t);
+	abstract public void hilite(GenericDrawContext context);
 	abstract public void clearHiliting();
 
 	/**
@@ -117,13 +114,11 @@ public abstract class AbstractDrawingObject {
 		mIsSelected = s;
 		}
 
-	public Rectangle2D.Double getBoundingRect() {
+	public GenericRectangle getBoundingRect(GenericDrawContext context) {
 		if (mPoint == null)
 			return null;
 
-		Rectangle2D.Double bounds = new Rectangle2D.Double();
-		bounds.x = mPoint[0].x;
-		bounds.y = mPoint[0].y;
+		GenericRectangle bounds = new GenericRectangle(mPoint[0].x, mPoint[0].y, 0, 0);
 
 		for (int i=1; i<mPoint.length; i++) {
 			if (bounds.x > mPoint[i].x) {
@@ -145,12 +140,12 @@ public abstract class AbstractDrawingObject {
 		return bounds;
 		}
 
-	public boolean isSurroundedBy(Shape shape) {
+	public boolean isSurroundedBy(GenericShape shape) {
 		if (mPoint == null)
 			return false;
 
 		for (int i=0; i<mPoint.length; i++)
-			if (!shape.contains(mPoint[i]))
+			if (!shape.contains(mPoint[i].x, mPoint[i].y))
 				return false;
 
 		return true;

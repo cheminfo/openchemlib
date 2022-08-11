@@ -43,9 +43,12 @@ import com.actelion.research.gui.dnd.MoleculeDropAdapter;
 import com.actelion.research.gui.dnd.MoleculeTransferable;
 import com.actelion.research.gui.dnd.ReactionDropAdapter;
 import com.actelion.research.gui.dnd.ReactionTransferable;
+import com.actelion.research.gui.generic.GenericDrawContext;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gui.hidpi.HiDPIHelper;
+import com.actelion.research.gui.swing.SwingDrawContext;
 import com.actelion.research.util.ColorHelper;
-import com.actelion.research.util.CursorHelper;
+import com.actelion.research.gui.swing.SwingCursorHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,8 +95,8 @@ public class JChemistryView extends JComponent
 	private ArrayList<StructureListener> mListener;
 	private Dimension           mSize;
 	private int					mChemistryType,mUpdateMode,mDisplayMode,mDragType,mCopyOrDragActions,mPasteOrDropActions,mPasteAndDropOptions;
-	private boolean				mIsDragging,mAllowDropOrPasteWhenDisabled,mIsEditable,mShowBorder,mOpaqueBackground;
-	private Color				mFragmentNoColor;
+	private boolean				mIsDragging,mAllowDropOrPasteWhenDisabled,mIsEditable,mShowBorder;
+	private int 				mFragmentNoColor;
 	private MoleculeDropAdapter mMoleculeDropAdapter = null;
 	private ReactionDropAdapter mReactionDropAdapter = null;
 	private String              mWarningMessage;
@@ -152,7 +155,7 @@ public class JChemistryView extends JComponent
 		}
 
 	public void setContent(StereoMolecule mol, DrawingObjectList drawingObjectList) {
-		mDepictor = new ExtendedDepictor(mol, drawingObjectList, true);
+		mDepictor = new ExtendedDepictor(mol, drawingObjectList);
 		mDepictor.setDisplayMode(mDisplayMode);
 		mDepictor.setFragmentNoColor(mFragmentNoColor);
 		mUpdateMode = UPDATE_SCALE_COORDS;
@@ -161,7 +164,7 @@ public class JChemistryView extends JComponent
 		}
 
 	public void setContent(StereoMolecule[] mol, DrawingObjectList drawingObjectList) {
-		mDepictor = new ExtendedDepictor(mol, drawingObjectList, true);
+		mDepictor = new ExtendedDepictor(mol, drawingObjectList);
 		mDepictor.setDisplayMode(mDisplayMode);
 		mDepictor.setFragmentNoColor(mFragmentNoColor);
 		mUpdateMode = UPDATE_SCALE_COORDS;
@@ -170,16 +173,12 @@ public class JChemistryView extends JComponent
 		}
 
 	public void setContent(Reaction rxn, DrawingObjectList drawingObjectList) {
-		mDepictor = new ExtendedDepictor(rxn, drawingObjectList, rxn == null ? false : rxn.isReactionLayoutRequired(), true);
+		mDepictor = new ExtendedDepictor(rxn, drawingObjectList, rxn == null ? false : rxn.isReactionLayoutRequired());
 		mDepictor.setDisplayMode(mDisplayMode);
 		mDepictor.setFragmentNoColor(mFragmentNoColor);
 		mUpdateMode = UPDATE_SCALE_COORDS;
 		mDragType = DRAG_TYPE_NONE;
 		repaint();
-		}
-
-	public void setOpaqueBackground(boolean b) {
-		mOpaqueBackground = b;
 		}
 
 	/**
@@ -206,9 +205,10 @@ public class JChemistryView extends JComponent
 			if (mReactionDropAdapter != null)
 				mReactionDropAdapter.setActive(enable);
 			if (enable)
-				mDepictor.setOverruleColor(null, null);
+				mDepictor.setOverruleColor(0, 0);
 			else
-				mDepictor.setOverruleColor(ColorHelper.getContrastColor(Color.GRAY, getBackground()), getBackground());
+				mDepictor.setOverruleColor(0xFF000000 | ColorHelper.getContrastColor(0xFF808080,
+						getBackground().getRGB()), 0xFF000000 | getBackground().getRGB());
 			repaint();
 			}
 		}
@@ -222,11 +222,14 @@ public class JChemistryView extends JComponent
 			mIsEditable = b;
 		}
 
-	public void setFragmentNoColor(Color c) {
-	        // use setFragmentNoColor(null) if you don't want fragment numbers to be shown
-		mFragmentNoColor = c;
+	/**
+	 * Use setFragmentNoColor(0) if you don't want fragment numbers to be shown
+	 * @param argb
+	 */
+	public void setFragmentNoColor(int argb) {
+		mFragmentNoColor = argb;
 		if (mDepictor != null)
-			mDepictor.setFragmentNoColor(c);
+			mDepictor.setFragmentNoColor(argb);
 		}
 
 	public void setDisplayMode(int displayMode) {
@@ -249,15 +252,17 @@ public class JChemistryView extends JComponent
 		theSize.width -= insets.left + insets.right;
 		theSize.height -= insets.top + insets.bottom;
 
+		GenericDrawContext context = new SwingDrawContext((Graphics2D)g);
+
 		if (mSize == null
 		 || mSize.width != theSize.width
 		 || mSize.height != theSize.height
 		 || mUpdateMode == UPDATE_SCALE_COORDS) {
-			mDepictor.validateView(g, new Rectangle2D.Double(insets.left, insets.top, theSize.width, theSize.height),
+			mDepictor.validateView(context, new GenericRectangle(insets.left, insets.top, theSize.width, theSize.height),
 									AbstractDepictor.cModeInflateToMaxAVBL);
 			}
 		else if (mUpdateMode == UPDATE_CHECK_COORDS) {
-			mDepictor.validateView(g, new Rectangle2D.Double(insets.left, insets.top, theSize.width, theSize.height), 0);
+			mDepictor.validateView(context, new GenericRectangle(insets.left, insets.top, theSize.width, theSize.height), 0);
 			}
 
 		mSize = theSize;
@@ -278,7 +283,7 @@ public class JChemistryView extends JComponent
 		if (mShowBorder && mDragType != DRAG_TYPE_NONE) {
 			Color color = ColorHelper.perceivedBrightness(bg) < 0.5f ? ColorHelper.brighter(bg, 0.85f) : ColorHelper.darker(bg, 0.85f);
 			g.setColor(color);
-			Rectangle2D.Double rect = (mDragType == DRAG_TYPE_REACTION) ? getChemistryBounds() : getMoleculeBounds(mDragType);
+			GenericRectangle rect = (mDragType == DRAG_TYPE_REACTION) ? getChemistryBounds() : getMoleculeBounds(mDragType);
 			int arc = (int)Math.min(rect.height/4, Math.min(rect.width/4, HiDPIHelper.scale(10)));
 			g.fillRoundRect((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height, arc, arc);
 			if (mDragType == DRAG_TYPE_REACTION) {
@@ -293,7 +298,7 @@ public class JChemistryView extends JComponent
 				}
 			}
 
-		mDepictor.paint(g);
+		mDepictor.paint(context);
 
 		if (mWarningMessage != null) {
 			int fontSize = HiDPIHelper.scale(12);
@@ -316,23 +321,23 @@ public class JChemistryView extends JComponent
 	 * @param i
 	 * @return bounds or null, if i is out of range
 	 */
-	public Rectangle2D.Double getMoleculeBounds(int i) {
+	public GenericRectangle getMoleculeBounds(int i) {
 		return mDepictor == null || i >= mDepictor.getMoleculeCount() ?
 				null : mDepictor.getMoleculeDepictor(i).getBoundingRect();
 		}
 
-	public Rectangle2D.Double getChemistryBounds() {
+	public GenericRectangle getChemistryBounds() {
 		if (mDepictor == null || mDepictor.getMoleculeCount() == 0)
 			return null;
 
-		Rectangle2D.Double rect = null;
+		GenericRectangle rect = null;
 		for (int i=0; i<mDepictor.getMoleculeCount(); i++) {
-			Rectangle2D.Double mrect = mDepictor.getMoleculeDepictor(i).getBoundingRect();
+			GenericRectangle mrect = mDepictor.getMoleculeDepictor(i).getBoundingRect();
 			if (mrect != null) {
 				if (rect == null)
 					rect = mrect;
 				else
-					rect = (Rectangle2D.Double)rect.createUnion(mrect);
+					rect = rect.union(mrect);
 				}
 			}
 		return rect;
@@ -425,8 +430,8 @@ public class JChemistryView extends JComponent
 	public void mousePressed(MouseEvent e) {
 		handlePopupTrigger(e);
 
-		setCursor(CursorHelper.getCursor((mDragType == DRAG_TYPE_NONE) ?
-				CursorHelper.cPointerCursor : CursorHelper.cFistCursor));
+		setCursor(SwingCursorHelper.getCursor((mDragType == DRAG_TYPE_NONE) ?
+				SwingCursorHelper.cPointerCursor : SwingCursorHelper.cFistCursor));
 		}
 
 	@Override
@@ -536,11 +541,11 @@ public class JChemistryView extends JComponent
 			}
 
 		updateBorder(dragType != DRAG_TYPE_NONE);
-		setCursor(CursorHelper.getCursor((mDragType == DRAG_TYPE_NONE) ?
-				CursorHelper.cPointerCursor : CursorHelper.cHandCursor));
+		setCursor(SwingCursorHelper.getCursor((mDragType == DRAG_TYPE_NONE) ?
+				SwingCursorHelper.cPointerCursor : SwingCursorHelper.cHandCursor));
 		}
 
-	private Rectangle shrink(Rectangle2D.Double rect) {
+	private Rectangle shrink(GenericRectangle rect) {
 		if (rect == null)
 			return null;
 
@@ -719,7 +724,7 @@ public class JChemistryView extends JComponent
 					getReactionTransferable() : getMoleculeTransferable();
 			if (transferable != null) {
 				try {
-					e.startDrag(CursorHelper.getCursor(CursorHelper.cFistCursor), transferable, this);
+					e.startDrag(SwingCursorHelper.getCursor(SwingCursorHelper.cFistCursor), transferable, this);
 					mIsDragging = true;
 //					e.startDrag(DragSource.DefaultCopyNoDrop, transferable, this);
 					}

@@ -585,6 +585,27 @@ public class StringFunctions {
 
 		return str.substring(start,end);
 	}
+
+	public static Point getStartEnd(String str, String regex) {
+
+		Pattern pa = Pattern.compile(regex);
+
+		Matcher ma = pa.matcher(str);
+
+		int start = -1;
+		int end = -1;
+
+		if(ma.find()){
+			MatchResult mr = ma.toMatchResult();
+			start = mr.start();
+			end = mr.end();
+		} else {
+			return null;
+		}
+
+		return new Point(start,end);
+	}
+
 	
 	public static boolean isRegexInString(String str, String regex) {
 
@@ -1354,6 +1375,10 @@ public class StringFunctions {
 		return false;
 	}
 
+
+	public static boolean isAlphaNumeric(char char1) {
+		return (char1 >= 'a' && char1 <= 'z') || (char1 >= 'A' && char1 <= 'Z') || (char1 >= '0' && char1 <= '9');
+	}
 	/**
 	 * 
 	 * @param s

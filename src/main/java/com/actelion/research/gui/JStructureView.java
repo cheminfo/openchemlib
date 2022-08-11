@@ -1,17 +1,33 @@
 /*
- * Copyright 2017 Idorsia Pharmaceuticals Ltd., Hegenheimermattweg 91, CH-4123 Allschwil, Switzerland
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
  *
- * This file is part of DataWarrior.
- * 
- * DataWarrior is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version.
- * 
- * DataWarrior is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with DataWarrior.
- * If not, see http://www.gnu.org/licenses/.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Thomas Sander
  */
@@ -24,13 +40,17 @@ import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.actelion.research.gui.dnd.MoleculeDragAdapter;
 import com.actelion.research.gui.dnd.MoleculeDropAdapter;
 import com.actelion.research.gui.dnd.MoleculeTransferable;
+import com.actelion.research.gui.generic.GenericDepictor;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gui.hidpi.HiDPIHelper;
+import com.actelion.research.gui.swing.SwingDrawContext;
 import com.actelion.research.util.ColorHelper;
-import com.actelion.research.util.CursorHelper;
+import com.actelion.research.gui.swing.SwingCursorHelper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
@@ -52,9 +72,8 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 	private ArrayList<StructureListener> mListener;
 	private String mIDCode;
 	private StereoMolecule mMol,mDisplayMol;
-    private Depictor2D mDepictor;
-	private boolean mShowBorder,mAllowFragmentStatusChangeOnPasteOrDrop,mIsDraggingThis,mOpaqueBackground,
-					mIsEditable,mDisableBorder;
+    private GenericDepictor mDepictor;
+	private boolean mShowBorder,mAllowFragmentStatusChangeOnPasteOrDrop,mIsDraggingThis,mIsEditable,mDisableBorder;
 	private int mChiralTextPosition,mDisplayMode;
 	private String[] mAtomText;
 	private IClipboardHandler mClipboardHandler;
@@ -62,6 +81,8 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 	protected int mAllowedDragAction;
 	protected int mAllowedDropAction;
 	private String mWarningMessage;
+	private int[] mAtomHiliteColor;
+	private float[] mAtomHiliteRadius;
 
 	public JStructureView() {
         this(null);
@@ -132,10 +153,17 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 		mDisplayMol = (displayMol == null) ? mMol : displayMol;
 		mDisplayMode = AbstractDepictor.cDModeHiliteAllQueryFeatures;
 		mIsEditable = false;
+		updateBackground();
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		initializeDragAndDrop(dragAction, dropAction);
 	    }
+
+	@Override
+	public void updateUI() {
+		super.updateUI();
+		updateBackground();
+		}
 
     /**
      * Call this in order to get clipboard support:
@@ -184,6 +212,7 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 
 	public void setEnabled(boolean enable) {
 		if (enable != isEnabled()) {
+			updateBackground();
 			repaint();
 			if (mDropAdapter != null)
 				mDropAdapter.setActive(enable);
@@ -211,6 +240,18 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 		mAllowFragmentStatusChangeOnPasteOrDrop = allow;
 		}
 
+	/**
+	 * If you want this structure view to also draw an atom background with specific colors for every atom,
+	 * then you need to call this method before or just after one of the structureChanged() calls.
+	 * @param argb if alpha < 1 then the background is mixed in accordingly
+	 * @param radius <= 1.0; if null, then a default of 0.5 of the average bond length is used
+	 */
+	public void setAtomHighlightColors(int[] argb, float[] radius) {
+		mAtomHiliteColor = argb;
+		mAtomHiliteRadius = radius;
+		repaint();
+		}
+
 	public boolean canDrop() {
 		return mIsEditable && isEnabled() && !mIsDraggingThis;
 	    }
@@ -233,14 +274,12 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
         g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 
 		Color fg = g2.getColor();
-		Color bg = UIManager.getColor(isEditable() && isEnabled() ? "TextField.background" : "TextField.inactiveBackground");
-		if (bg == null)
-			bg = getBackground();
+		Color bg = getBackground();
 		g2.setColor(bg);
 		g2.fill(new Rectangle(insets.left, insets.top, theSize.width, theSize.height));
 
 		if (mShowBorder && !mDisableBorder) {
-			Rectangle2D.Double rect = mDepictor.getBoundingRect();
+			GenericRectangle rect = mDepictor.getBoundingRect();
 			if (rect != null) {
 				g.setColor(ColorHelper.perceivedBrightness(bg) < 0.5f ? ColorHelper.brighter(bg, 0.85f) : ColorHelper.darker(bg, 0.85f));
 				int arc = (int)Math.min(rect.height/4, Math.min(rect.width/4, HiDPIHelper.scale(10)));
@@ -251,19 +290,21 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 		g2.setColor(fg);
 
 		if (mDisplayMol != null && mDisplayMol.getAllAtoms() != 0) {
-			mDepictor = new Depictor2D(mDisplayMol);
+			mDepictor = new GenericDepictor(mDisplayMol);
             mDepictor.setDisplayMode(mDisplayMode);
             mDepictor.setAtomText(mAtomText);
+            mDepictor.setAtomHighlightColors(mAtomHiliteColor, mAtomHiliteRadius);
 
 			if (!isEnabled())
-                mDepictor.setOverruleColor(ColorHelper.getContrastColor(Color.GRAY, getBackground()), getBackground());
+                mDepictor.setOverruleColor(ColorHelper.getContrastColor(Color.GRAY, bg), bg);
 			else
-				mDepictor.setForegroundColor(getForeground(), getBackground());
+				mDepictor.setForegroundColor(getForeground(), bg);
 
 			int avbl = HiDPIHelper.scale(AbstractDepictor.cOptAvBondLen);
-			mDepictor.validateView(g, new Rectangle2D.Double(insets.left, insets.top, theSize.width,theSize.height),
+			SwingDrawContext context = new SwingDrawContext((Graphics2D)g);
+			mDepictor.validateView(context, new GenericRectangle(insets.left, insets.top, theSize.width,theSize.height),
 								   AbstractDepictor.cModeInflateToMaxAVBL | mChiralTextPosition | avbl);
-            mDepictor.paint(g);
+            mDepictor.paint(context);
 			}
 
 		if (mWarningMessage != null) {
@@ -396,20 +437,20 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 		int y = e.getY();
 		boolean isInRect = false;
 		if (mDepictor != null && (mAllowedDragAction & DnDConstants.ACTION_COPY) != 0) {
-			Rectangle bounds = shrink(mDepictor.getBoundingRect());
+			GenericRectangle bounds = shrink(mDepictor.getBoundingRect());
 			if (bounds != null && bounds.contains(x, y))
 				isInRect = true;
 			}
 
 		updateBorder(isInRect);
-		setCursor(CursorHelper.getCursor(isInRect ? CursorHelper.cHandCursor : CursorHelper.cPointerCursor));
+		setCursor(SwingCursorHelper.getCursor(isInRect ? SwingCursorHelper.cHandCursor : SwingCursorHelper.cPointerCursor));
 		}
 
-	private Rectangle shrink(Rectangle2D.Double rect) {
+	private GenericRectangle shrink(GenericRectangle rect) {
 		int margin = HiDPIHelper.scale(DRAG_MARGIN);
 		int marginX = Math.min(margin, (int)rect.width / 6);
 		int marginY = Math.min(margin, (int)rect.height / 6);
-		return new Rectangle((int)rect.x+marginX, (int)rect.y+marginY, (int)rect.width-2*marginX, (int)rect.height-2*marginY);
+		return new GenericRectangle((int)rect.x+marginX, (int)rect.y+marginY, (int)rect.width-2*marginX, (int)rect.height-2*marginY);
 	}
 
 	@Override public void mouseDragged(MouseEvent e) {}
@@ -453,6 +494,12 @@ public class JStructureView extends JComponent implements ActionListener,MouseLi
 			mWarningMessage = null;
 			repaint();
 			} ).start();
+		}
+
+	private void updateBackground() {
+		Color bg = UIManager.getColor(isEditable() && isEnabled() ? "TextField.background" : "TextField.inactiveBackground");
+		if (bg != null)
+			setBackground(bg);
 		}
 
 	private void handlePopupTrigger(MouseEvent e) {

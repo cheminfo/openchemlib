@@ -1,21 +1,35 @@
 /*
- * Copyright (c) 2020.
- * Idorsia Pharmaceuticals Ltd., Hegenheimermattweg 91, CH-4123 Allschwil, Switzerland
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
  *
- *  This file is part of DataWarrior.
+ * All rights reserved.
  *
- *  DataWarrior is free software: you can redistribute it and/or modify it under the terms of the
- *  GNU General Public License as published by the Free Software Foundation, either version 3 of
- *  the License, or (at your option) any later version.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *  DataWarrior is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *  See the GNU General Public License for more details.
- *  You should have received a copy of the GNU General Public License along with DataWarrior.
- *  If not, see http://www.gnu.org/licenses/.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
  *
- *  @author Modest v. Korff
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ * @author Modest v. Korff
  */
 
 package com.actelion.research.chem.descriptor.flexophore;
@@ -50,6 +64,8 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 	private boolean finalized;
 
 	private byte modeFlexophore;
+
+	private int[][] nodeAtoms;  // original atom index list for every node
 
 	public MolDistHist () {
 		initHistogramArray(0);
@@ -258,12 +274,26 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 		finalized = false;
 	}
 	
-	
 	public int getConnAtom(int at, int index) {
 		if(index >= at)
 			index++;
 		
 		return index;
+	}
+
+	/**
+	 * @return the original atom indexes in node order, provided they have beed added when creating this MolDistHist
+	 */
+	public int[][] getNodeAtoms() {
+		return nodeAtoms;
+	}
+
+	/**
+	 * Adds the original atom indexes in node order to this MolDistHist
+	 * @param nodeAtoms
+	 */
+	public void setNodeAtoms(int[][] nodeAtoms) {
+		this.nodeAtoms = nodeAtoms;
 	}
 
 	@Override
@@ -274,7 +304,6 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 	}
 	
 	public String toString(){
-
 //		Causes errors in debug mode
 //		if(!finalized)
 //			realize();
@@ -423,7 +452,11 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 		while(!nodesProcessed){
 			
 			int end = StringFunctions.nextClosing(strMolDistHist, start, '(', ')');
-			
+
+			if(end==-1){
+				throw new RuntimeException("Error for MolDistHist " + strMolDistHist);
+			}
+
 			String strNode = strMolDistHist.substring(start+1, end);
 
 			PPNode n = PPNode.read(strNode);
@@ -443,33 +476,27 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 	public static MolDistHist read(String strMolDistHist){
 
 		String pattern = "[0-9]+";
-
 		List<PPNode> liPPNode = readNodes( strMolDistHist);
-
 		int size = liPPNode.size();
-
 		MolDistHist mdh = new MolDistHist(size);
-
 		for (PPNode ppNode : liPPNode) {
 			mdh.addNode(ppNode);
 		}
 
 		boolean histsProcessed = false;
-
 		List<byte []> liHist = new ArrayList<byte []>();
-
 		int startHist = strMolDistHist.indexOf("][");
-
 		int nHistograms = ((size*size)-size)/2;
+
+		if(nHistograms==0){
+			histsProcessed=true;
+		}
 
 		while(!histsProcessed){
 
 			int endHist = StringFunctions.nextClosing(strMolDistHist, startHist, '[', ']');
-
 			String sub = strMolDistHist.substring(startHist, endHist);
-
 			List<Point> li = StringFunctions.match(sub, pattern);
-
 			if(li.size() != ConstantsFlexophoreGenerator.BINS_HISTOGRAM){
 				throw new RuntimeException("Error in histogram.");
 			}
@@ -478,17 +505,12 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 
 			int cc=0;
 			for (Point p : li) {
-
 				String strCount = sub.substring(p.x, p.y);
-
 				arr[cc++] = (byte)(Integer.parseInt(strCount) & 0xFF);
-
 			}
 
 			liHist.add(arr);
-
 			startHist = strMolDistHist.indexOf('[', endHist);
-
 			if(liHist.size()==nHistograms){
 				histsProcessed=true;
 			}
@@ -500,7 +522,6 @@ public class MolDistHist extends DistHist implements Serializable, IMolDistHist 
 				mdh.setDistHist(i,j, liHist.get(cc++));
 			}
 		}
-
 
 		return mdh;
 	}

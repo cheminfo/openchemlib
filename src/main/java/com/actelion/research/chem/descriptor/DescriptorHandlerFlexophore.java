@@ -1,21 +1,35 @@
 /*
- * Copyright (c) 2020.
- * Idorsia Pharmaceuticals Ltd., Hegenheimermattweg 91, CH-4123 Allschwil, Switzerland
+ * Copyright (c) 1997 - 2022
+ * Idorsia Pharmaceuticals Ltd.
+ * Hegenheimermattweg 91
+ * CH-4123 Allschwil, Switzerland
  *
- *  This file is part of DataWarrior.
+ * All rights reserved.
  *
- *  DataWarrior is free software: you can redistribute it and/or modify it under the terms of the
- *  GNU General Public License as published by the Free Software Foundation, either version 3 of
- *  the License, or (at your option) any later version.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *  DataWarrior is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *  See the GNU General Public License for more details.
- *  You should have received a copy of the GNU General Public License along with DataWarrior.
- *  If not, see http://www.gnu.org/licenses/.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
  *
- *  @author Modest v. Korff
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ * @author Modest v. Korff
  */
 
 package com.actelion.research.chem.descriptor;
@@ -28,20 +42,18 @@ import com.actelion.research.chem.descriptor.flexophore.*;
 import com.actelion.research.chem.descriptor.flexophore.completegraphmatcher.ObjectiveBlurFlexophoreHardMatchUncovered;
 import com.actelion.research.chem.descriptor.flexophore.completegraphmatcher.PPNodeSimilarity;
 import com.actelion.research.chem.descriptor.flexophore.generator.CreatorMolDistHistViz;
+import com.actelion.research.util.ArrayUtils;
 import com.actelion.research.util.CommandLineParser;
 import com.actelion.research.util.graph.complete.CompleteGraphMatcher;
 import com.actelion.research.util.graph.complete.SolutionCompleteGraph;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
  * DescriptorHandlerFlexophore
- * <p>Copyright: Actelion Ltd., Inc. All Rights Reserved
- * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
- * Use is subject to license terms.</p>
- * @author Modest von Korff
  * 29 Jan 2009 MvK: Start implementation
  * 15 Oct 2012 MvK renamed DescriptorHandler3DMM2PPInteract-->DescriptorHandlerFlexophore
  * 19 Apr 2013 MvK major changes in Flexophore encoding decoding
@@ -141,6 +153,7 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 	private double threshHistogramSimilarity;
 
 	private boolean singleConformationModeQuery;
+	private boolean includeNodeAtoms;
 
 	private ThreadMaster threadMaster;
 
@@ -216,8 +229,10 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 
 
 		creatorMolDistHistViz = new CreatorMolDistHistViz();
+	}
 
-
+	public void setIncludeNodeAtoms(boolean b) {
+		includeNodeAtoms = b;
 	}
 
 	public void setModeQuery(boolean modeQuery){
@@ -368,10 +383,9 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 	}
 
 	public MolDistHist createDescriptor(Object mol) {
-
 		StereoMolecule fragBiggest = (StereoMolecule)mol;
 
-		fragBiggest.stripSmallFragments();
+		int[] oldToNewAtom = fragBiggest.stripSmallFragments();
 
 		fragBiggest.ensureHelperArrays(StereoMolecule.cHelperCIP);
 
@@ -381,9 +395,6 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 			return FAILED_OBJECT;
 		}
 
-//        IDCodeParser parser = new IDCodeParser();
-//		fragBiggest = parser.getCompactMolecule(new Canonizer(fragBiggest).getIDCode());
-
 		MolDistHistViz mdhv = createVisualDescriptor(fragBiggest);
 		MolDistHist mdh = (mdhv == null) ? null : mdhv.getMolDistHist();
 
@@ -392,12 +403,25 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 		if(mdh == null) {
 			mdh = FAILED_OBJECT;
 		} else if (mdh.getNumPPNodes() > ConstantsFlexophore.MAX_NUM_NODES_FLEXOPHORE) {
-
 			String msg = "Flexophore exceeded maximum number of nodes.";
-
 			recentException = new RuntimeException(msg);
-
 			mdh = FAILED_OBJECT;;
+		}
+		else if (includeNodeAtoms) {
+			List<PPNodeViz> nodeList = mdhv.getNodes();
+			int[][] nodeAtom = new int[nodeList.size()][];
+			for (int i=0; i<nodeList.size(); i++) {
+				nodeAtom[i] = ArrayUtils.toIntArray(nodeList.get(i).getListIndexOriginalAtoms());
+				if (oldToNewAtom != null) {
+					int[] newToOldAtom = new int[fragBiggest.getAtoms()];
+					for (int j=0; j<oldToNewAtom.length; j++)
+						if (oldToNewAtom[j] != -1)
+							newToOldAtom[oldToNewAtom[j]] = j;
+					for (int j=0; j<nodeAtom[i].length; j++)
+						nodeAtom[i][j] = newToOldAtom[nodeAtom[i][j]];
+				}
+			}
+			mdh.setNodeAtoms(nodeAtom);
 		}
 
 		return mdh;
@@ -562,6 +586,9 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 
 		int n = scgBest.getSizeHeap();
 
+		if (n == 0) // added to prevent NegativeArraySizeException in next statement; TLS 10Jan2022
+			return null;
+
 		float [] arrSimNode = new float[scgBest.getNodesQuery()];
 
 		Arrays.fill(arrSimNode, -1);
@@ -581,7 +608,45 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 		return mss;
 	}
 
+	public ModelSolutionSimilarity getBestMatch(MolDistHist mdhBase, MolDistHist mdhQuery){
 
+		MolDistHistViz mdhvBase = new MolDistHistViz(mdhBase);
+		MolDistHistViz mdhvQuery = new MolDistHistViz(mdhQuery);
+
+		CompleteGraphMatcher<IMolDistHist> cgMatcher = queueCGM.poll();
+
+		if(cgMatcher == null){
+			cgMatcher = getNewCompleteGraphMatcher();
+		}
+
+		cgMatcher.set(mdhvBase, mdhvQuery);
+		cgMatcher.calculateSimilarity();
+
+		SolutionCompleteGraph scgBest = cgMatcher.getBestMatchingSolution();
+
+		int n = scgBest.getSizeHeap();
+
+		if (n == 0) // added to prevent NegativeArraySizeException in next statement; TLS 10Jan2022
+			return null;
+
+		float [] arrSimNode = new float[scgBest.getNodesQuery()];
+
+		Arrays.fill(arrSimNode, -1);
+
+		ObjectiveBlurFlexophoreHardMatchUncovered objectiveCompleteGraphHard = (ObjectiveBlurFlexophoreHardMatchUncovered)cgMatcher.getObjectiveCompleteGraph();
+		objectiveCompleteGraphHard.setMatchingInfoInQueryAndBase(scgBest);
+
+		for (int indexHeap = 0; indexHeap < n; indexHeap++) {
+
+			int indexQuery = scgBest.getIndexQueryFromHeap(indexHeap);
+
+			arrSimNode[indexQuery] = mdhvQuery.getNode(indexQuery).getSimilarityMappingNodes();
+		}
+
+		ModelSolutionSimilarity mss = new ModelSolutionSimilarity(scgBest, arrSimNode);
+
+		return mss;
+	}
 
 	public static float normalizeValue(double value) {
 		return value <= 0.0f ? 0.0f
@@ -608,6 +673,7 @@ public class DescriptorHandlerFlexophore implements IDescriptorHandlerFlexophore
 				singleConformationModeQuery);
 
 		dh.setModeQuery(objectiveCompleteGraphHard.isModeQuery());
+		dh.setIncludeNodeAtoms(includeNodeAtoms);
 
 		return dh;
 	}

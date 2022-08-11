@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem;
 
@@ -230,9 +231,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * The neighbours (connected atoms) of any atom are sorted by their relevance:<br>
-	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non natural abundance isotops, custom labelled hydrogen, etc.)<br>
+	 * 1. non-hydrogen atoms (bond order 1 and above) and unusual hydrogen atoms (non-natural abundance isotopes, custom labelled hydrogen, etc.)<br>
 	 * 2. plain-hydrogen atoms (natural abundance, bond order 1)<br>
-	 * 3. loosely connected atoms (bond order 0, i.e. metall ligand bond)<br>
+	 * 3. loosely connected atoms (bond order 0, i.e. metal ligand bond)<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
 	 * @param atom
 	 * @return count of category 1 & 2 neighbour atoms (excludes neighbours connected with zero bond order)
@@ -262,13 +263,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 	/**
 	 * A validated molecule (after helper array creation) contains a sorted list of all atoms
-	 * with the plain (neglegible) hydrogen atoms at the end of the list. Neglegible hydrogen atoms
+	 * with the plain (negligible) hydrogen atoms at the end of the list. negligible hydrogen atoms
 	 * a those that can be considered implicit, because they have no attached relevant information.
-	 * Hydrogen atoms that cannot be neglected are special isotops (mass != 0), if they carry a
+	 * Hydrogen atoms that cannot be neglected are special isotopes (mass != 0), if they carry a
 	 * custom label, if they are connected to another atom with bond order different from 1, or
-	 * if they are connected to another neglegible hydrogen.<br>
+	 * if they are connected to another negligible hydrogen.<br>
 	 * Only valid after calling ensureHelperArrays(cHelperNeighbours or higher);
-	 * @return the number of relevant atoms not including neglegible hydrogen atoms
+	 * @return the number of relevant atoms not including negligible hydrogen atoms
 	 */
 	public int getAtoms() {
 		return mAtoms;
@@ -308,16 +309,29 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
+	 * Hendrickson Z-value, which is the sum of all bond orders to any attached hetero atoms.
+	 * Delocalized bonds orders are considered 1.5. Since the z-value is an integer,
+	 * one delocalized hetero atom results in z=1, two delocalized hetero atoms give z=3.
+	 * Requires helper arrays state cHelperRings.
 	 * @param atom
-	 * @return Hendrickson Z-value, which is the sum of all bond orders to any attached hetero atoms
-	 *
+	 * @return Hendrickson Z-value
+	 */
 	public int getAtomZValue(int atom) {
 		int z = 0;
-		for (int i=0; i<mConnAtoms[atom]; i++)
-			if (isElectronegative(mConnAtom[atom][i]))
-				z += mConnBondOrder[atom][i];
-		return z;
-		}*/
+		int arom = 0;
+		for (int i=0; i<mConnAtoms[atom]; i++) {
+			if (isElectronegative(mConnAtom[atom][i])) {
+				if (isDelocalizedBond(mConnBond[atom][i])) {
+					z++;
+					arom++;
+					}
+				else {
+					z += mConnBondOrder[atom][i];
+					}
+				}
+			}
+		return z + arom/2;
+		}
 
 	
 	/**
@@ -1532,6 +1546,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * different, but energetically equivalent mesomeric structures. Bonds in aromatic 6-membered
 	 * rings typically are delocalized, while those in uncharged 5-membered aromatic rings are not.
 	 * Indole has 6 delocalized bonds.
+	 * Moreover, if the molecule is a fragment and if the bond query feature cBondQFDelocalized is
+	 * set (possibly as one of multiple allowed bond types), then this method also returns true.
 	 * @param bond
 	 * @return
 	 */
@@ -1664,8 +1680,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 
 	/**
-	 * Converts any stereo bond attached with its pointed tip
-	 * to this atom into a single bond.
+	 * Converts any stereo bond being attached with the pointed tip to the given potential stereocenter
+	 * (TH or allene) into a single bond. For allenic stereo centers, stereo bonds at the allene end atoms
+	 * are converted. Atoms with PI electrons are not touched, unless they are P,S,...
 	 * @param atom
 	 */
 	public void convertStereoBondsToSingleBonds(int atom) {
@@ -1673,12 +1690,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 			for (int i=0; i<2; i++) {
 				int alleneEnd = findAlleneEndAtom(atom, mConnAtom[atom][i]);
 				if (alleneEnd != -1)
-					convertStereoBondsToSingleBonds(alleneEnd);
+					for (int j=0; j<mConnAtoms[alleneEnd];j++)
+						if (isStereoBond(mConnBond[alleneEnd][j]))
+							mBondType[mConnBond[alleneEnd][j]] = cBondTypeSingle;
 				}
 			return;
 			}
 
-		// avoid flattening allene stereo bonds
 		if (mPi[atom] == 0 || mAtomicNo[atom] >= 15) {
 			for (int i=0; i<mAllConnAtoms[atom]; i++) {
 				int connBond = mConnBond[atom][i];
@@ -2299,7 +2317,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return axial chirality bond or -1 if axial chirality conditions are not met 
 	 */
 	public int findBINAPChiralityBond(int atom) {
-		if (mConnAtoms[atom] == 3 && isAromaticAtom(atom) && getAtomRingSize(atom) >= 6)
+		if (mConnAtoms[atom] == 3 && isAromaticAtom(atom) && getAtomRingSize(atom) >= 5)
 			for (int i = 0; i< mConnAtoms[atom]; i++)
 				if (isBINAPChiralityBond(mConnBond[atom][i]))
 					return mConnBond[atom][i];
@@ -2444,28 +2462,69 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		int atom1 = mBondAtom[0][bond];
 		if (!isAromaticAtom(atom1)
-		 || getAtomRingSize(atom1) < 6)
+		 || getAtomRingSize(atom1) < 5)
 			return false;
 
 		int atom2 = mBondAtom[1][bond];
 		if (!isAromaticAtom(atom2)
-		 || getAtomRingSize(atom2) < 6)
+		 || getAtomRingSize(atom2) < 5)
 			return false;
 
-		int orthoSubstituentCount = 0;
-		for (int j = 0; j< mConnAtoms[atom1]; j++) {
-			int connAtom = mConnAtom[atom1][j];
-			if (connAtom != atom2 && mConnAtoms[connAtom] > 2)
-				orthoSubstituentCount++;
-			}
-		for (int j = 0; j< mConnAtoms[atom2]; j++) {
-			int connAtom = mConnAtom[atom2][j];
-			if (connAtom != atom1 && mConnAtoms[connAtom] > 2)
-				orthoSubstituentCount++;
-			}
-		return (orthoSubstituentCount > 2);
+		int orthoSubstituentCount1 = getOrthoSubstituentCount(atom1, atom2);
+		int orthoSubstituentCount2 = getOrthoSubstituentCount(atom2, atom1);
+
+		// with aromatic 6-membered (or larger) rings only, we have a simple logic
+		if (getAtomRingSize(atom1) > 5 && getAtomRingSize(atom2) > 5)
+			return orthoSubstituentCount1 + orthoSubstituentCount2 > 2;
+
+		int secondOrderOrthoSubstituentCount1 = getSecondOrderOrthoSubstituentCount(atom1, atom2);
+		int secondOrderOrthoSubstituentCount2 = getSecondOrderOrthoSubstituentCount(atom2, atom1);
+
+		// for 5-membered rings we need stronger constraints (currently we don't distignuid 5-5 and 5-6)
+
+		if (orthoSubstituentCount1 == 2 && secondOrderOrthoSubstituentCount2 >= 1)
+			return true;
+		if (orthoSubstituentCount2 == 2 && secondOrderOrthoSubstituentCount1 >= 1)
+			return true;
+
+		if (secondOrderOrthoSubstituentCount1 == 2 && (orthoSubstituentCount2 >= 1 || secondOrderOrthoSubstituentCount2 >= 1))
+			return true;
+		if (secondOrderOrthoSubstituentCount2 == 2 && (orthoSubstituentCount1 >= 1 || secondOrderOrthoSubstituentCount1 >= 1))
+			return true;
+
+		return false;
 		}
 
+	private int getOrthoSubstituentCount(int atom, int otherBondAtom) {
+		int count = 0;
+		for (int i=0; i<mConnAtoms[atom]; i++) {
+			int connAtom = mConnAtom[atom][i];
+			if (connAtom != otherBondAtom && mConnAtoms[connAtom] > 2)
+				count++;
+			}
+		return count;
+		}
+
+	private int getSecondOrderOrthoSubstituentCount(int atom, int otherBondAtom) {
+		int count = 0;
+		for (int i=0; i<mConnAtoms[atom]; i++) {
+			int connAtom = mConnAtom[atom][i];
+			if (connAtom != otherBondAtom) {
+				int innerCount = 0;
+				for (int j=0; j<mConnAtoms[connAtom]; j++) {
+					int nextConnAtom = mConnAtom[connAtom][j];
+					if (nextConnAtom != atom
+					 && isAromaticBond(mConnBond[connAtom][j])
+					 && mConnAtoms[nextConnAtom] > 2)
+						innerCount++;
+					}
+				// if we have two next neighbours with 3 neighbours each, then one of them must be a second order ortho
+				if (innerCount == 2)
+					count++;
+				}
+			}
+		return count;
+		}
 
 	protected boolean validateBondType(int bond, int type) {
 		boolean ok = super.validateBondType(bond, type);
@@ -3141,13 +3200,13 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		return getHandleHydrogenAtomMap(findSimpleHydrogens());
 		}
 
-		/**
-		 * If ensureHelperArrays() (and with it handleHydrogens()) was not called yet
-		 * on a fresh molecule and if the molecule contains simple hydrogen atoms within
-		 * non-hydrogens atoms, then this function returns a map from current atom indexes
-		 * to those new atom indexes that would result from a call to handleHydrogens.
-		 * @return
-		 */
+	/**
+	 * If ensureHelperArrays() (and with it handleHydrogens()) was not called yet
+	 * on a fresh molecule and if the molecule contains simple hydrogen atoms within
+	 * non-hydrogens atoms, then this function returns a map from current atom indexes
+	 * to those new atom indexes that would result from a call to handleHydrogens.
+	 * @return
+	 */
 	public int[] getHandleHydrogenAtomMap(boolean[] isSimpleHydrogen) {
 		int[] map = new int[mAllAtoms];
 		for (int i=0; i<mAllAtoms; i++)
@@ -3162,6 +3221,11 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				int tempIndex = map[i];
 				map[i] = map[lastNonHAtom];
 				map[lastNonHAtom] = tempIndex;
+
+				// swap simple H flags also
+				boolean temp = isSimpleHydrogen[i];
+				isSimpleHydrogen[i] = isSimpleHydrogen[lastNonHAtom];
+				isSimpleHydrogen[lastNonHAtom] = temp;
 
 				do lastNonHAtom--;
 				while (isSimpleHydrogen[lastNonHAtom]);
@@ -3494,7 +3558,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 						queryFeatureShift = freeValence + explicitHydrogens - queryFeatureHydrogens;
 
 					if (queryFeatureShift > 0) {
-						int queryFeatures = (queryFeatureHydrogens == 0) ?  // purge 'less than' options
+						long queryFeatures = (queryFeatureHydrogens == 0) ?  // purge 'less than' options
 								0 : (mAtomQueryFeatures[atom] & cAtomQFHydrogen) << queryFeatureShift;
 						queryFeatures |= (queryFeatureShift == 3 ? 7 : explicitHydrogens == 2 ? 3 : 1) << cAtomQFHydrogenShift;
 

@@ -1,3 +1,37 @@
+/*
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Modest v. Korff
+ */
+
 package com.actelion.research.chem.descriptor.flexophore.redgraph;
 
 import com.actelion.research.chem.*;
@@ -11,9 +45,6 @@ import java.util.*;
  *
  * Creates substructures by fragmentation and summarizes them.
  *
- * <p>Copyright: Actelion Pharmaceuticals Ltd., Inc. All Rights Reserved
- * This software is the proprietary information of Actelion Pharmaceuticals, Ltd.
- * Use is subject to license terms.</p>
  * Created by korffmo1 on 17.02.16.
  * 10.03.2017 Bug fix in isEnclosingRing() for multi-bridged ring systems.
  */
@@ -294,7 +325,6 @@ public class SubGraphExtractor {
 
 
                     SubGraphIndices sgiSub = new SubGraphIndices();
-
                     sgiSub.addIndex(arrAtmSubPath);
 
                     addConnAtoms(mol, sgiSub, sgi, hsIndAtmSubPath);
@@ -979,7 +1009,11 @@ public class SubGraphExtractor {
 
         List<SubGraphIndices> liFragmentRings = new ArrayList<>();
 
-        RingCollection ringCollection = mol.getRingSet();
+
+
+        RingHelper ringHelper = new RingHelper(mol);
+
+        RingCollection ringCollection = ringHelper.getRingCollection();
 
         int rings = ringCollection.getSize();
 
@@ -987,21 +1021,22 @@ public class SubGraphExtractor {
 
             int ringSize = ringCollection.getRingSize(ringNo);
 
-            // Exclude enclosing rings
-            if(isEnclosingRing(ringCollection, ringNo)){
+            if(ringSize > MAX_RING_SIZE_TO_SUMMARIZE_HETERO_RINGS) {
                 continue;
             }
 
-            if(ringSize <= MAX_RING_SIZE_TO_SUMMARIZE_HETERO_RINGS) {
+            int [] arrIndexRingAtoms = ringCollection.getRingAtoms(ringNo);
 
-                SubGraphIndices fragment = new SubGraphIndices();
-
-                int [] arrIndexRingAtoms = ringCollection.getRingAtoms(ringNo);
-
-                fragment.addIndex(arrIndexRingAtoms);
-
-                liFragmentRings.add(fragment);
+            // Exclude enclosing rings
+            if(ringHelper.isEnclosingRing(arrIndexRingAtoms)){
+                continue;
             }
+
+            SubGraphIndices fragment = new SubGraphIndices();
+
+            fragment.addIndex(arrIndexRingAtoms);
+
+            liFragmentRings.add(fragment);
         }
 
         // Merge bridged rings.
@@ -1037,258 +1072,6 @@ public class SubGraphExtractor {
 
         return liFragmentRingsMerged;
     }
-
-
-    /**
-     * Checks for enclosing ring.
-     * An enclosing ring is a ring that contains all atom indices of two or more rings. And the enclosing ring contains
-     * no other atom index.
-     *
-     * @param ringCollection
-     * @param ringNo2Check
-     * @return
-     */
-    private boolean isEnclosingRing(RingCollection ringCollection, int ringNo2Check){
-
-        boolean enclosingRing = false;
-
-        int rings = ringCollection.getSize();
-
-        int [] arrIndexRingAtomsRing2Check = ringCollection.getRingAtoms(ringNo2Check);
-
-        for (int indexRingAt : arrIndexRingAtomsRing2Check) {
-            arrRingAtom[indexRingAt] = true;
-        }
-
-        int sizeRing2Check = arrIndexRingAtomsRing2Check.length;
-
-        LinkedList<LinkedList> liliIndexRing = new LinkedList<>();
-
-        /**
-         * Detect all rings that have the same indices as the potentially enclosing ring.
-         */
-        for (int ringNo = 0; ringNo < rings; ringNo++) {
-
-            if(ringNo==ringNo2Check){
-                continue;
-            }
-
-            int [] arrIndexRingAtoms = ringCollection.getRingAtoms(ringNo2Check);
-
-            if(arrIndexRingAtoms.length >= sizeRing2Check) {
-                continue;
-            }
-
-            boolean allIndicesMatch = true;
-
-            for (int indexRingAtom : arrIndexRingAtoms) {
-
-                if(!arrRingAtom[indexRingAtom]){
-                    allIndicesMatch = false;
-                    break;
-                }
-            }
-
-            if(allIndicesMatch) {
-
-                LinkedList<Integer> li = new LinkedList<>();
-
-                li.add(ringNo);
-
-                liliIndexRing.add(li);
-
-            }
-        }
-
-        while (!liliIndexRing.isEmpty()){
-
-            LinkedList<Integer> liIndexRingParent = liliIndexRing.poll();
-
-            HashSetInt hsIndexAtom = new HashSetInt();
-
-            for (int ringNo : liIndexRingParent) {
-
-                int [] arrIndexRingAtoms = ringCollection.getRingAtoms(ringNo);
-
-                hsIndexAtom.add(arrIndexRingAtoms);
-
-            }
-
-            if(hsIndexAtom.size() == sizeRing2Check) {
-
-                int [] arrIndexRingAtoms = hsIndexAtom.getValues();
-
-                Arrays.sort(arrIndexRingAtoms);
-
-                boolean match = true;
-
-                for (int i = 0; i < arrIndexRingAtoms.length; i++) {
-
-                    if(arrIndexRingAtomsRing2Check[i] != arrIndexRingAtoms[i]){
-
-                        match = false;
-
-                        break;
-
-                    }
-
-                }
-
-                if(match) {
-
-                    enclosingRing = true;
-
-                    break;
-
-                }
-
-            } else if(hsIndexAtom.size() < sizeRing2Check) {
-
-                for (int ringNo = 0; ringNo < rings; ringNo++) {
-
-                    if(ringNo == ringNo2Check) {
-
-                        continue;
-
-                    }
-
-                    if(!liIndexRingParent.contains(ringNo)){
-
-                        int [] arrIndexRingAtoms = ringCollection.getRingAtoms(ringNo);
-
-                        boolean allIndicesMatch = true;
-
-                        for (int indexRingAtom : arrIndexRingAtoms) {
-                            if(!arrRingAtom[indexRingAtom]){
-                                allIndicesMatch = false;
-                                break;
-                            }
-                        }
-
-                        if(allIndicesMatch) {
-
-                            LinkedList<Integer> liIndexRingChild = new LinkedList<>(liIndexRingParent);
-
-                            liIndexRingChild.add(ringNo);
-
-                            liliIndexRing.add(liIndexRingChild);
-                        }
-                    }
-                }
-            }
-        }
-
-        // Reset the array
-        for (int indexRingAt : arrIndexRingAtomsRing2Check) {
-            arrRingAtom[indexRingAt] = false;
-        }
-
-        return enclosingRing;
-    }
-
-//  10.03.2017 commented out. Not working for multi bridged boron containing rings.
-//    private static boolean isEnclosingRing(RingCollection ringCollection, int ringNo){
-//
-//        boolean enclosingRing = false;
-//
-//        int rings = ringCollection.getSize();
-//
-//        int [] arrIndexRingAtoms0 = ringCollection.getRingAtoms(ringNo);
-//
-//        Arrays.sort(arrIndexRingAtoms0);
-//
-//        int size0 = arrIndexRingAtoms0.length;
-//
-//        LinkedList<LinkedList> liliIndexRing = new LinkedList<>();
-//
-//        for (int i = 0; i < rings; i++) {
-//
-//            if(i==ringNo){
-//
-//                continue;
-//
-//            }
-//
-//            if(ringCollection.getRingAtoms(i).length < size0) {
-//
-//                LinkedList<Integer> li = new LinkedList<>();
-//
-//                li.add(i);
-//
-//                liliIndexRing.add(li);
-//
-//            }
-//
-//        }
-//
-//        while (!liliIndexRing.isEmpty()){
-//
-//            LinkedList<Integer> liIndexRingParent = liliIndexRing.poll();
-//
-//            HashSetInt hsIndexAtom = new HashSetInt();
-//
-//            for (int indRing : liIndexRingParent) {
-//
-//                int [] arrIndexRingAtoms = ringCollection.getRingAtoms(indRing);
-//
-//                hsIndexAtom.add(arrIndexRingAtoms);
-//
-//            }
-//
-//            if(hsIndexAtom.size() == size0) {
-//
-//                int [] arrIndexRingAtoms = hsIndexAtom.getValues();
-//
-//                Arrays.sort(arrIndexRingAtoms);
-//
-//                boolean match = true;
-//
-//                for (int i = 0; i < arrIndexRingAtoms.length; i++) {
-//
-//                    if(arrIndexRingAtoms0[i] != arrIndexRingAtoms[i]){
-//
-//                        match = false;
-//
-//                        break;
-//
-//                    }
-//
-//                }
-//
-//                if(match) {
-//
-//                    enclosingRing = true;
-//
-//                    break;
-//
-//                }
-//
-//            } else if(hsIndexAtom.size() < size0) {
-//
-//                for (int i = 0; i < rings; i++) {
-//
-//                    if(i == ringNo) {
-//
-//                        continue;
-//
-//                    }
-//
-//                    if(!liIndexRingParent.contains(i)){
-//
-//                        LinkedList<Integer> liIndexRingChild = new LinkedList<>(liIndexRingParent);
-//
-//                        liIndexRingChild.add(i);
-//
-//                        liliIndexRing.add(liIndexRingChild);
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//        return enclosingRing;
-//    }
-
 
 
 

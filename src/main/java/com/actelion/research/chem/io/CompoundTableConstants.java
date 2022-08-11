@@ -93,6 +93,7 @@ public interface CompoundTableConstants {
     int cDataTypeInteger = 2;
     int cDataTypeDate = 3;
     int cDataTypeString = 4;
+    String cForceCategoriesCode = "_categories";
     String[] cDataTypeCode = {"auto", "num", "int", "date", "text"};
     String[] cDataTypeText = {"Automatic", "Floating Point", "Integer", "Date", "Text"};
 
@@ -172,11 +173,17 @@ public interface CompoundTableConstants {
     String cColumnPropertyReferenceTypeRedundant = "redundant";	// a connection is always referenced on both records
     String cColumnPropertyReferenceTypeTopDown = "topdown";	// a connection is only referenced from top record
     String cColumnPropertyFormula = "formula";
+    String cColumnPropertyCompoundProperty = "compoundProperty";
     String cColumnPropertySuperposeMolecule = "superposeMol";	// idcode+coords to be displayed in every cell
+    String cColumnPropertyProteinCavity = "proteinCavity";	// idcode+coords of protein cavity to be displayed in every cell
+    String cColumnPropertyNaturalLigand = "naturalLigand";	// idcode+coords of natural ligand, if proteinCavity is given (not shown, used for surface creation)
+    String cColumnPropertyShowNaturalLigand = "showNaturalLigand";	// whether to show the natural ligand in addition to row's structure; default is true
     String cColumnPropertySuperpose = "superpose";  // cSuperposeValueReferenceRow or null
     String cColumnPropertySuperposeAlign = "align";  // cSuperposeAlignValueShape or null
+    String cColumnProperty3DFragmentSplit = "split3D"; // if "true": unconnected fragments of 3D-structure are shown as differently colored V3DMolecules
     String cColumnPropertyCommentUploadStatus = "commentUploadStatus";
     String cColumnPropertyCommentDepartment = "commentDepartment";
+    String cColumnPropertyCalculated = "calculated"; //for columns that can be calculated by a task
 
     String cSuperposeValueReferenceRow = "refRow";  // "reference" or null
     String cSuperposeAlignValueShape = "shape";  // "reference" or null

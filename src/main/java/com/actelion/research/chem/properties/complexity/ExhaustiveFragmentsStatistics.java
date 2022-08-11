@@ -115,7 +115,7 @@ public class ExhaustiveFragmentsStatistics {
 
 		efg  = new ExhaustiveFragmentGeneratorBonds(bits, totalCapacity);
 
-		System.out.println("ExhaustiveFragmentsStatistics init(...) max capacity bonds in fragment " + efg.getMaximumCapacityBondsInFragment());
+		System.out.println("ExhaustiveFragmentsStatistics init(...) totalCapacity " + totalCapacity);
 
 		minNumBondsFragment = MINLEN_FRAG;
 				

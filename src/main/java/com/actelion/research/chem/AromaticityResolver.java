@@ -1,35 +1,36 @@
 /*
-* Copyright (c) 1997 - 2016
-* Actelion Pharmaceuticals Ltd.
-* Gewerbestrasse 16
-* CH-4123 Allschwil, Switzerland
-*
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice, this
-*    list of conditions and the following disclaimer.
-* 2. Redistributions in binary form must reproduce the above copyright notice,
-*    this list of conditions and the following disclaimer in the documentation
-*    and/or other materials provided with the distribution.
-* 3. Neither the name of the the copyright holder nor the
-*    names of its contributors may be used to endorse or promote products
-*    derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*/
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @author Thomas Sander
+ */
 
 package com.actelion.research.chem;
 
@@ -332,8 +333,9 @@ public class AromaticityResolver {
 			if (mIsDelocalizedAtom[atom]
 			 && mMol.getLowestFreeValence(atom) == 0
 			 && (!mayChangeAtomCharges
-			  || !mMol.isElectronegative(atom)
-			  || mMol.getAtomCharge(atom) > 0))
+			  || (mMol.getAtomicNo(atom) == 5 && mMol.getAtomCharge(atom) < 0)
+			  || (mMol.getAtomicNo(atom) == 6 || mMol.getAtomicNo(atom) == 14)
+			  || (mMol.isElectronegative(atom) && mMol.getAtomCharge(atom) > 0)))
 				protectAtom(atom);
 		}
 
@@ -679,39 +681,23 @@ public class AromaticityResolver {
 	 */
 	private boolean checkAtomTypePi1(int atom, boolean correctCharge) {
 		int atomicNo = mMol.getAtomicNo(atom);
-		if ((atomicNo >=5 && atomicNo <= 8)
+		if ((atomicNo >= 5 && atomicNo <= 8)
 		 || atomicNo == 15 || atomicNo == 16 || atomicNo == 33 || atomicNo == 34 || atomicNo == 52) {	// P,S,As,Se,Te
-
-// Old logic seems fishy to me; TLS 10Dec2020
-//			int freeValence = mMol.getFreeValence(atom);
-//			if (freeValence == 1 || freeValence == 2)	// we allow one more free valence, because the atom may have a missing charge
-//  			return true;
 
 			int freeValence = mMol.getLowestFreeValence(atom);
 			if (freeValence != 0)
 				return true;
 
-			if (mMol.getAtomCharge(atom) == 0) {
-				if ((atomicNo == 15 || atomicNo == 33) /* && freeValence == 3 */) {
-					if (correctCharge)
-						mMol.setAtomCharge(atom, 1);
-					return true;
-					}
-				if ((atomicNo == 16 || atomicNo == 34 || atomicNo == 52) /* && freeValence == 4 */) {
-					if (correctCharge)
-						mMol.setAtomCharge(atom, 1);
-					return true;
-					}
-				if (atomicNo == 5 /* && freeValence == 0 */) {
-					if (correctCharge)
-						mMol.setAtomCharge(atom, -1);
-					return true;
-					}
-				if ((atomicNo == 7 || atomicNo == 8) /* && freeValence == 0 */) {
-					if (correctCharge)
-						mMol.setAtomCharge(atom, 1);
-					return true;
-					}
+			int charge = mMol.getAtomCharge(atom);
+			if (atomicNo == 5 && charge >= 0) {
+				if (correctCharge)
+					mMol.setAtomCharge(atom, charge-1);
+				return true;
+				}
+			if (atomicNo != 5 && charge <= 0) {
+				if (correctCharge)
+					mMol.setAtomCharge(atom, charge+1);
+				return true;
 				}
 			}
 

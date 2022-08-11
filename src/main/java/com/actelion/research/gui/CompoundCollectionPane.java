@@ -1,17 +1,33 @@
 /*
- * Copyright 2017 Idorsia Pharmaceuticals Ltd., Hegenheimermattweg 91, CH-4123 Allschwil, Switzerland
+ * Copyright (c) 1997 - 2016
+ * Actelion Pharmaceuticals Ltd.
+ * Gewerbestrasse 16
+ * CH-4123 Allschwil, Switzerland
  *
- * This file is part of DataWarrior.
- * 
- * DataWarrior is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version.
- * 
- * DataWarrior is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with DataWarrior.
- * If not, see http://www.gnu.org/licenses/.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. Neither the name of the the copyright holder nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @author Thomas Sander
  */
@@ -23,9 +39,11 @@ import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.actelion.research.gui.dnd.MoleculeDragAdapter;
 import com.actelion.research.gui.dnd.MoleculeDropAdapter;
 import com.actelion.research.gui.dnd.MoleculeTransferable;
+import com.actelion.research.gui.editor.SwingEditorDialog;
+import com.actelion.research.gui.generic.GenericRectangle;
 import com.actelion.research.gui.hidpi.HiDPIHelper;
 import com.actelion.research.util.ColorHelper;
-import com.actelion.research.util.CursorHelper;
+import com.actelion.research.gui.swing.SwingCursorHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,12 +91,13 @@ public class CompoundCollectionPane<T> extends JScrollPane
 	private CompoundCollectionModel<T> mModel;
 	private IClipboardHandler   mClipboardHandler;
 	private MoleculeFilter		mCompoundFilter;
-	private int					mDragActions,mDisplayMode,mSelectedIndex,mHighlightedIndex,
+	private int					mDisplayMode,mSelectedIndex,mHighlightedIndex,
 								mEditedIndex,mFileSupport,mStructureSize,mDragIndex,mDropIndex;
 	private Dimension		    mContentSize,mCellSize;
 	private JPanel			    mContentPanel;
 	private boolean			    mIsVertical,mIsEditable,mIsSelectable,mCreateFragments,
 								mIsEnabled,mShowValidationError,mInternalDragAndDropIsMove;
+	private ArrayList<JMenuItem> mCustomPopupItemList;
 	private ScrollPaneAutoScrollerWhenDragging mScroller;
 
 
@@ -210,6 +229,14 @@ public class CompoundCollectionPane<T> extends JScrollPane
 		return mClipboardHandler;
 		}
 
+	public void addCustomPopupItem(JMenuItem customItem) {
+		if (mCustomPopupItemList == null)
+			mCustomPopupItemList = new ArrayList<>();
+
+		mCustomPopupItemList.add(customItem);
+		}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(COPY) && mHighlightedIndex != -1) {
 			mClipboardHandler.copyMolecule(mModel.getMolecule(mHighlightedIndex));
@@ -364,7 +391,7 @@ public class CompoundCollectionPane<T> extends JScrollPane
 			mol = mModel.getMolecule(mEditedIndex);
 			}
 		Component c = getParentFrame();
-		JDrawDialog theDialog = (c instanceof Frame) ? new JDrawDialog((Frame)c, mol) : new JDrawDialog((Dialog)c, mol);
+		SwingEditorDialog theDialog = (c instanceof Frame) ? new SwingEditorDialog((Frame)c, mol) : new SwingEditorDialog((Dialog)c, mol);
 		theDialog.addStructureListener(this);
 		theDialog.setVisible(true);
 		}
@@ -429,12 +456,12 @@ public class CompoundCollectionPane<T> extends JScrollPane
 							}
 
 						Depictor2D d = new Depictor2D(compound, mDisplayMode);
-						d.validateView(g,
-									   new Rectangle2D.Double(bounds.x, bounds.y, bounds.width, bounds.height),
+						d.validateView((Graphics2D)g,
+									   new GenericRectangle(bounds.x, bounds.y, bounds.width, bounds.height),
 									   AbstractDepictor.cModeInflateToMaxAVBL);
 
 						d.setForegroundColor(foreground, background);
-						d.paint(g);
+						d.paint((Graphics2D)g);
 
 						if (mSelectedIndex == i || mHighlightedIndex == i) {
 							g.setColor(!mIsEnabled ? ColorHelper.getContrastColor(Color.GRAY, background)
@@ -540,7 +567,7 @@ public class CompoundCollectionPane<T> extends JScrollPane
 			int index = getMoleculeIndex(e.getX(), e.getY());
 			if (mHighlightedIndex != index) {
 				mHighlightedIndex = index;
-				setCursor(CursorHelper.getCursor(index == -1 ? CursorHelper.cPointerCursor : CursorHelper.cHandCursor));
+				setCursor(SwingCursorHelper.getCursor(index == -1 ? SwingCursorHelper.cPointerCursor : SwingCursorHelper.cHandCursor));
 				repaint();
 				}
 			}
@@ -597,6 +624,12 @@ public class CompoundCollectionPane<T> extends JScrollPane
 				item.addActionListener(this);
 				popup.add(item);
 				}
+			}
+
+		if (mCustomPopupItemList != null) {
+			popup.addSeparator();
+			for (JMenuItem customItem:mCustomPopupItemList)
+				popup.add(customItem);
 			}
 
 		popup.show(this, e.getX(), e.getY());
@@ -660,13 +693,12 @@ public class CompoundCollectionPane<T> extends JScrollPane
 		}
 
 	private void initializeDragAndDrop(int dragAction, int dropAction) {
-		mDragActions = dragAction;
 		if (dragAction != DnDConstants.ACTION_NONE) {
 			new MoleculeDragAdapter(this) {
 				public Transferable getTransferable(Point p) {
 					if (mHighlightedIndex == -1)
 						return null;
-					setCursor(CursorHelper.getCursor(CursorHelper.cFistCursor));
+					setCursor(SwingCursorHelper.getCursor(SwingCursorHelper.cFistCursor));
 					mDragIndex = mHighlightedIndex;
 					return new MoleculeTransferable(mModel.getMolecule(mHighlightedIndex));
 					}
