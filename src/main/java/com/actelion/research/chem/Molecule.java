@@ -215,8 +215,8 @@ public class Molecule implements Serializable {
 	public static final int cBondTypeDeleted		= 0x00000080;
 	public static final int cBondTypeIncreaseOrder  = 0x0000007F;
 
-	protected static final int cBondTypeMaskSimple	= 0x00000067;	// masks
-	protected static final int cBondTypeMaskStereo	= 0x00000018;
+	public static final int cBondTypeMaskSimple	= 0x00000067;	// masks
+	public static final int cBondTypeMaskStereo	= 0x00000018;
 
 	protected static final int cBondFlagsHelper2	= 0x000002C0;
 	protected static final int cBondFlagsHelper3	= 0x0000003F;
@@ -267,15 +267,15 @@ public class Molecule implements Serializable {
 	public static final int cBondQFRingSizeShift	= 15;
 	public static final int cBondQFAromStateBits	= 2;
 	public static final int cBondQFAromStateShift	= 19;
-	public static final int cBondQFAllFeatures		= 0x001FFFFF;
+	public static final int cBondQFAllFeatures		= 0x003FFFFF;
 	public static final int cBondQFSimpleFeatures	= 0x0018007F;
 	public static final int cBondQFNarrowing		= 0x00180060;
-	public static final int cBondQFBondTypes		= 0x0000001F;
-	public static final int cBondQFSingle			= 0x00000001;
-	public static final int cBondQFDouble			= 0x00000002;
-	public static final int cBondQFTriple			= 0x00000004;
-	public static final int cBondQFDelocalized		= 0x00000008;
-	public static final int cBondQFMetalLigand		= 0x00000010;
+	public static final int cBondQFBondTypes		= 0x0000001F;   // using OR logic for all 5 bond types
+	public static final int cBondQFSingle           = 0x00000001;
+	public static final int cBondQFDouble           = 0x00000002;
+	public static final int cBondQFTriple           = 0x00000004;
+	public static final int cBondQFDelocalized      = 0x00000008;
+	public static final int cBondQFMetalLigand      = 0x00000010;
 	public static final int cBondQFRingState		= 0x00000060;
 	public static final int cBondQFNotRing			= 0x00000020;
 	public static final int cBondQFRing				= 0x00000040;
@@ -287,6 +287,7 @@ public class Molecule implements Serializable {
 	public static final int cBondQFAromState		= 0x00180000;
 	public static final int cBondQFAromatic			= 0x00080000;
 	public static final int cBondQFNotAromatic		= 0x00100000;
+	public static final int cBondQFMatchFormalOrder = 0x00200000; // matches the formal bond order considering also cBondQFBondTypes in query
 
 	public static final int cHelperNone				= 0x0000;
 	public static final int cHelperBitNeighbours	= 0x0001;
@@ -325,6 +326,15 @@ public class Molecule implements Serializable {
 
 	public static final int cMoleculeColorDefault = 0;
 	public static final int cMoleculeColorNeutral = 1;
+
+	public static final int cPseudoAtomsHydrogenIsotops = 1;
+	public static final int cPseudoAtomsRGroups = 2;
+	public static final int cPseudoAtomsAminoAcids = 4;
+	public static final int cPseudoAtomAttachmentPoint = 8;
+
+	public static final int cDefaultAllowedPseudoAtoms = cPseudoAtomsHydrogenIsotops
+													   | cPseudoAtomsAminoAcids
+													   | cPseudoAtomAttachmentPoint;
 
 	public static final String[] cAtomLabel = { "?",
 		"H"  ,"He" ,"Li" ,"Be" ,"B"  ,"C"  ,"N"  ,"O"  ,
@@ -467,9 +477,32 @@ public class Molecule implements Serializable {
 	transient private Object mUserData;
 
     public static int getAtomicNoFromLabel(String atomLabel) {
-		for (int i=1; i<cAtomLabel.length; i++)
-			if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
+	    return getAtomicNoFromLabel(atomLabel, cDefaultAllowedPseudoAtoms);
+		}
+
+	public static int getAtomicNoFromLabel(String atomLabel, int allowedPseudoAtomGroups) {
+    	if (((allowedPseudoAtomGroups & cPseudoAtomAttachmentPoint) != 0) && atomLabel.equals("?"))
+			return 0;
+
+		for (int i=1; i<=128; i++)
+			if (!atomLabel.equals("??") && atomLabel.equalsIgnoreCase(cAtomLabel[i]))
 				return i;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomsRGroups) != 0)
+			for (int i=129; i<=144; i++)
+				if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
+					return i;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomsHydrogenIsotops) != 0)
+			for (int i=151; i<=152; i++)
+				if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
+					return i;
+
+		if ((allowedPseudoAtomGroups & cPseudoAtomsAminoAcids) != 0)
+			for (int i=171; i<=190; i++)
+				if (atomLabel.equalsIgnoreCase(cAtomLabel[i]))
+					return i;
+
 		return 0;
 		}
 
@@ -527,10 +560,11 @@ public class Molecule implements Serializable {
 		}
 
 
-	public static int bondOrderToType(int bondOrder) {
+	public static int bondOrderToType(int bondOrder, boolean useCrossBond) {
 		return bondOrder == 0 ? Molecule.cBondTypeMetalLigand
 			 : bondOrder == 1 ? Molecule.cBondTypeSingle
-			 : bondOrder == 2 ? Molecule.cBondTypeDouble : Molecule.cBondTypeTriple;
+			 : bondOrder == 2 ? (useCrossBond ? Molecule.cBondTypeCross : Molecule.cBondTypeDouble)
+							  : Molecule.cBondTypeTriple;
 		}
 
 

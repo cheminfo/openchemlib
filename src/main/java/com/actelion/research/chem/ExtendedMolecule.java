@@ -749,7 +749,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 					return graphLevel[graphAtom[current]];
 
 				if (graphLevel[candidate] == 0
-						&& (neglectAtom == null || neglectAtom.length <= candidate || !neglectAtom[candidate])) {
+				 && (neglectAtom == null || neglectAtom.length <= candidate || !neglectAtom[candidate])) {
 					graphAtom[++highest] = candidate;
 					graphLevel[candidate] = graphLevel[graphAtom[current]]+1;
 					}
@@ -759,9 +759,9 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 		return -1;
 		}
 
-
 	/**
-	 * Locates and returns the shortest path between atoms atom1 and atom2
+	 * Locates and returns the shortest path between atoms atom1 and atom2.
+	 * If neglectBond is not null, then flagged neglectBonds may not be part of the path.
 	 * @param pathAtom array large enough to hold all path atoms, i.e. maxLength+1
 	 * @param atom1 first atom of path; ends up in pathAtom[0]
 	 * @param atom2 last atom of path; ends up in pathAtom[pathLength]
@@ -770,6 +770,22 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 	 * @return number of bonds of path; -1 if there is no path
 	 */
 	public int getPath(int[] pathAtom, int atom1, int atom2, int maxLength, boolean[] neglectBond) {
+		return getPath(pathAtom, atom1, atom2, maxLength, null, neglectBond);
+		}
+
+	/**
+	 * Locates and returns the shortest path between atoms atom1 and atom2.
+	 * If neglectAtom is not null, then flagged neglectAtoms may not be part of the path, except for atom1 and atom2.
+	 * If neglectBond is not null, then flagged neglectBonds may not be part of the path.
+	 * @param pathAtom array large enough to hold all path atoms, i.e. maxLength+1
+	 * @param atom1 first atom of path; ends up in pathAtom[0]
+	 * @param atom2 last atom of path; ends up in pathAtom[pathLength]
+	 * @param maxLength paths larger than maxLength won't be detected
+	 * @param neglectAtom null or bitmask of forbidden atoms
+	 * @param neglectBond null or bitmask of forbidden bonds
+	 * @return number of bonds of path; -1 if there is no path
+	 */
+	public int getPath(int[] pathAtom, int atom1, int atom2, int maxLength, boolean[] neglectAtom, boolean[] neglectBond) {
 		if (atom1 == atom2) {
 			pathAtom[0] = atom1;
 			return 0;
@@ -804,7 +820,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 						return graphLevel[parent];
 						}
 	
-					if (graphLevel[candidate] == 0) {
+					if (graphLevel[candidate] == 0
+					 && (neglectAtom == null || neglectAtom.length <= candidate || !neglectAtom[candidate])) {
 						graphAtom[++highest] = candidate;
 						graphLevel[candidate] = graphLevel[parent]+1;
 						parentAtom[candidate] = parent;
@@ -3196,7 +3213,8 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 
 		for (int bond=0; bond<lastNonHBond; bond++) {
 			if (isHydrogenBond[bond]) {
-				int tempInt = mBondAtom[0][bond];
+				swapBonds(bond, lastNonHBond);
+/*				int tempInt = mBondAtom[0][bond];
 				mBondAtom[0][bond] = mBondAtom[0][lastNonHBond];
 				mBondAtom[0][lastNonHBond] = tempInt;
 				tempInt = mBondAtom[1][bond];
@@ -3204,7 +3222,7 @@ public class ExtendedMolecule extends Molecule implements Serializable {
 				mBondAtom[1][lastNonHBond] = tempInt;
 				tempInt = mBondType[bond];
 				mBondType[bond] = mBondType[lastNonHBond];
-				mBondType[lastNonHBond] = tempInt;
+				mBondType[lastNonHBond] = tempInt;  */
 				isHydrogenBond[bond] = false;
 				do lastNonHBond--;
 					while (isHydrogenBond[lastNonHBond]);

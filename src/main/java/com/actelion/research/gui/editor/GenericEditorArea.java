@@ -47,8 +47,8 @@ import com.actelion.research.gui.LookAndFeelHelper;
 import com.actelion.research.gui.clipboard.IClipboardHandler;
 import com.actelion.research.gui.generic.*;
 import com.actelion.research.gui.hidpi.HiDPIHelper;
-import com.actelion.research.util.ColorHelper;
 import com.actelion.research.gui.swing.SwingCursorHelper;
+import com.actelion.research.util.ColorHelper;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -89,6 +89,7 @@ public class GenericEditorArea implements GenericEventListener {
 	private static final String ITEM_FLIP_HORIZONTALLY = "Flip Horizontally";
 	private static final String ITEM_FLIP_VERTICALLY = "Flip Vertically";
 	private static final String ITEM_FLIP_ROTATE180 = "Rotate 180°";
+	private static final String ITEM_SHOW_HELP = "Help Me";
 
 	// development items
 	private static final String ITEM_SHOW_ATOM_BOND_NUMBERS = "Show Atom & Bond Numbers";
@@ -139,12 +140,13 @@ public class GenericEditorArea implements GenericEventListener {
 
 	private static IReactionMapper sMapper;
 	private int mMode, mChainAtoms, mCurrentTool, mCustomAtomicNo, mCustomAtomMass, mCustomAtomValence, mCustomAtomRadical,
-			mCurrentHiliteAtom, mCurrentHiliteBond, mPendingRequest, mEventsScheduled,
+			mCurrentHiliteAtom, mCurrentHiliteBond, mPendingRequest, mEventsScheduled, mFirstAtomKey,
 			mCurrentCursor, mReactantCount, mUpdateMode, mDisplayMode, mAtom1, mAtom2, mMaxAVBL;
 	private int[] mChainAtom, mFragmentNo, mHiliteBondSet;
 	private double mX1, mY1, mX2, mY2, mWidth, mHeight, mUIScaling, mTextSizeFactor;
 	private double[] mX, mY, mChainAtomX, mChainAtomY;
-	private boolean mAltIsDown, mShiftIsDown, mMouseIsDown, mIsAddingToSelection, mAtomColorSupported, mAllowQueryFeatures;
+	private boolean mAltIsDown, mShiftIsDown, mMouseIsDown, mIsAddingToSelection, mAtomColorSupported, mAllowQueryFeatures,
+			mAllowFragmentChangeOnPasteOrDrop;
 	private boolean[] mIsSelectedAtom, mIsSelectedObject;
 	private String mCustomAtomLabel,mWarningMessage,mAtomKeyStrokeSuggestion;
 	private String[] mAtomText;
@@ -185,6 +187,7 @@ public class GenericEditorArea implements GenericEventListener {
 		mCustomAtomRadical = 0;
 		mCustomAtomLabel = null;
 		mAllowQueryFeatures = true;
+		mAllowFragmentChangeOnPasteOrDrop = false;
 		mPendingRequest = cRequestNone;
 		mCurrentCursor = SwingCursorHelper.cPointerCursor;
 		mAtomKeyStrokeBuffer = new StringBuilder();
@@ -609,6 +612,8 @@ public class GenericEditorArea implements GenericEventListener {
 			flip(false);
 		} else if (command.equals(ITEM_FLIP_ROTATE180)) {
 			rotate180();
+		} else if (command.equals(ITEM_SHOW_HELP)) {
+			showHelpDialog();
 		} else if (command.startsWith("atomColor")) {
 			int index = command.indexOf(':');
 			int atom = Integer.parseInt(command.substring(9, index));
@@ -782,9 +787,10 @@ public class GenericEditorArea implements GenericEventListener {
 		if (mClipboardHandler != null) {
 			Reaction rxn = mClipboardHandler.pasteReaction();
 			if (rxn != null) {
-				for (int i = 0; i<rxn.getMolecules(); i++) {
-					rxn.getMolecule(i).setFragment(mMol.isFragment());
-				}
+				if (!mAllowFragmentChangeOnPasteOrDrop)
+					for (int i = 0; i<rxn.getMolecules(); i++)
+						rxn.getMolecule(i).setFragment(mMol.isFragment());
+
 				storeState();
 				setReaction(rxn);
 				ret = true;
@@ -825,16 +831,19 @@ public class GenericEditorArea implements GenericEventListener {
 		mol.removeAtomColors();
 		mol.removeBondHiliting();
 
+		boolean editorIsFragment = mMol.isFragment();
 		if (mMol.getAllAtoms() == 0) {
-			boolean isFragment = mMol.isFragment();
 			mol.copyMolecule(mMol);
-			mMol.setFragment(isFragment);
+			if (!mAllowFragmentChangeOnPasteOrDrop)
+				mMol.setFragment(editorIsFragment);
 			updateAndFireEvent(UPDATE_SCALE_COORDS);
 		} else {
 			if (p != null)
 				mol.translateCoords(p.x - mCanvas.getCanvasWidth()/2, p.y - mCanvas.getCanvasHeight()/2);
 			int originalAtoms = mMol.getAllAtoms();
 			mMol.addMolecule(mol);
+			if (!mAllowFragmentChangeOnPasteOrDrop)
+				mMol.setFragment(editorIsFragment);
 			for (int atom = 0; atom<mMol.getAllAtoms(); atom++)
 				mMol.setAtomSelection(atom, atom>=originalAtoms);
 
@@ -1241,7 +1250,20 @@ public class GenericEditorArea implements GenericEventListener {
 			} else if (mCurrentHiliteAtom != -1) {
 				int ch = e.getKey();
 				boolean isFirst = (mAtomKeyStrokeBuffer.length() == 0);
-				if (isFirst && (ch == '+' || ch == '-')) {
+				if (isFirst)
+					mFirstAtomKey = ch;
+				else {
+					if (mFirstAtomKey == 'l') { // if we don't want first 'l' to be a chlorine
+						mAtomKeyStrokeBuffer.setLength(0);
+						mAtomKeyStrokeBuffer.append('L');
+						}
+					mFirstAtomKey = -1;
+					}
+
+				if (isFirst && ch == 'l') { // if no chars are following, we interpret 'l' as chlorine analog to ChemDraw
+					mAtomKeyStrokeBuffer.append("Cl");
+					update(UPDATE_REDRAW);
+				} else if (isFirst && (ch == '+' || ch == '-')) {
 					storeState();
 					if (mMol.changeAtomCharge(mCurrentHiliteAtom, ch == '+'))
 						updateAndFireEvent(UPDATE_CHECK_COORDS);
@@ -1257,11 +1279,13 @@ public class GenericEditorArea implements GenericEventListener {
 							: (mMol.getAtomRadical(mCurrentHiliteAtom) == Molecule.cAtomRadicalStateS) ? 0 : Molecule.cAtomRadicalStateT;
 					mMol.setAtomRadical(mCurrentHiliteAtom, newRadical);
 					updateAndFireEvent(UPDATE_CHECK_COORDS);
-				} else if (isFirst && ch == 'l') {
-					mAtomKeyStrokeBuffer.append("Cl");
-					update(UPDATE_REDRAW);
 				} else if (isFirst && ch == 'q' && mMol.isFragment()) {
 					showAtomQFDialog(mCurrentHiliteAtom);
+
+				} else if (isFirst && mMol.isFragment() && (ch == 'x' || ch == 'X')) {
+					int[] list = { 9, 17, 35, 53 };
+					mMol.setAtomList(mCurrentHiliteAtom, list);
+					updateAndFireEvent(UPDATE_CHECK_COORDS);
 				} else if (isFirst && ch == '?') {
 					storeState();
 					if (mMol.changeAtom(mCurrentHiliteAtom, 0, 0, -1, 0)) {
@@ -1389,6 +1413,12 @@ public class GenericEditorArea implements GenericEventListener {
 			popup.addRadioButtonItem("	  ", "atomColor" + mCurrentHiliteAtom + ":" + Molecule.cAtomColorOrange, AbstractDepictor.COLOR_ORANGE, atomColor == Molecule.cAtomColorOrange);
 			popup.endSubMenu();
 			}
+
+		if (popup == null)
+			popup = mUIHelper.createPopupMenu(this);
+		else
+			popup.addSeparator();
+		popup.addItem(ITEM_SHOW_HELP, null, true);
 
 		if (System.getProperty("development") != null) {
 			if (popup == null)
@@ -2527,7 +2557,7 @@ public class GenericEditorArea implements GenericEventListener {
 	 * @param s
 	 * @return true if adding one or more chars may still create a valid key stroke sequence
 	 */
-	private boolean isValidAtomKeyStrokeStart (String s){
+	private boolean isValidAtomKeyStrokeStart(String s){
 		if (s.length()<3)
 			for (int i=1; i<Molecule.cAtomLabel.length; i++)
 				if (Molecule.cAtomLabel[i].startsWith(s))
@@ -2536,7 +2566,7 @@ public class GenericEditorArea implements GenericEventListener {
 		return false;
 	}
 
-	private void expandAtomKeyStrokes (String keyStrokes){
+	private void expandAtomKeyStrokes(String keyStrokes){
 		mAtomKeyStrokeBuffer.setLength(0);
 
 		int atomicNo = Molecule.getAtomicNoFromLabel(keyStrokes);
@@ -2774,10 +2804,10 @@ public class GenericEditorArea implements GenericEventListener {
 		if (mMol == theMolecule) {
 			return;
 		}
+		storeState();
 		mMol = theMolecule;
 		mMode = 0;
 		mDrawingObjectList = null;
-		storeState();
 		moleculeChanged();
 	}
 
@@ -2929,6 +2959,20 @@ public class GenericEditorArea implements GenericEventListener {
 			if (!allow)
 				mMol.removeQueryFeatures();
 		}
+	}
+
+	/**
+	 * In case a molecule/reaction is pasted into or dropped onto the editor area,
+	 * then the fragment state of the editor area stays unchanged even if it is empty.
+	 * If this method has been called with parameter 'true' then the behaviour changes as follows:
+	 * If a query molecule/reaction (fragment==true) is pasted/dropped, then the editor's
+	 * fragment state is set to true. If a non-fragment molecule/reaction is pasted/dropped
+	 * then the editor's fragment state stays unchanged unless the editor area is empty,
+	 * in which case the fragment state of the dropped object will be retained.
+	 * @param b
+	 */
+	public void setAllowFragmentChangeOnPasteOrDrop(boolean b) {
+		mAllowFragmentChangeOnPasteOrDrop = b;
 	}
 
 	/**
