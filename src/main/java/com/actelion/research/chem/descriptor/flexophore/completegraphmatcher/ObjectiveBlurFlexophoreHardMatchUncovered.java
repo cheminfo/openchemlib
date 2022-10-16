@@ -49,6 +49,8 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 
 	private boolean modeQuery;
 
+	private int marginQuery;
+
 	private MolDistHistViz mdhvBase;
 	private MolDistHistViz mdhvBaseBlurredHist;
 
@@ -74,6 +76,8 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 	private PPNodeSimilarity nodeSimilarity;
 
 	private boolean optimisticHistogramSimilarity;
+
+	private boolean excludeHistogramSimilarity;
 
 	// For small Flexophore descriptor comparison.
 	private boolean fragmentNodesMapping;
@@ -140,12 +144,18 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		deltaNanoSimilarity=0;
 		setFragmentNodesMapping(false);
 		setOptimisticHistogramSimilarity(false);
+		marginQuery = 0;
+		excludeHistogramSimilarity=false;
 		initSimilarityMatrices();
 
 	}
 
 	public void setFragmentNodesMapping(boolean fragmentNodesMapping) {
 		this.fragmentNodesMapping = fragmentNodesMapping;
+	}
+
+	public void setMarginQuery(int marginQuery) {
+		this.marginQuery = marginQuery;
 	}
 
 	/**
@@ -157,6 +167,10 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		if(optimisticHistogramSimilarity){
 			threshHistogramSimilarity = THRESH_HISTOGRAM_SIMILARITY_OPTIMISTIC;
 		}
+	}
+
+	public void setExcludeHistogramSimilarity(boolean excludeHistogramSimilarity) {
+		this.excludeHistogramSimilarity = excludeHistogramSimilarity;
 	}
 
 	private void initSimilarityMatrices(){
@@ -315,7 +329,7 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		//
 		// Check for matching histograms.
 		//
-		if(mapping){
+		if(mapping && !excludeHistogramSimilarity){
 			outer:
 			for (int i = 0; i < heap; i++) {
 
@@ -538,10 +552,11 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		int heap = solution.getSizeHeap();
 
 		//
-		// the query must hit with all pharmacophore nodes
+		// the query must hit with all pharmacophore nodes except margin. Margin gives the number of nodes that need
+		// not to hit.
 		//
 		if(modeQuery) {
-			if (nodesQuery != heap) {
+			if (Math.abs(nodesQuery-heap)>marginQuery) {
 				similarity=0;
 				return (float)similarity;
 			}
@@ -605,6 +620,7 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		// return (float)1.0;
 
 	}
+
 
 	/**
 	 *
@@ -716,6 +732,10 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 
 	public void setBase(IMolDistHist iMolDistHistBase) {
 
+		if(iMolDistHistBase.getNumPPNodes()>=ConstantsFlexophore.MAX_NUM_NODES_FLEXOPHORE){
+			throw new RuntimeException("Number of base pharmacophore nodes (" +iMolDistHistBase.getNumPPNodes() + ") exceeds limit of " + ConstantsFlexophore.MAX_NUM_NODES_FLEXOPHORE + ".");
+		}
+
 		long t0 = System.nanoTime();
 
 		if(iMolDistHistBase instanceof MolDistHistViz) {
@@ -726,7 +746,9 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 			mdhvBaseBlurredHist = new MolDistHistViz((MolDistHist) iMolDistHistBase);
 		}
 
-		slidingWindowDistHist.apply(mdhvBaseBlurredHist);
+
+		if(!fragmentNodesMapping)
+			slidingWindowDistHist.apply(mdhvBaseBlurredHist);
 
 		nodesBase = iMolDistHistBase.getNumPPNodes();
 		
@@ -743,6 +765,10 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 	
 	public void setQuery(IMolDistHist iMolDistHistQuery) {
 
+		if(iMolDistHistQuery.getNumPPNodes()>=ConstantsFlexophore.MAX_NUM_NODES_FLEXOPHORE){
+			throw new RuntimeException("Number of query pharmacophore nodes (" +iMolDistHistQuery.getNumPPNodes() + ") exceeds limit of " + ConstantsFlexophore.MAX_NUM_NODES_FLEXOPHORE + ".");
+		}
+
 		long t0 = System.nanoTime();
 
 		if(iMolDistHistQuery instanceof MolDistHistViz) {
@@ -753,7 +779,8 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 			mdhvQueryBlurredHist = new MolDistHistViz((MolDistHist) iMolDistHistQuery);
 		}
 
-		slidingWindowDistHist.apply(mdhvQueryBlurredHist);
+		if(!fragmentNodesMapping)
+			slidingWindowDistHist.apply(mdhvQueryBlurredHist);
 
 		nodesQuery = iMolDistHistQuery.getNumPPNodes();
 		
