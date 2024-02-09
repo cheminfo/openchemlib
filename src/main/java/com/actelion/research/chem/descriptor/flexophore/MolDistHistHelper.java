@@ -123,6 +123,30 @@ public class MolDistHistHelper {
         }
     }
 
+    public static MolDistHist getEmptyMolDistHist(){
+        PPNode ppNode0 = new PPNode();
+        ppNode0.realize();
+
+        MolDistHist mdhEmpty = new MolDistHist(1);
+        mdhEmpty.addNode(ppNode0);
+        mdhEmpty.realize();
+
+        return mdhEmpty;
+    }
+    public static boolean isEmptyMolDistHist(MolDistHist mdh){
+
+        boolean empty = true;
+        if(mdh.getNumPPNodes()>1){
+            empty = false;
+        } else if(mdh.getNumPPNodes()==1){
+            if(mdh.getNode(0).getInteractionTypeCount()>0){
+                empty = false;
+            }
+        }
+
+        return empty;
+    }
+
     public static MolDistHist getMostDistantPairOfNodes (MolDistHist mdh){
 
         int n = mdh.getNumPPNodes();
