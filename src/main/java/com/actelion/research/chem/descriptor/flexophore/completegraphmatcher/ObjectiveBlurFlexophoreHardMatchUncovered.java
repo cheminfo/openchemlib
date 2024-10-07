@@ -43,7 +43,11 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 	// 03.03.2016 Top result so far for 0.9
 	// 13.04.2020 Maybe obsolete
 	// ToDo
-	final static double THRESH_NODE_SIMILARITY_START = 0.5;
+	// final static double THRESH_NODE_SIMILARITY_START = 0.5;
+
+	// Changed to 0.9 21.08.2024 MvK
+	final static double THRESH_NODE_SIMILARITY_START = 0.9;
+	final static double OPTIMISTIC_HISTOGRAM_THRESH = 0.0;
 
 	private static final float INIT_VAL = -1;
 
@@ -163,6 +167,11 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		this.fragmentNodesMapping = fragmentNodesMapping;
 	}
 
+	/**
+	 * Only used in mode query
+	 * The query must hit with all pharmacophore nodes except margin. Margin gives the number of nodes that need
+	 * @param marginQuery
+	 */
 	public void setMarginQuery(int marginQuery) {
 		this.marginQuery = marginQuery;
 	}
@@ -180,6 +189,9 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 
 	public void setExcludeHistogramSimilarity(boolean excludeHistogramSimilarity) {
 		this.excludeHistogramSimilarity = excludeHistogramSimilarity;
+	}
+	public boolean isExcludeHistogramSimilarity() {
+		return excludeHistogramSimilarity;
 	}
 
 	private void initSimilarityMatrices(){
@@ -833,7 +845,7 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		}
 
 
-		if(!fragmentNodesMapping)
+		if((slidingWindowDistHist!=null) && !fragmentNodesMapping)
 			slidingWindowDistHist.apply(mdhvBaseBlurredHist);
 
 		nodesBase = iMolDistHistBase.getNumPPNodes();
@@ -848,7 +860,11 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 
 		deltaNanoBaseBlur += System.nanoTime()-t0;
 	}
-	
+
+	public void setSlidingWindowDistHistNull() {
+		this.slidingWindowDistHist = null;
+	}
+
 	public void setQuery(IMolDistHist iMolDistHistQuery) {
 
 		if(iMolDistHistQuery.getNumPPNodes()>=ConstantsFlexophore.MAX_NUM_NODES_FLEXOPHORE){
@@ -865,7 +881,7 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 			mdhvQueryBlurredHist = new MolDistHistViz((MolDistHist) iMolDistHistQuery);
 		}
 
-		if(!fragmentNodesMapping)
+		if((slidingWindowDistHist!=null) && !fragmentNodesMapping)
 			slidingWindowDistHist.apply(mdhvQueryBlurredHist);
 
 		nodesQuery = iMolDistHistQuery.getNumPPNodes();
@@ -1113,7 +1129,7 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		double simHists = getSimilarityHistogram(indexNode1Query, indexNode2Query, indexNode1Base, indexNode2Base);
 
 		if(optimisticHistogramSimilarity) {
-			if (simHists > 0) {
+			if (simHists >= OPTIMISTIC_HISTOGRAM_THRESH) {
 				simHists = 1.0;
 			}
 		}
@@ -1121,39 +1137,27 @@ public class ObjectiveBlurFlexophoreHardMatchUncovered implements IObjectiveComp
 		if(verbose){
 			System.out.println("simHists " + Formatter.format2(simHists));
 		}
-
-		// score = simNodePair1 * simNodePair1 * simNodePair2 * simNodePair2 * simHists * simHists * simHists;
-
 		score = simNodePair1 * simNodePair1 * simNodePair2 * simNodePair2 * simHists * simHists;
-
-
 		return score;
 	}
 
 	public double getSimilarityNodes(int indexNodeQuery, int indexNodeBase) {
-		
 		if(arrSimilarityNodes[indexNodeQuery][indexNodeBase] < 0 || verbose){
-			
 			float similarity = (float)nodeSimilarity.getSimilarity(mdhvQueryBlurredHist.getNode(indexNodeQuery), mdhvBaseBlurredHist.getNode(indexNodeBase));
-			
 			arrSimilarityNodes[indexNodeQuery][indexNodeBase]=similarity;
 		} 
-		
 		return arrSimilarityNodes[indexNodeQuery][indexNodeBase];
 	}
 	
 	public float getSimilarityHistogram(int indexNode1Query, int indexNode2Query, int indexNode1Base, int indexNode2Base) {
 
 		int indexHistogramQuery = DistHist.getIndex(indexNode1Query, indexNode2Query, nodesQuery);
-
 		int indexHistogramBase = DistHist.getIndex(indexNode1Base, indexNode2Base, nodesBase);
-
 		if(arrSimilarityHistograms[indexHistogramQuery][indexHistogramBase] < 0){
-
-			float similarityHistogram =
+			float similarityHistogram = 0;
+			similarityHistogram =
 					(float)HistogramMatchCalculator.getSimilarity(
 							mdhvQueryBlurredHist, indexNode1Query, indexNode2Query, mdhvBaseBlurredHist, indexNode1Base, indexNode2Base);
-
 			arrSimilarityHistograms[indexHistogramQuery][indexHistogramBase]=similarityHistogram;
 		}
 

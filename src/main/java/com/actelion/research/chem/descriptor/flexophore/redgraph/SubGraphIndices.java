@@ -187,6 +187,14 @@ public class SubGraphIndices {
         }
         return carbon;
     }
+    public static boolean isCharged(StereoMolecule mol, SubGraphIndices sgi){
+        int charge=0;
+        // A nitro group compensates to 0.
+        for (int atomIndex : sgi.getAtomIndices()) {
+            charge+=mol.getAtomCharge(atomIndex);
+        }
+        return (charge!=0);
+    }
 
     /**
      * Merges fragments containing a common atom index. The fragments in the list are merged and the list is
@@ -269,7 +277,6 @@ public class SubGraphIndices {
      * @return true if the {@link SubGraphIndices} under consideration connects two or more other {@link SubGraphIndices}.
      */
     public static boolean isLinker(StereoMolecule mol, List<SubGraphIndices> liSGI, int indexSGI){
-
         int atoms = mol.getAtoms();
 
         SubGraphIndices sgi = liSGI.get(indexSGI);

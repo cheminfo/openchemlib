@@ -62,7 +62,7 @@ public class SolutionCompleteGraph extends AMemorizedObject implements Comparabl
 	private byte maxIndexNodeQuery;
 	
 	/**
-	 * The index is the index of the node in the query molecule.
+	 * The index is the index of the node in the query molecule. Not matched query nodes contain a -1.
 	 * The value at 'index' is the index of the node in the base molecule.
 	 * Contains the same information as heapIndexBase and heapIndexQuery. Used for fast lookup.
 	 */
@@ -135,13 +135,12 @@ public class SolutionCompleteGraph extends AMemorizedObject implements Comparabl
 	/**
 	 * The index is the index of the node in the query molecule.
 	 * The value at 'index' is the index of the node in the base molecule.
+	 * Can contain -1 if a node is not mapping.
 	 */
 	public byte [] getSolution (){
 		return arrSolution;
 	}
-	
 
-	
 	public boolean equals(Object obj) {
 		
 		boolean eq = true;
@@ -220,10 +219,10 @@ public class SolutionCompleteGraph extends AMemorizedObject implements Comparabl
 		
 		if(sizeHeap>0) {
 			
-			for (int i = 0; i < sizeHeap; i++) {
-				sb.append(arrSolution[i]);
-				if(i < sizeHeap -1)
+			for (int i = 0; i < maxIndexNodeQuery+1; i++) {
+				if(sb.length()>0)
 					sb.append(" ");
+				sb.append(arrSolution[i]);
 			}
 			
 		} else {

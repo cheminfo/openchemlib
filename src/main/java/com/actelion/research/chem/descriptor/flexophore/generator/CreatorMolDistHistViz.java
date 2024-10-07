@@ -34,13 +34,17 @@
 
 package com.actelion.research.chem.descriptor.flexophore.generator;
 
+import com.actelion.research.calc.ArrayUtilsCalc;
 import com.actelion.research.calc.ThreadMaster;
 import com.actelion.research.chem.*;
+import com.actelion.research.chem.conf.Conformer;
+import com.actelion.research.chem.conf.ConformerSet;
 import com.actelion.research.chem.descriptor.DescriptorHandlerFlexophore;
 import com.actelion.research.chem.descriptor.flexophore.*;
 import com.actelion.research.chem.descriptor.flexophore.redgraph.SubGraphExtractor;
 import com.actelion.research.chem.descriptor.flexophore.redgraph.SubGraphIndices;
 import com.actelion.research.chem.interactionstatistics.InteractionAtomTypeCalculator;
+import com.actelion.research.util.StringFunctions;
 
 import java.util.*;
 
@@ -207,6 +211,29 @@ public class CreatorMolDistHistViz {
         }
         MolDistHistViz mdhv = create(liMultCoordFragIndex, molViz);
         return mdhv;
+    }
+    public MolDistHistViz createFromConformerSet(ConformerSet conformerSet)  {
+
+        Molecule3D mol = new Molecule3D(conformerSet.iterator().next().toMolecule());
+        mol.ensureHelperArrays(Molecule.cHelperRings);
+        InteractionAtomTypeCalculator.setInteractionTypes(mol);
+
+        List<SubGraphIndices> liSGI = getSubGraphIndices(mol);
+        List<MultCoordFragIndex> liMultCoordFragIndex = new ArrayList<>();
+        for (SubGraphIndices subGraphIndices : liSGI) {
+            liMultCoordFragIndex.add(new MultCoordFragIndex(subGraphIndices.getAtomIndices()));
+        }
+
+        Iterator<Conformer> it = conformerSet.iterator();
+        while (it.hasNext()){
+            Conformer c = it.next();
+            Molecule3D molConf = new Molecule3D(c.toMolecule());
+            molConf.ensureHelperArrays(Molecule.cHelperRings);
+            calcFragmentCenter(molConf, liMultCoordFragIndex);
+        }
+
+        Molecule3D molViz = createPharmacophorePoints(mol, liMultCoordFragIndex);
+        return create(liMultCoordFragIndex, molViz);
     }
 
     public List<SubGraphIndices> getSubGraphIndices(Molecule3D molInPlace){
@@ -423,6 +450,62 @@ public class CreatorMolDistHistViz {
         return molDistHistViz;
 
     }
+
+    public void addFlexophoreDistanceHistograms(MolDistHistViz mdhv){
+        Molecule3D molecule = mdhv.getMolecule();
+
+        List<MultCoordFragIndex> liMultCoordFragIndex = new ArrayList<>();
+        for (PPNodeViz node : mdhv.getNodes()) {
+            liMultCoordFragIndex.add(new MultCoordFragIndex(node.getArrayIndexOriginalAtoms()));
+        }
+        conformerGeneratorStageTries.setMolecule(molecule);
+        int ccConformationsGenerated=0;
+        for (int i = 0; i < DescriptorHandlerFlexophore.NUM_CONFORMATIONS; i++) {
+            boolean conformerGenerated = false;
+            try {
+                conformerGenerated = conformerGeneratorStageTries.generateConformerAndSetCoordinates(molecule.getAtoms(), molecule);
+            } catch (ExceptionTimeOutConformerGeneration e) {
+                System.err.println(
+                        "CreatorMolDistHistViz: ExceptionTimeOutConformerGeneration for idcode " + molecule.getIDCode( )+ ", hence generated " + ccConformationsGenerated + " conformers.");
+                // e.printStackTrace();
+                break;
+            }
+
+            if(!conformerGenerated){
+                break;
+            }
+            ccConformationsGenerated++;
+            calcFragmentCenter(molecule, liMultCoordFragIndex);
+
+        }
+
+        for (int i = 0; i < liMultCoordFragIndex.size(); i++) {
+            for (int j = i+1; j < liMultCoordFragIndex.size(); j++) {
+                byte [] arrDistHist = MultCoordFragIndex.getDistHist(liMultCoordFragIndex.get(i), liMultCoordFragIndex.get(j));
+                // System.out.println(StringFunctions.toString(arrDistHist));
+                mdhv.setDistHist(i,j,arrDistHist);
+            }
+        }
+
+    }
+    public MolDistHistViz createWithoutCoordinates(Molecule3D molecule3D){
+        InteractionAtomTypeCalculator.setInteractionTypes(molecule3D);
+        List<SubGraphIndices> sgis = getSubGraphIndices(molecule3D);
+        return  createWithoutCoordinates(sgis, molecule3D);
+    }
+    public MolDistHistViz createWithoutCoordinates(Molecule3D molecule3D, int [] indices2consider){
+        InteractionAtomTypeCalculator.setInteractionTypes(molecule3D);
+        List<SubGraphIndices> sgis = getSubGraphIndices(molecule3D);
+        List<SubGraphIndices> sgis2consider = new ArrayList<>();
+        for (SubGraphIndices sgi : sgis) {
+            if(ArrayUtilsCalc.containsAll(indices2consider, sgi.getAtomIndices()))    {
+                sgis2consider.add(sgi);
+            }
+        }
+        return  createWithoutCoordinates(sgis2consider, molecule3D);
+    }
+
+
     public static MolDistHistViz createWithoutCoordinates(List<SubGraphIndices> liMultCoordFragIndex, Molecule3D molecule3D){
 
         MolDistHistViz molDistHistViz = new MolDistHistViz(liMultCoordFragIndex.size(), molecule3D);
@@ -508,11 +591,7 @@ public class CreatorMolDistHistViz {
         InteractionAtomTypeCalculator.setInteractionTypes(molStart);
         Molecule3D molInPlace = new Molecule3D(molStart);
         molInPlace.ensureHelperArrays(Molecule.cHelperRings);
-
         List<SubGraphIndices> liSubGraphIndices = getSubGraphIndices(molInPlace);
-
-
-
         List<MultCoordFragIndex> liMultCoordFragIndex = new ArrayList<>();
         for (SubGraphIndices subGraphIndices : liSubGraphIndices) {
             liMultCoordFragIndex.add(new MultCoordFragIndex(subGraphIndices.getAtomIndices()));
