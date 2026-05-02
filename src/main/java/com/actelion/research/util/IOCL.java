@@ -54,15 +54,13 @@ import com.actelion.research.util.datamodel.IntArray;
  * IO
  * 2003 MvK: Start implementation
  */
-public class IO {
+public class IOCL {
 
 	// private static final NumberFormat NF = new DecimalFormat("000");
 
 	private static final int LIMIT_FILES_DIR = 10000;
 
 	public static final String SEP = System.getProperty("file.separator");
-
-
 
 	public static boolean canWriteAndDeleteInPath(File dir) throws IOException {
 		boolean w = false;
