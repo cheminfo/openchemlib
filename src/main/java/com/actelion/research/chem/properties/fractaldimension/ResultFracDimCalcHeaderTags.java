@@ -33,8 +33,6 @@
 
 package com.actelion.research.chem.properties.fractaldimension;
 
-import com.actelion.research.util.ConstantsDWAR;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,20 +51,20 @@ public class ResultFracDimCalcHeaderTags {
     public static final String ATTR_SUCCESS = "true";
     public static final String ATTR_FAILURE = "false";
 
-    private static final String TAG_SMILES = "SMILES";
+    public static final String TAG_SMILES = "SMILES";
 
-    private static final String TAG_ID = "MoleculeId";
+    public static final String TAG_ID = "MoleculeId";
 
-    private static final String TAG_SUM_UNIQUE_FRAGMENTS_CALC = "SumUniqueFragmentsCalculated";
+    public static final String TAG_SUM_UNIQUE_FRAGMENTS_CALC = "SumUniqueFragmentsCalculated";
 
-    private static final String TAG_ATOM_COUNT = "AtomCountNonH";
-    private static final String TAG_BOND_COUNT = "BondCountNonH";
-    private static final String TAG_BONDS_AT_MAX_FRAGS_CALC = "BondNumberAtMaxNumFragCalculated";
+    public static final String TAG_ATOM_COUNT = "AtomCountNonH";
+    public static final String TAG_BOND_COUNT = "BondCountNonH";
+    public static final String TAG_BONDS_AT_MAX_FRAGS_CALC = "BondNumberAtMaxNumFragCalculated";
 
-    private static final String TAG_MAX_NUM_UNIQUE_FRAGMENTS_CALC = "MaxNumUniqueFragmentsCalculated";
+    public static final String TAG_MAX_NUM_UNIQUE_FRAGMENTS_CALC = "MaxNumUniqueFragmentsCalculated";
 
-    private static final String TAG_FRACTAL_DIM = "FractalDimension";
-    private static final String TAG_MESSAGE = "Message";
+    public static final String TAG_FRACTAL_DIM = "FractalDimension";
+    public static final String TAG_MESSAGE = "Message";
 
     private static final String [] ARR_TAGS = {
             TAG_SMILES,
@@ -85,7 +83,7 @@ public class ResultFracDimCalcHeaderTags {
     private String tagColumnIdCode;
 
     public ResultFracDimCalcHeaderTags() {
-        this(ConstantsDWAR.TAG_IDCODE2);
+        this("Structure");
     }
     public ResultFracDimCalcHeaderTags(String tagColumnIdCode) {
         this.tagColumnIdCode = tagColumnIdCode;
