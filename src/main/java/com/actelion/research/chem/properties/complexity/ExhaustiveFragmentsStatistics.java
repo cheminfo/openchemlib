@@ -123,7 +123,7 @@ public class ExhaustiveFragmentsStatistics {
 	 * @param molIn
 	 * @return
 	 */
-	public ResultFragmentsStatistic create(StereoMolecule molIn, int maxNumBondsFragmentDesired){
+	public ResultFragmentsStatistic create(StereoMolecule molIn, int maxNumBondsFragmentDesired) throws InterruptedException {
 
 		StereoMolecule mol = new StereoMolecule(molIn);
 		mol.ensureHelperArrays(Molecule.cHelperRings);
@@ -213,9 +213,7 @@ public class ExhaustiveFragmentsStatistics {
 			try {Thread.sleep(SLEEP);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 
-		List<ModelExhaustiveStatistics> liModelExhaustiveStatisticsCpy = new ArrayList<>(liModelExhaustiveStatistics);
-
-		ResultFragmentsStatistic fragmentsStatistic = new ResultFragmentsStatistic(mol, liModelExhaustiveStatisticsCpy);
+		ResultFragmentsStatistic fragmentsStatistic = new ResultFragmentsStatistic(mol, liModelExhaustiveStatistics);
 		
 		return fragmentsStatistic;
 	}
